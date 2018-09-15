@@ -6,7 +6,7 @@ import {
   FETCH_POSTINGS,
 } from './types';
 
-const ROOT_URL = 'http://localhost:9000';
+const ROOT_URL = 'http://104.236.213.219:8080';
 
 export const authError = error => ({
   type: AUTH_ERROR,

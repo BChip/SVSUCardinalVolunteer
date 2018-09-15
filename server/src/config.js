@@ -54,7 +54,7 @@ const config = {
     }
   },
   production: {
-    ip: process.env.IP || undefined,
+    ip: process.env.IP || "0.0.0.0",
     port: process.env.PORT || 8080,
     mongo: {
       uri: process.env.MONGODB_URI || 'mongodb://localhost/svsuvolunteer'
