@@ -13,7 +13,7 @@ class Signin extends PureComponent {
       return (
         <div className="alert alert-danger">
           <string>
-Oops!
+            Oops!
             {' '}
             {this.props.errorMessage}
           </string>

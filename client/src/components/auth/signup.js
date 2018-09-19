@@ -8,67 +8,67 @@ class Signup extends PureComponent {
     this.props.signupUser(formProps);
   }
 
-    renderField = ({
-      input, label, type, meta: { touched, error },
-    }) => (
+  renderField = ({
+    input, label, type, meta: { touched, error },
+  }) => (
+    <div>
+      <label>{label}</label>
       <div>
-        <label>{label}</label>
-        <div>
-          <input className="form-control" {...input} placeholder={label} type={type} />
-          {touched && error && <span className="text-danger">{error}</span>}
-        </div>
+        <input className="form-control" {...input} placeholder={label} type={type} />
+        {touched && error && <span className="text-danger">{error}</span>}
       </div>
-    );
+    </div>
+  );
 
-    renderError() {
-      if (this.props.errorMessage) {
-        return (
-          <div className="alert alert-danger">
-            <string>
-Oops!
-              {' '}
-              {this.props.errorMessage}
-            </string>
-          </div>
-        );
-      }
-    }
-
-    render() {
-      const { handleSubmit, submitting } = this.props;
-
+  renderError() {
+    if (this.props.errorMessage) {
       return (
-        <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
-          <fieldset className="form-group">
-            <Field
-              name="email"
-              label="Email"
-              component={this.renderField}
-              type="text"
-            />
-          </fieldset>
-          <fieldset className="form-group">
-            <Field
-              name="password"
-              label="Password"
-              component={this.renderField}
-              type="password"
-            />
-          </fieldset>
-          <fieldset className="form-group">
-            <Field
-              name="passwordConfirmation"
-              label="Password Confirmation"
-              component={this.renderField}
-              type="password"
-            />
-          </fieldset>
-          {this.renderError()}
-          <button type="submit" className="btn btn-primary" disabled={submitting}>Sign Up</button>
-
-        </form>
+        <div className="alert alert-danger">
+          <string>
+            Oops!
+            {' '}
+            {this.props.errorMessage}
+          </string>
+        </div>
       );
     }
+  }
+
+  render() {
+    const { handleSubmit, submitting } = this.props;
+
+    return (
+      <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
+        <fieldset className="form-group">
+          <Field
+            name="email"
+            label="Email"
+            component={this.renderField}
+            type="text"
+          />
+        </fieldset>
+        <fieldset className="form-group">
+          <Field
+            name="password"
+            label="Password"
+            component={this.renderField}
+            type="password"
+          />
+        </fieldset>
+        <fieldset className="form-group">
+          <Field
+            name="passwordConfirmation"
+            label="Password Confirmation"
+            component={this.renderField}
+            type="password"
+          />
+        </fieldset>
+        {this.renderError()}
+        <button type="submit" className="btn btn-primary" disabled={submitting}>Sign Up</button>
+
+      </form>
+    );
+  }
 }
 
 const validate = (values) => {

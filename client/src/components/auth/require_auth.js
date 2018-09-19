@@ -4,25 +4,25 @@ import PropTypes from 'prop-types';
 
 export default function (ComposedComponent) {
   class Authentication extends Component {
-        static contextTypes = {
-          router: PropTypes.object,
-        }
+    static contextTypes = {
+      router: PropTypes.object,
+    }
 
-        componentWillMount() {
-          if (!this.props.authenticated) {
-            this.props.history.push('/');
-          }
-        }
+    componentWillMount() {
+      if (!this.props.authenticated) {
+        this.props.history.push('/');
+      }
+    }
 
-        componentWillUpdate(nextProps) {
-          if (!nextProps.authenticated) {
-            this.props.history.push('/');
-          }
-        }
+    componentWillUpdate(nextProps) {
+      if (!nextProps.authenticated) {
+        this.props.history.push('/');
+      }
+    }
 
-        render() {
-          return <ComposedComponent {...this.props} />;
-        }
+    render() {
+      return <ComposedComponent {...this.props} />;
+    }
   }
 
   function mapStateToProps(state) {
