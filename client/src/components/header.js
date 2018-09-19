@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 
 class Header extends PureComponent {
   renderLinks() {
-    if (this.props.authenticated) {
+    const { authenticated } = this.props;
+    if (authenticated) {
       return (
         <li className="nav-item">
           <Link className="nav-link" to="/signout">Sign Out</Link>

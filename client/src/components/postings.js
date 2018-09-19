@@ -1,8 +1,11 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 
 class Postings extends PureComponent {
+  postings = this.props.postings
+
   componentWillMount() {
     this.props.fetchPostings();
   }
@@ -26,6 +29,10 @@ class Postings extends PureComponent {
     );
   }
 }
+
+Postings.propTypes = {
+  fetchPostings: PropTypes.func.isRequired,
+};
 
 const mapStateToProps = state => ({ postings: state.postings.homePagePostings });
 
