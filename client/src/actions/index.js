@@ -43,7 +43,6 @@ export const signupUser = ({ email, password }) => async (dispatch) => {
     dispatch(authError(json.message));
     return;
   }
-  dispatch({ type: AUTH_USER });
   History.push('/signin');
 };
 
