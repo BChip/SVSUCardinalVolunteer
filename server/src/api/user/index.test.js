@@ -1,55 +1,18 @@
 import request from 'supertest'
-import { masterKey, apiRoot } from '../../config'
+import { apiRoot } from '../../config'
 import { signSync } from '../../services/jwt'
 import express from '../../services/express'
 import routes, { User } from '.'
 
 const app = () => express(apiRoot, routes)
 
-let user1, user2, admin, session1, session2, adminSession
+let user1, user2, session1, session2
 
 beforeEach(async () => {
   user1 = await User.create({ name: 'user', email: 'a@a.com', password: '123456' })
   user2 = await User.create({ name: 'user', email: 'b@b.com', password: '123456' })
-  admin = await User.create({ email: 'c@c.com', password: '123456', role: 'admin' })
   session1 = signSync(user1.id)
   session2 = signSync(user2.id)
-  adminSession = signSync(admin.id)
-})
-
-test('GET /users 200 (admin)', async () => {
-  const { status, body } = await request(app())
-    .get(apiRoot)
-    .query({ access_token: adminSession })
-  expect(status).toBe(200)
-  expect(Array.isArray(body)).toBe(true)
-})
-
-test('GET /users?page=2&limit=1 200 (admin)', async () => {
-  const { status, body } = await request(app())
-    .get(apiRoot)
-    .query({ access_token: adminSession, page: 2, limit: 1 })
-  expect(status).toBe(200)
-  expect(Array.isArray(body)).toBe(true)
-  expect(body.length).toBe(1)
-})
-
-test('GET /users?q=user 200 (admin)', async () => {
-  const { status, body } = await request(app())
-    .get(apiRoot)
-    .query({ access_token: adminSession, q: 'user' })
-  expect(status).toBe(200)
-  expect(Array.isArray(body)).toBe(true)
-  expect(body.length).toBe(2)
-})
-
-test('GET /users?fields=name 200 (admin)', async () => {
-  const { status, body } = await request(app())
-    .get(apiRoot)
-    .query({ access_token: adminSession, fields: 'name' })
-  expect(status).toBe(200)
-  expect(Array.isArray(body)).toBe(true)
-  expect(Object.keys(body[0])).toEqual(['id', 'name'])
 })
 
 test('GET /users 401 (user)', async () => {
@@ -94,106 +57,76 @@ test('GET /users/:id 404', async () => {
   expect(status).toBe(404)
 })
 
-test('POST /users 201 (master)', async () => {
+test('POST /users 201 ', async () => {
   const { status, body } = await request(app())
     .post(apiRoot)
-    .send({ access_token: masterKey, email: 'd@d.com', password: '123456' })
+    .send({ email: 'd@d.com', password: '123456' })
   expect(status).toBe(201)
   expect(typeof body).toBe('object')
   expect(body.email).toBe('d@d.com')
 })
 
-test('POST /users 201 (master)', async () => {
+test('POST /users 201 ', async () => {
   const { status, body } = await request(app())
     .post(apiRoot)
-    .send({ access_token: masterKey, email: 'd@d.com', password: '123456', role: 'user' })
+    .send({ email: 'd@d.com', password: '123456', role: 'user' })
   expect(status).toBe(201)
   expect(typeof body).toBe('object')
   expect(body.email).toBe('d@d.com')
 })
 
-test('POST /users 201 (master)', async () => {
+test('POST /users 409  - duplicated email', async () => {
   const { status, body } = await request(app())
     .post(apiRoot)
-    .send({ access_token: masterKey, email: 'd@d.com', password: '123456', role: 'admin' })
-  expect(status).toBe(201)
-  expect(typeof body).toBe('object')
-  expect(body.email).toBe('d@d.com')
-})
-
-test('POST /users 409 (master) - duplicated email', async () => {
-  const { status, body } = await request(app())
-    .post(apiRoot)
-    .send({ access_token: masterKey, email: 'a@a.com', password: '123456' })
+    .send({ email: 'a@a.com', password: '123456' })
   expect(status).toBe(409)
   expect(typeof body).toBe('object')
   expect(body.param).toBe('email')
 })
 
-test('POST /users 400 (master) - invalid email', async () => {
+test('POST /users 400  - invalid email', async () => {
   const { status, body } = await request(app())
     .post(apiRoot)
-    .send({ access_token: masterKey, email: 'invalid', password: '123456' })
+    .send({ email: 'invalid', password: '123456' })
   expect(status).toBe(400)
   expect(typeof body).toBe('object')
   expect(body.param).toBe('email')
 })
 
-test('POST /users 400 (master) - missing email', async () => {
+test('POST /users 400  - missing email', async () => {
   const { status, body } = await request(app())
     .post(apiRoot)
-    .send({ access_token: masterKey, password: '123456' })
+    .send({ password: '123456' })
   expect(status).toBe(400)
   expect(typeof body).toBe('object')
   expect(body.param).toBe('email')
 })
 
-test('POST /users 400 (master) - invalid password', async () => {
+test('POST /users 400  - invalid password', async () => {
   const { status, body } = await request(app())
     .post(apiRoot)
-    .send({ access_token: masterKey, email: 'd@d.com', password: '123' })
+    .send({ email: 'd@d.com', password: '123' })
   expect(status).toBe(400)
   expect(typeof body).toBe('object')
   expect(body.param).toBe('password')
 })
 
-test('POST /users 400 (master) - missing password', async () => {
+test('POST /users 400  - missing password', async () => {
   const { status, body } = await request(app())
     .post(apiRoot)
-    .send({ access_token: masterKey, email: 'd@d.com' })
+    .send({ email: 'd@d.com' })
   expect(status).toBe(400)
   expect(typeof body).toBe('object')
   expect(body.param).toBe('password')
 })
 
-test('POST /users 400 (master) - invalid role', async () => {
+test('POST /users 400  - invalid role', async () => {
   const { status, body } = await request(app())
     .post(apiRoot)
-    .send({ access_token: masterKey, email: 'd@d.com', password: '123456', role: 'invalid' })
+    .send({ email: 'd@d.com', password: '123456', role: 'invalid' })
   expect(status).toBe(400)
   expect(typeof body).toBe('object')
   expect(body.param).toBe('role')
-})
-
-test('POST /users 401 (admin)', async () => {
-  const { status } = await request(app())
-    .post(apiRoot)
-    .send({ access_token: adminSession, email: 'd@d.com', password: '123456' })
-  expect(status).toBe(401)
-})
-
-test('POST /users 401 (user)', async () => {
-  const { status } = await request(app())
-    .post(apiRoot)
-    .send({ access_token: session1, email: 'd@d.com', password: '123456' })
-  expect(status).toBe(401)
-})
-
-test('POST /users 401', async () => {
-  const { status } = await request(app())
-    .post(apiRoot)
-    .send({ email: 'd@d.com', password: '123456' })
-  expect(status).toBe(401)
 })
 
 test('PUT /users/me 200 (user)', async () => {
@@ -239,15 +172,6 @@ test('PUT /users/:id 200 (user)', async () => {
   expect(body.email).toBe('a@a.com')
 })
 
-test('PUT /users/:id 200 (admin)', async () => {
-  const { status, body } = await request(app())
-    .put(`${apiRoot}/${user1.id}`)
-    .send({ access_token: adminSession, name: 'test' })
-  expect(status).toBe(200)
-  expect(typeof body).toBe('object')
-  expect(body.name).toBe('test')
-})
-
 test('PUT /users/:id 401 (user) - another user', async () => {
   const { status } = await request(app())
     .put(`${apiRoot}/${user1.id}`)
@@ -260,13 +184,6 @@ test('PUT /users/:id 401', async () => {
     .put(`${apiRoot}/${user1.id}`)
     .send({ name: 'test' })
   expect(status).toBe(401)
-})
-
-test('PUT /users/:id 404 (admin)', async () => {
-  const { status } = await request(app())
-    .put(apiRoot + '/123456789098765432123456')
-    .send({ access_token: adminSession, name: 'test' })
-  expect(status).toBe(404)
 })
 
 const passwordMatch = async (password, userId) => {
@@ -360,13 +277,6 @@ test('PUT /users/:id/password 404 (user)', async () => {
   expect(status).toBe(404)
 })
 
-test('DELETE /users/:id 204 (admin)', async () => {
-  const { status } = await request(app())
-    .delete(`${apiRoot}/${user1.id}`)
-    .send({ access_token: adminSession })
-  expect(status).toBe(204)
-})
-
 test('DELETE /users/:id 401 (user)', async () => {
   const { status } = await request(app())
     .delete(`${apiRoot}/${user1.id}`)
@@ -378,11 +288,4 @@ test('DELETE /users/:id 401', async () => {
   const { status } = await request(app())
     .delete(`${apiRoot}/${user1.id}`)
   expect(status).toBe(401)
-})
-
-test('DELETE /users/:id 404 (admin)', async () => {
-  const { status } = await request(app())
-    .delete(apiRoot + '/123456789098765432123456')
-    .send({ access_token: adminSession })
-  expect(status).toBe(404)
 })
