@@ -6,7 +6,7 @@ import {
   FETCH_POSTINGS,
 } from './types';
 
-const ROOT_URL = 'http://104.236.213.219:8080';
+const ROOT_URL = 'http://0.0.0.0:9000';
 
 export const authError = error => ({
   type: AUTH_ERROR,
@@ -15,8 +15,7 @@ export const authError = error => ({
 
 export const signinUser = ({ mail, password }) => async (dispatch) => {
   const headers = { authorization: `Basic ${btoa(`${mail}:${password}`)}`, 'content-type': 'application/json' };
-  const body = JSON.stringify({ access_token: 'pZKb7ed8N3J6LJBB1gOe3f3YZo0gbXhz' });
-  const response = await fetch(`${ROOT_URL}/auth`, { method: 'POST', headers, body });
+  const response = await fetch(`${ROOT_URL}/auth`, { method: 'POST', headers });
   if (response.status !== 201) {
     dispatch(authError('Bad Login Info'));
     return;
@@ -37,7 +36,7 @@ export const signinUser = ({ mail, password }) => async (dispatch) => {
 
 export const signupUser = ({ email, password }) => async (dispatch) => {
   const headers = { 'content-type': 'application/json' };
-  const body = JSON.stringify({ access_token: 'pZKb7ed8N3J6LJBB1gOe3f3YZo0gbXhz', email, password });
+  const body = JSON.stringify({ email, password });
   const response = await fetch(`${ROOT_URL}/users`, { method: 'POST', headers, body });
   const json = await response.json();
   if (response.status !== 201) {

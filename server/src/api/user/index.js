@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import { middleware as query } from 'querymen'
 import { middleware as body } from 'bodymen'
-import { password as passwordAuth, master, token } from '../../services/passport'
+import { password as passwordAuth, token } from '../../services/passport'
 import { index, showMe, show, create, update, updatePassword, destroy } from './controller'
 import { schema } from './model'
 export User, { schema } from './model'
@@ -52,8 +52,6 @@ router.get('/:id',
  * @api {post} /users Create user
  * @apiName CreateUser
  * @apiGroup User
- * @apiPermission master
- * @apiParam {String} access_token Master access_token.
  * @apiParam {String} email User's email.
  * @apiParam {String{6..}} password User's password.
  * @apiParam {String} [name] User's name.
@@ -61,11 +59,9 @@ router.get('/:id',
  * @apiParam {String=user} [role=user] User's role.
  * @apiSuccess (Sucess 201) {Object} user User's data.
  * @apiError {Object} 400 Some parameters may contain invalid values.
- * @apiError 401 Master access only.
  * @apiError 409 Email already registered.
  */
 router.post('/',
-  master(),
   body({ email, password, name, picture, role }),
   create)
 
