@@ -1,44 +1,41 @@
 import { success, notFound, authorOrAdmin } from '../../services/response/'
-import { Posting } from '.'
+import { Rsvp } from '.'
 
 export const create = ({ user, bodymen: { body } }, res, next) =>
-  Posting.create({ ...body, user })
-    .then((posting) => posting.view(true))
+  Rsvp.create({ ...body, user })
+    .then((rsvp) => rsvp.view(true))
     .then(success(res, 201))
     .catch(next)
 
 export const index = ({ querymen: { query, select, cursor } }, res, next) =>
-  Posting.find(query, select, cursor)
+  Rsvp.find(query, select, cursor)
     .populate('user')
-    .populate('rsvps')
-    .then((postings) => postings.map((posting) => posting.view()))
+    .then((rsvps) => rsvps.map((rsvp) => rsvp.view()))
     .then(success(res))
     .catch(next)
 
 export const show = ({ params }, res, next) =>
-  Posting.findById(params.id)
+  Rsvp.findById(params.id)
     .populate('user')
-    .populate('rsvps')
     .then(notFound(res))
-    .then((posting) => posting ? posting.view() : null)
+    .then((rsvp) => rsvp ? rsvp.view() : null)
     .then(success(res))
     .catch(next)
 
 export const update = ({ user, bodymen: { body }, params }, res, next) =>
-  Posting.findById(params.id)
+  Rsvp.findById(params.id)
     .populate('user')
-    .populate('rsvps')
     .then(notFound(res))
     .then(authorOrAdmin(res, user, 'user'))
-    .then((posting) => posting ? Object.assign(posting, body).save() : null)
-    .then((posting) => posting ? posting.view(true) : null)
+    .then((rsvp) => rsvp ? Object.assign(rsvp, body).save() : null)
+    .then((rsvp) => rsvp ? rsvp.view(true) : null)
     .then(success(res))
     .catch(next)
 
 export const destroy = ({ user, params }, res, next) =>
-  Posting.findById(params.id)
+  Rsvp.findById(params.id)
     .then(notFound(res))
     .then(authorOrAdmin(res, user, 'user'))
-    .then((posting) => posting ? posting.remove() : null)
+    .then((rsvp) => rsvp ? rsvp.remove() : null)
     .then(success(res, 204))
     .catch(next)

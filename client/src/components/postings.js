@@ -11,7 +11,14 @@ class Postings extends PureComponent {
   }
 
   renderPostings() {
-    return this.props.postings.map(posting => <li key={posting}>{posting}</li>);
+    return this.props.postings.map(posting => {
+        return (
+        <div>
+          <p>Title: {posting.title}</p>
+          <p>Description: {posting.description}</p>
+          <p>Created: {posting.createdAt}</p>
+        </div>)
+    });
   }
 
   render() {

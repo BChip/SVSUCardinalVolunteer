@@ -4,40 +4,36 @@ import { middleware as body } from 'bodymen'
 import { token } from '../../services/passport'
 import { create, index, show, update, destroy } from './controller'
 import { schema } from './model'
-export Posting, { schema } from './model'
+export Rsvp, { schema } from './model'
 
 const router = new Router()
-const { title, description, location, time, category, approved } = schema.tree
+const { posting } = schema.tree
 
 /**
- * @api {post} /postings Create posting
- * @apiName CreatePosting
- * @apiGroup Posting
+ * @api {post} /rsvps Create rsvp
+ * @apiName CreateRsvp
+ * @apiGroup Rsvp
  * @apiPermission user
  * @apiParam {String} access_token user access token.
- * @apiParam title Posting's title.
- * @apiParam description Posting's description.
- * @apiParam location Posting's location.
- * @apiParam time Posting's time.
- * @apiParam category Posting's category.
- * @apiSuccess {Object} posting Posting's data.
+ * @apiParam posting Rsvp's posting.
+ * @apiSuccess {Object} rsvp Rsvp's data.
  * @apiError {Object} 400 Some parameters may contain invalid values.
- * @apiError 404 Posting not found.
+ * @apiError 404 Rsvp not found.
  * @apiError 401 user access only.
  */
 router.post('/',
   token({ required: true }),
-  body({ title, description, location, time, category }),
+  body({ posting }),
   create)
 
 /**
- * @api {get} /postings Retrieve postings
- * @apiName RetrievePostings
- * @apiGroup Posting
+ * @api {get} /rsvps Retrieve rsvps
+ * @apiName RetrieveRsvps
+ * @apiGroup Rsvp
  * @apiPermission user
  * @apiParam {String} access_token user access token.
  * @apiUse listParams
- * @apiSuccess {Object[]} postings List of postings.
+ * @apiSuccess {Object[]} rsvps List of rsvps.
  * @apiError {Object} 400 Some parameters may contain invalid values.
  * @apiError 401 user access only.
  */
@@ -47,14 +43,14 @@ router.get('/',
   index)
 
 /**
- * @api {get} /postings/:id Retrieve posting
- * @apiName RetrievePosting
- * @apiGroup Posting
+ * @api {get} /rsvps/:id Retrieve rsvp
+ * @apiName RetrieveRsvp
+ * @apiGroup Rsvp
  * @apiPermission user
  * @apiParam {String} access_token user access token.
- * @apiSuccess {Object} posting Posting's data.
+ * @apiSuccess {Object} rsvp Rsvp's data.
  * @apiError {Object} 400 Some parameters may contain invalid values.
- * @apiError 404 Posting not found.
+ * @apiError 404 Rsvp not found.
  * @apiError 401 user access only.
  */
 router.get('/:id',
@@ -62,34 +58,30 @@ router.get('/:id',
   show)
 
 /**
- * @api {put} /postings/:id Update posting
- * @apiName UpdatePosting
- * @apiGroup Posting
+ * @api {put} /rsvps/:id Update rsvp
+ * @apiName UpdateRsvp
+ * @apiGroup Rsvp
  * @apiPermission user
  * @apiParam {String} access_token user access token.
- * @apiParam title Posting's title.
- * @apiParam description Posting's description.
- * @apiParam location Posting's location.
- * @apiParam time Posting's time.
- * @apiParam category Posting's category.
- * @apiSuccess {Object} posting Posting's data.
+ * @apiParam posting Rsvp's posting.
+ * @apiSuccess {Object} rsvp Rsvp's data.
  * @apiError {Object} 400 Some parameters may contain invalid values.
- * @apiError 404 Posting not found.
+ * @apiError 404 Rsvp not found.
  * @apiError 401 user access only.
  */
 router.put('/:id',
   token({ required: true }),
-  body({ title, description, location, time, category, approved }),
+  body({ posting }),
   update)
 
 /**
- * @api {delete} /postings/:id Delete posting
- * @apiName DeletePosting
- * @apiGroup Posting
+ * @api {delete} /rsvps/:id Delete rsvp
+ * @apiName DeleteRsvp
+ * @apiGroup Rsvp
  * @apiPermission user
  * @apiParam {String} access_token user access token.
  * @apiSuccess (Success 204) 204 No Content.
- * @apiError 404 Posting not found.
+ * @apiError 404 Rsvp not found.
  * @apiError 401 user access only.
  */
 router.delete('/:id',

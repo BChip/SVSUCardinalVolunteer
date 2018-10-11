@@ -10,4 +10,5 @@ docs
 npm-debug.log
 .nyc_output
 coverage
+.yo-rc.json
 cassettes

@@ -7,24 +7,47 @@ const postingSchema = new Schema({
     required: true
   },
   title: {
-    type: String
+    type: String,
+    required: true
   },
   description: {
-    type: String
+    type: String,
+    required: true
   },
   location: {
-    type: String
+    type: String,
+    required: true
   },
   time: {
-    type: String
+    type: String,
+    required: true
+  },
+  category: {
+    type: String,
+    required: true
+  },
+  approved: {
+    type: Boolean,
+    required: true,
+    default: false
   }
 }, {
   timestamps: true,
   toJSON: {
     virtuals: true,
     transform: (obj, ret) => { delete ret._id }
+  },
+  toObject: {
+    virtuals: true
   }
 })
+
+postingSchema.virtual('rsvps', {
+  ref: 'Rsvp',
+  localField: '_id',
+  foreignField: 'posting'
+})
+
 
 postingSchema.methods = {
   view (full) {
@@ -33,9 +56,11 @@ postingSchema.methods = {
       id: this.id,
       user: this.user.view(full),
       title: this.title,
+      category: this.category,
       description: this.description,
       location: this.location,
       time: this.time,
+      approved: this.approved,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt
     }
@@ -51,3 +76,5 @@ const model = mongoose.model('Posting', postingSchema)
 
 export const schema = model.schema
 export default model
+
+
