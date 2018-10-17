@@ -1,10 +1,14 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import * as actions from '../actions';
+import Header from './header';
+
 
 class Postings extends PureComponent {
-  postings = this.props.postings
+   postings = this.props.postings
+  
 
   componentWillMount() {
     this.props.fetchPostings();
@@ -22,16 +26,18 @@ class Postings extends PureComponent {
   }
 
   render() {
+    
     if (!this.props.postings) {
       return <div>Loading...</div>;
     }
-
     return (
       <div>
+        <Header />
         <h4>Postings</h4>
         <ul>
           {this.renderPostings()}
         </ul>
+        <Link to='../Signout'>Log out</Link>
       </div>
     );
   }
