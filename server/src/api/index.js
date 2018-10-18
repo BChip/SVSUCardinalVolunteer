@@ -3,7 +3,6 @@ import user from './user'
 import auth from './auth'
 import passwordReset from './password-reset'
 import posting from './posting'
-import rsvp from './rsvp'
 
 const router = new Router()
 
@@ -34,6 +33,5 @@ router.use('/users', user)
 router.use('/auth', auth)
 router.use('/password-resets', passwordReset)
 router.use('/postings', posting)
-router.use('/rsvps', rsvp)
 
 export default router
