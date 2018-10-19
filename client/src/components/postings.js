@@ -17,7 +17,7 @@ class Postings extends PureComponent {
    renderPostings() {
      return this.props.postings.map(posting => (
        <div>
-        <a href={`/postings/${posting.id}`} className="list-group-item list-group-item-action flex-column align-items-start">
+         <a href={`/postings/${posting.id}`} className="list-group-item list-group-item-action flex-column align-items-start">
           <div className="d-flex w-100 justify-content-between">
             <h5 className="mb-1">{posting.title}</h5>
             <small>{`${posting.location} - ${posting.time}` }</small>
@@ -25,7 +25,7 @@ class Postings extends PureComponent {
           <p className="mb-1">{posting.description}</p>
           <small>{posting.category}</small>
         </a>
-      </div>));
+       </div>));
    }
 
    render() {
@@ -34,12 +34,12 @@ class Postings extends PureComponent {
      }
      return (
        <div>
-        <Header />
-        <h4>Postings</h4>
-        <div className="list-group">
+         <Header />
+         <h4>Postings</h4>
+         <div className="list-group">
           {this.renderPostings()}
         </div>
-      </div>
+       </div>
      );
    }
 }
