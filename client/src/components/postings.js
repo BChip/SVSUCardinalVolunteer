@@ -8,39 +8,40 @@ import Header from './header';
 
 class Postings extends PureComponent {
    postings = this.props.postings
-  
 
-  componentWillMount() {
-    this.props.fetchPostings();
-  }
 
-  renderPostings() {
-    return this.props.postings.map(posting => {
-        return (
-        <div>
-          <p>Title: {posting.title}</p>
-          <p>Description: {posting.description}</p>
-          <p>Created: {posting.createdAt}</p>
-        </div>)
-    });
-  }
+   componentWillMount() {
+     this.props.fetchPostings();
+   }
 
-  render() {
-    
-    if (!this.props.postings) {
-      return <div>Loading...</div>;
-    }
-    return (
-      <div>
+   renderPostings() {
+     return this.props.postings.map(posting => (
+       <div>
+        <a href={`/postings/${posting.id}`} className="list-group-item list-group-item-action flex-column align-items-start">
+          <div className="d-flex w-100 justify-content-between">
+            <h5 className="mb-1">{posting.title}</h5>
+            <small>{`${posting.location} - ${posting.time}` }</small>
+          </div>
+          <p className="mb-1">{posting.description}</p>
+          <small>{posting.category}</small>
+        </a>
+      </div>));
+   }
+
+   render() {
+     if (!this.props.postings) {
+       return <div>Loading...</div>;
+     }
+     return (
+       <div>
         <Header />
         <h4>Postings</h4>
-        <ul>
+        <div className="list-group">
           {this.renderPostings()}
-        </ul>
-        <Link to='../Signout'>Log out</Link>
+        </div>
       </div>
-    );
-  }
+     );
+   }
 }
 
 Postings.propTypes = {

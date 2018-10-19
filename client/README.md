@@ -1,4 +1,4 @@
-# Svsuvolunteer
+# SVSUVOLUNTEER
 
 ## Commands
 
