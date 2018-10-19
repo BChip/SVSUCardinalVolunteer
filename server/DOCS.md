@@ -45,12 +45,6 @@
 |---------|-----------|--------------------------------------|
 | Authorization			| String			|  <p>Basic authorization with email and password.</p>							|
 
-### Parameters
-
-| Name    | Type      | Description                          |
-|---------|-----------|--------------------------------------|
-| access_token			| String			|  <p>Master access_token.</p>							|
-
 ## Authenticate with Facebook
 
 
@@ -144,6 +138,7 @@
 | description			| 			|  <p>Posting's description.</p>							|
 | location			| 			|  <p>Posting's location.</p>							|
 | time			| 			|  <p>Posting's time.</p>							|
+| category			| 			|  <p>Posting's category.</p>							|
 
 ## Delete posting
 
@@ -205,6 +200,7 @@
 | description			| 			|  <p>Posting's description.</p>							|
 | location			| 			|  <p>Posting's location.</p>							|
 | time			| 			|  <p>Posting's time.</p>							|
+| category			| 			|  <p>Posting's category.</p>							|
 
 # User
 
@@ -219,7 +215,6 @@
 
 | Name    | Type      | Description                          |
 |---------|-----------|--------------------------------------|
-| access_token			| String			|  <p>Master access_token.</p>							|
 | email			| String			|  <p>User's email.</p>							|
 | password			| String			|  <p>User's password.</p>							|
 | name			| String			| **optional** <p>User's name.</p>							|

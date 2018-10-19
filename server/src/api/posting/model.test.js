@@ -5,7 +5,7 @@ let user, posting
 
 beforeEach(async () => {
   user = await User.create({ email: 'a@a.com', password: '123456' })
-  posting = await Posting.create({ user, title: 'test', description: 'test', location: 'test', time: 'test' })
+  posting = await Posting.create({ user, title: 'test', description: 'test', location: 'test', time: 'test', category: 'test' })
 })
 
 describe('view', () => {
@@ -19,6 +19,7 @@ describe('view', () => {
     expect(view.description).toBe(posting.description)
     expect(view.location).toBe(posting.location)
     expect(view.time).toBe(posting.time)
+    expect(view.category).toBe(posting.category)
     expect(view.createdAt).toBeTruthy()
     expect(view.updatedAt).toBeTruthy()
   })
@@ -33,6 +34,7 @@ describe('view', () => {
     expect(view.description).toBe(posting.description)
     expect(view.location).toBe(posting.location)
     expect(view.time).toBe(posting.time)
+    expect(view.category).toBe(posting.category)
     expect(view.createdAt).toBeTruthy()
     expect(view.updatedAt).toBeTruthy()
   })

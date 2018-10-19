@@ -36,17 +36,9 @@ const postingSchema = new Schema({
   toJSON: {
     virtuals: true,
     transform: (obj, ret) => { delete ret._id }
-  },
-  toObject: {
-    virtuals: true
   }
 })
 
-postingSchema.virtual('rsvps', {
-  ref: 'Rsvp',
-  localField: '_id',
-  foreignField: 'posting'
-})
 
 
 postingSchema.methods = {

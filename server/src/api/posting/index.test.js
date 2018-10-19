@@ -14,19 +14,20 @@ beforeEach(async () => {
   const anotherUser = await User.create({ email: 'b@b.com', password: '123456' })
   userSession = signSync(user.id)
   anotherSession = signSync(anotherUser.id)
-  posting = await Posting.create({ user })
+  posting = await Posting.create({ user, title: 'test', description: 'test', location: 'test', time: 'test', category: 'test' })
 })
 
 test('POST /postings 201 (user)', async () => {
   const { status, body } = await request(app())
     .post(`${apiRoot}`)
-    .send({ access_token: userSession, title: 'test', description: 'test', location: 'test', time: 'test' })
+    .send({ access_token: userSession, title: 'test', description: 'test', location: 'test', time: 'test', category: 'test' })
   expect(status).toBe(201)
   expect(typeof body).toEqual('object')
   expect(body.title).toEqual('test')
   expect(body.description).toEqual('test')
   expect(body.location).toEqual('test')
   expect(body.time).toEqual('test')
+  expect(body.category).toEqual('test')
   expect(typeof body.user).toEqual('object')
 })
 
@@ -77,7 +78,7 @@ test('GET /postings/:id 404 (user)', async () => {
 test('PUT /postings/:id 200 (user)', async () => {
   const { status, body } = await request(app())
     .put(`${apiRoot}/${posting.id}`)
-    .send({ access_token: userSession, title: 'test', description: 'test', location: 'test', time: 'test' })
+    .send({ access_token: userSession, title: 'test', description: 'test', location: 'test', time: 'test', category: 'test' })
   expect(status).toBe(200)
   expect(typeof body).toEqual('object')
   expect(body.id).toEqual(posting.id)
@@ -85,13 +86,14 @@ test('PUT /postings/:id 200 (user)', async () => {
   expect(body.description).toEqual('test')
   expect(body.location).toEqual('test')
   expect(body.time).toEqual('test')
+  expect(body.category).toEqual('test')
   expect(typeof body.user).toEqual('object')
 })
 
 test('PUT /postings/:id 401 (user) - another user', async () => {
   const { status } = await request(app())
     .put(`${apiRoot}/${posting.id}`)
-    .send({ access_token: anotherSession, title: 'test', description: 'test', location: 'test', time: 'test' })
+    .send({ access_token: anotherSession, title: 'test', description: 'test', location: 'test', time: 'test', category: 'test' })
   expect(status).toBe(401)
 })
 
@@ -104,7 +106,7 @@ test('PUT /postings/:id 401', async () => {
 test('PUT /postings/:id 404 (user)', async () => {
   const { status } = await request(app())
     .put(apiRoot + '/123456789098765432123456')
-    .send({ access_token: anotherSession, title: 'test', description: 'test', location: 'test', time: 'test' })
+    .send({ access_token: anotherSession, title: 'test', description: 'test', location: 'test', time: 'test', category: 'test' })
   expect(status).toBe(404)
 })
 
