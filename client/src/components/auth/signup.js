@@ -69,7 +69,7 @@ class Signup extends PureComponent {
             <div>
               <label htmlFor="roleatsvsu">Role At SVSU:</label>
               <div>
-                <Field className="form-control" name="role" component="select">
+                <Field className="form-control" name="rolesvsu" component="select">
                   <option value="0">Select a role</option>
                   {this.studentroles.map(
                     roles => <option value={roles} key={roles}>{roles}</option>)}
@@ -132,7 +132,7 @@ class Signup extends PureComponent {
           </div>
           <div className="form-group">
             <Field
-              name="role"
+              name="rolepartner"
               label="Role"
               component={this.renderField}
               type="text"
@@ -233,8 +233,11 @@ const validate = (values) => {
   if (values.password !== values.passwordConfirmation) {
     errors.password = 'Password must match';
   }
-  if (values.role === '0') {
-    errors.role = 'Please Select one role';
+  if (values.rolesvsu === '0') {
+    errors.rolesvsu = 'Please Select one role';
+  }
+  if (!values.rolepartner) {
+    errors.rolepartner = 'Please Specify your role';
   }
   if (!values.aboutorg) {
     errors.aboutorg = 'Please provide some information about organisation';
