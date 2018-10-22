@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import * as actions from '../../actions';
 
 
-
 class Signin extends PureComponent {
   handleFormSubmit({ mail, password }) {
     this.props.signinUser({ mail, password });
@@ -15,11 +14,11 @@ class Signin extends PureComponent {
     if (this.props.errorMessage) {
       return (
         <div className="alert alert-danger">
-          <string>
+          <p className="text-justify">
             Sorry!
             {' '}
             {this.props.errorMessage}
-          </string>
+          </p>
         </div>
       );
     }
@@ -45,17 +44,16 @@ class Signin extends PureComponent {
             <button type="submit" className="btn btn-primary btn-block">Log in</button>
           </div>
           <div className="clearfix">
-            <p className="text-center"> Not Member? Join As</p> 
+            <p className="text-center"> Not Member? Join As</p>
             <hr />
-            
-            <Link to="./Signup/1" className="btn btn-primary btn-small student-link-button" role="button">
+            <Link to="./Signup/student" className="btn btn-primary btn-small student-link-button" role="button">
               Volunteer
             </Link>
-           
-            <Link to="./Signup/2" className="btn btn-primary btn-small" role="button">
+
+            <Link to="./Signup/partner" className="btn btn-primary btn-small" role="button">
               Community Partner
             </Link>
-           
+
           </div>
         </form>
 

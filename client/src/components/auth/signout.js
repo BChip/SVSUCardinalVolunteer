@@ -15,4 +15,3 @@ class Signout extends PureComponent {
 }
 
 export default connect(null, actions)(Signout);
-

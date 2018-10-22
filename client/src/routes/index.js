@@ -6,6 +6,7 @@ import Signin from '../components/auth/signin';
 import Signout from '../components/auth/signout';
 import Signup from '../components/auth/signup';
 import Postings from '../components/postings';
+import Welcome from '../components/welcome';
 
 
 const Routes = () => (
@@ -13,7 +14,8 @@ const Routes = () => (
     <Route exact path="/" component={Signin} />
     <Route exact path="/signin" component={Signin} />
     <Route exact path="/signout" component={Signout} />
-    <Route exact path="/signup/:id" component={Signup} />
+    <Route exact path="/welcome" component={Welcome} />
+    <Route exact path="/signup/:type" component={Signup} />
     <Route exact path="/postings" component={RequireAuth(Postings)} />
   </App>
 );
