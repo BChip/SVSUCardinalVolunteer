@@ -25,6 +25,20 @@ class Signup extends PureComponent {
     </div>
   );
 
+  renderSelectField = ({
+    input, label, meta: { touched, error }, children,
+  }) => (
+    <div>
+      <label>{label}</label>
+      <div>
+        <select {...input} className="form-control">
+          {children}
+        </select>
+        {touched && error && <span className="text-danger">{error}</span>}
+      </div>
+    </div>
+  )
+
   renderTextArea = ({
     input, label, meta: { touched, error },
   }) => (
@@ -32,7 +46,7 @@ class Signup extends PureComponent {
       <label>{label}</label>
       <div>
         <textarea {...input} className="form-control" placeholder={label} rows="5" cols="30" />
-        {touched && ((error && <span className="text-danger">{error}</span>))}
+        {touched && error && <span className="text-danger">{error}</span>}
       </div>
     </div>
   );
@@ -66,16 +80,17 @@ class Signup extends PureComponent {
             />
           </div>
           <div className="form-group">
-            <div>
-              <label htmlFor="roleatsvsu">Role At SVSU:</label>
-              <div>
-                <Field className="form-control" name="rolesvsu" component="select">
-                  <option value="0">Select a role</option>
-                  {this.studentroles.map(
-                    roles => <option value={roles} key={roles}>{roles}</option>)}
-                </Field>
-              </div>
-            </div>
+            <Field
+              name="rolesvsu"
+              label="Role At SVSU"
+              type="text"
+              component={this.renderSelectField}
+            >
+              <option value="">Select one</option>
+              {this.studentroles.map(
+                roles => <option value={roles} key={roles}>{roles}</option>)}
+            </Field>
+
           </div>
 
           <div className="form-group">
@@ -233,7 +248,7 @@ const validate = (values) => {
   if (values.password !== values.passwordConfirmation) {
     errors.password = 'Password must match';
   }
-  if (values.rolesvsu === '0') {
+  if (!values.rolesvsu) {
     errors.rolesvsu = 'Please Select one role';
   }
   if (!values.rolepartner) {
