@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import * as actions from '../../actions';
 
 class Signin extends PureComponent {
@@ -36,7 +37,8 @@ class Signin extends PureComponent {
           <Field className="form-control" name="password" component="input" type="password" />
         </fieldset>
         {this.renderError()}
-        <button action="submit" className="btn btn-primary">Sign in</button>
+        <button action="submit" className="btn btn-primary">Sign in</button><br/><br/>
+        <Link to="/forgot_password" className="btn btn-primary">Forgot Passsword</Link>
       </form>
     );
   }
