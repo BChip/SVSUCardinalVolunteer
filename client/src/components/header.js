@@ -24,20 +24,27 @@ class Header extends PureComponent {
 
   render() {
     return (
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">  
+      <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span className="navbar-toggler-icon"></span>
+          <span className="navbar-toggler-icon" />
         </button>
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav">
             <li className="nav-item active">
-              <Link className="nav-link" to="../Postings">Home <span className="sr-only">(current)</span></Link>
+              <Link className="nav-link" to="../Postings">
+Home
+                {' '}
+                <span className="sr-only">(current)</span>
+              </Link>
             </li>
             <li className="nav-item active">
-              <Link className="nav-link" to="../Postings">My Opportunities</Link>
+              <Link className="nav-link" to="/Postings">My Opportunities</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to=".../Postings">My Account</Link>
+              <Link className="nav-link" to="/Postings">My Account</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/Postcreate">Create Post</Link>
             </li>
           </ul>
         </div>

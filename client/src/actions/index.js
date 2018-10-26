@@ -1,9 +1,13 @@
+
 import History from '../history';
+
+
 import {
   AUTH_USER,
   UNAUTH_USER,
   AUTH_ERROR,
   FETCH_POSTINGS,
+
 } from './types';
 
 const ROOT_URL = 'http://0.0.0.0:9000';
@@ -18,6 +22,7 @@ export const signinUser = ({ mail, password }) => async (dispatch) => {
   const response = await fetch(`${ROOT_URL}/auth`, { method: 'POST', headers });
   if (response.status !== 201) {
     dispatch(authError('Bad Login Info'));
+
     return;
   }
   dispatch({ type: AUTH_USER });
@@ -46,6 +51,25 @@ export const signupUser = formvalue => async (dispatch) => {
   History.push('../welcome');
 };
 
+export const createPost = ({
+  title, description, location, time, category,
+}) => async (dispatch) => {
+  const headers = { authorization: `Bearer ${localStorage.getItem('token')}`, 'content-type': 'application/json' };
+  const body = JSON.stringify(
+    {
+      title, description, location, time, category,
+    },
+  );
+  console.log(body);
+  const response = await fetch(`${ROOT_URL}/postings`, { method: 'POST', headers, body });
+  const json = await response.json();
+  if (response.status !== 201) {
+    dispatch(authError(json.message));
+    return;
+  }
+  History.push('/postings');
+};
+
 export const signoutUser = () => {
   localStorage.removeItem('token');
   localStorage.removeItem('id');
@@ -58,6 +82,7 @@ export const signoutUser = () => {
 export const fetchPostings = () => async (dispatch) => {
   const headers = { authorization: `Bearer ${localStorage.getItem('token')}` };
   const response = await fetch(`${ROOT_URL}/postings`, { method: 'GET', headers });
+
   const json = await response.json();
   dispatch({
     type: FETCH_POSTINGS,

@@ -63,6 +63,7 @@ class Signin extends PureComponent {
   }
 }
 
+
 const mapStateToProps = state => ({ errorMessage: state.auth.error });
 
 export default reduxForm({
