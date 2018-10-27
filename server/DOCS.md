@@ -1,4 +1,4 @@
-# svsuvolunteer v0.0.0
+# SVSU Cardinal Volunteer v0.0.0
 
 
 
