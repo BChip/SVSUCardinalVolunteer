@@ -1,30 +1,33 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import * as actions from '../actions';
 import Header from './header';
 
-
 class Postings extends PureComponent {
-   postings = this.props.postings
+   postings = this.props.postings;
 
+   handleDelete(postselectedid) {
+     this.props.deletePost(postselectedid);
+   }
 
    componentWillMount() {
      this.props.fetchPostings();
    }
 
+
    renderPostings() {
      return this.props.postings.map(posting => (
        <div>
          <a href={`/postings/${posting.id}`} className="list-group-item list-group-item-action flex-column align-items-start">
-          <div className="d-flex w-100 justify-content-between">
-            <h5 className="mb-1">{posting.title}</h5>
-            <small>{`${posting.location} - ${posting.time}` }</small>
-          </div>
-          <p className="mb-1">{posting.description}</p>
-          <small>{posting.category}</small>
-        </a>
+           <div className="d-flex w-100 justify-content-between">
+             <h5 className="mb-1">{posting.title}</h5>
+             <small>{`${posting.location} - ${posting.time}` }</small>
+           </div>
+           <p className="mb-1">{posting.description}</p>
+           <small>{posting.category}</small>
+         </a>
+         <button className="btn btn-primary btn-small" onClick={() => this.handleDelete(posting.id)}>Delete</button>
        </div>));
    }
 
@@ -37,14 +40,15 @@ class Postings extends PureComponent {
          <Header />
          <h4>Postings</h4>
          <div className="list-group">
-          {this.renderPostings()}
-        </div>
+           {this.renderPostings()}
+         </div>
        </div>
      );
    }
 }
 
 Postings.propTypes = {
+
   fetchPostings: PropTypes.func.isRequired,
 };
 

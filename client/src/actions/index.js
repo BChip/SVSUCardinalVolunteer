@@ -7,6 +7,7 @@ import {
   UNAUTH_USER,
   AUTH_ERROR,
   FETCH_POSTINGS,
+  DELETE_POSTINGS,
 
 } from './types';
 
@@ -22,7 +23,6 @@ export const signinUser = ({ mail, password }) => async (dispatch) => {
   const response = await fetch(`${ROOT_URL}/auth`, { method: 'POST', headers });
   if (response.status !== 201) {
     dispatch(authError('Bad Login Info'));
-
     return;
   }
   dispatch({ type: AUTH_USER });
@@ -60,13 +60,27 @@ export const createPost = ({
       title, description, location, time, category,
     },
   );
-  console.log(body);
   const response = await fetch(`${ROOT_URL}/postings`, { method: 'POST', headers, body });
   const json = await response.json();
   if (response.status !== 201) {
     dispatch(authError(json.message));
     return;
   }
+  History.push('/postings');
+};
+
+export const deletePost = postselectedid => async (dispatch) => {
+  const headers = { authorization: `Bearer ${localStorage.getItem('token')}`, 'content-type': 'application/json' };
+  const response = await fetch(`${ROOT_URL}/postings/${postselectedid}`, { method: 'DELETE', headers });
+  if (response.status === 204) {
+    dispatch({
+      type: DELETE_POSTINGS,
+      payload: postselectedid,
+    });
+
+    return;
+  }
+  debugger;
   History.push('/postings');
 };
 
@@ -82,7 +96,6 @@ export const signoutUser = () => {
 export const fetchPostings = () => async (dispatch) => {
   const headers = { authorization: `Bearer ${localStorage.getItem('token')}` };
   const response = await fetch(`${ROOT_URL}/postings`, { method: 'GET', headers });
-
   const json = await response.json();
   dispatch({
     type: FETCH_POSTINGS,
