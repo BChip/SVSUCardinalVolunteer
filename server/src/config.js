@@ -22,8 +22,8 @@ const config = {
   all: {
     env: process.env.NODE_ENV || 'development',
     root: path.join(__dirname, '..'),
-    port: process.env.PORT || 9000,
-    ip: process.env.IP || '127.0.0.1',
+    port: process.env.PORT || 3030,
+    ip: process.env.IP || 'localhost',
     apiRoot: process.env.API_ROOT || '',
     defaultEmail: 'no-reply@svsuvolunteer.com',
     sendgridKey: requireProcessEnv('SENDGRID_KEY'),
@@ -55,7 +55,7 @@ const config = {
   },
   production: {
     ip: process.env.IP || "0.0.0.0",
-    port: process.env.PORT || 8080,
+    port: process.env.PORT || 3030,
     mongo: {
       uri: process.env.MONGODB_URI || 'mongodb://localhost/svsuvolunteer'
     }
