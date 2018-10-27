@@ -22,7 +22,7 @@ const config = {
   all: {
     env: process.env.NODE_ENV || 'development',
     root: path.join(__dirname, '..'),
-    port: process.env.PORT || 9000,
+    port: process.env.PORT || 3030,
     ip: process.env.IP || '0.0.0.0',
     apiRoot: process.env.API_ROOT || '',
     defaultEmail: 'no-reply@svsuvolunteer.com',
@@ -55,7 +55,7 @@ const config = {
   },
   production: {
     ip: process.env.IP || "0.0.0.0",
-    port: process.env.PORT || 8080,
+    port: process.env.PORT || 3030,
     mongo: {
       uri: process.env.MONGODB_URI || 'mongodb://localhost/svsuvolunteer'
     }
