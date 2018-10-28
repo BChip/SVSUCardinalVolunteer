@@ -80,7 +80,7 @@ export const deletePost = postselectedid => async (dispatch) => {
 
     return;
   }
-  debugger;
+
   History.push('/postings');
 };
 
