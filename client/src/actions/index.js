@@ -8,7 +8,6 @@ import {
   AUTH_ERROR,
   FETCH_POSTINGS,
   DELETE_POSTINGS,
-
 } from './types';
 
 const ROOT_URL = 'http://developerradio.com:3030';
