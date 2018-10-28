@@ -8,21 +8,17 @@ import {
   AUTH_ERROR,
   FETCH_POSTINGS,
   DELETE_POSTINGS,
+  LOGIN_PAGE_UNLOADED,
 
 } from './types';
 
 const ROOT_URL = 'http://localhost:3030';
 
-export const authError = error => ({
-  type: AUTH_ERROR,
-  payload: error,
-});
-
 export const signinUser = ({ mail, password }) => async (dispatch) => {
   const headers = { authorization: `Basic ${btoa(`${mail}:${password}`)}`, 'content-type': 'application/json' };
   const response = await fetch(`${ROOT_URL}/auth`, { method: 'POST', headers });
   if (response.status !== 201) {
-    dispatch(authError('Bad Login Info'));
+    dispatch({ type: AUTH_ERROR, payload: 'Invalid Email or Password. Please Try Again' });
     return;
   }
   dispatch({ type: AUTH_USER });
@@ -45,7 +41,7 @@ export const signupUser = formvalue => async (dispatch) => {
   const response = await fetch(`${ROOT_URL}/users`, { method: 'POST', headers, body });
   const json = await response.json();
   if (response.status !== 201) {
-    dispatch(authError(json.message));
+    dispatch({ type: AUTH_ERROR, payload: response.message });
     return;
   }
   History.push('../welcome');
@@ -63,7 +59,7 @@ export const createPost = ({
   const response = await fetch(`${ROOT_URL}/postings`, { method: 'POST', headers, body });
   const json = await response.json();
   if (response.status !== 201) {
-    dispatch(authError(json.message));
+    dispatch({ type: AUTH_ERROR, payload: response.message });
     return;
   }
   History.push('/postings');
@@ -102,3 +98,7 @@ export const fetchPostings = () => async (dispatch) => {
     payload: json,
   });
 };
+
+export function unload() {
+  return { type: LOGIN_PAGE_UNLOADED, payload: '' };
+}

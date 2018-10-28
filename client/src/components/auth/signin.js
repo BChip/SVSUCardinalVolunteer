@@ -10,35 +10,58 @@ class Signin extends PureComponent {
     this.props.signinUser({ mail, password });
   }
 
+  componentWillUnmount() {
+    this.props.unload();
+  }
+
+
   renderError() {
     if (this.props.errorMessage) {
       return (
         <div className="alert alert-danger">
           <p className="text-justify">
-            Sorry!
-            {' '}
-            {this.props.errorMessage}
+            { this.props.errorMessage }
           </p>
         </div>
       );
     }
   }
 
+  renderField = ({
+    input, label, type, meta: { touched, error },
+  }) => (
+    <div>
+      <label>{label}</label>
+      <div>
+        <input className="form-control" {...input} placeholder={label} type={type} />
+        {touched && error && <span className="text-danger">{error}</span>}
+      </div>
+    </div>
+  );
+
   render() {
     const { handleSubmit } = this.props;
 
     return (
       <div className="login-form">
-
-
         <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
           <h2 className="text-center">Log in</h2>
           {this.renderError()}
           <div className="form-group">
-            <Field component="input" name="mail" type="text" className="form-control" placeholder="Username" />
+            <Field
+              name="email"
+              label="Email"
+              component={this.renderField}
+              type="text"
+            />
           </div>
           <div className="form-group">
-            <Field component="input" name="password" type="password" className="form-control" placeholder="Password" />
+            <Field
+              name="password"
+              label="Password"
+              component={this.renderField}
+              type="password"
+            />
           </div>
           <div className="form-group">
             <button type="submit" className="btn btn-primary btn-block">Log in</button>
@@ -53,7 +76,6 @@ class Signin extends PureComponent {
             <Link to="./Signup/partner" className="btn btn-primary btn-small" role="button">
               Community Partner
             </Link>
-
           </div>
         </form>
 
@@ -62,10 +84,24 @@ class Signin extends PureComponent {
     );
   }
 }
+const validate = (values) => {
+  const errors = {};
 
+  if (!values.email) {
+    errors.email = 'Please enter an email';
+  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+    errors.email = 'Invalid email address format';
+  }
+
+  if (!values.password) {
+    errors.password = 'Please enter a password';
+  }
+  return errors;
+};
 
 const mapStateToProps = state => ({ errorMessage: state.auth.error });
 
 export default reduxForm({
   form: 'signin',
+  validate,
 })(connect(mapStateToProps, actions)(Signin));
