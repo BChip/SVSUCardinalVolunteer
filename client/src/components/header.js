@@ -46,6 +46,9 @@ Home
             <li className="nav-item">
               <Link className="nav-link" to="/Postcreate">Create Post</Link>
             </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/Signout">Log Out</Link>
+            </li>
           </ul>
         </div>
       </nav>

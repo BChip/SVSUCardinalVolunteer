@@ -7,14 +7,13 @@ import Header from './header';
 class Postings extends PureComponent {
    postings = this.props.postings;
 
-   handleDelete(postselectedid) {
-     this.props.deletePost(postselectedid);
-   }
-
    componentWillMount() {
      this.props.fetchPostings();
    }
 
+   handleDelete(postselectedid) {
+     this.props.deletePost(postselectedid);
+   }
 
    renderPostings() {
      return this.props.postings.map(posting => (
@@ -33,7 +32,13 @@ class Postings extends PureComponent {
 
    render() {
      if (!this.props.postings) {
-       return <div>Loading...</div>;
+       return (
+         <div>
+           <Header />
+           <p>Loading...</p>
+
+         </div>
+       );
      }
      return (
        <div>
