@@ -19,9 +19,11 @@ const Welcome = () => (
       <br />
       <br />
     </div>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 7b55966621b7d1653d42d62487184d1c7d68dc1e
   </div>
-
 );
 
 export default Welcome;

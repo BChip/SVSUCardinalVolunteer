@@ -12,7 +12,7 @@ import {
 
 } from './types';
 
-const ROOT_URL = 'http://localhost:3030';
+const ROOT_URL = 'http://developerradio.com:3030';
 
 export const signinUser = ({ mail, password }) => async (dispatch) => {
   const headers = { authorization: `Basic ${btoa(`${mail}:${password}`)}`, 'content-type': 'application/json' };
