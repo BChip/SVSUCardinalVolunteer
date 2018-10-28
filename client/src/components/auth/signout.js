@@ -12,5 +12,4 @@ class Signout extends PureComponent {
     return (<Redirect to="/" />);
   }
 }
-
 export default connect(null, actions)(Signout);
