@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router';
 import * as actions from '../../actions';
 
 class Signout extends PureComponent {
@@ -8,10 +9,7 @@ class Signout extends PureComponent {
   }
 
   render() {
-    return (
-      <div>Seeya...</div>
-    );
+    return (<Redirect to="/" />);
   }
 }
-
 export default connect(null, actions)(Signout);

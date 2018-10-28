@@ -1,7 +1,9 @@
 import React, { PureComponent } from 'react';
 import { Field, reduxForm } from 'redux-form';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
+
 
 class Signin extends PureComponent {
   handleFormSubmit({ mail, password }) {
@@ -12,11 +14,11 @@ class Signin extends PureComponent {
     if (this.props.errorMessage) {
       return (
         <div className="alert alert-danger">
-          <string>
-            Oops!
+          <p className="text-justify">
+            Sorry!
             {' '}
             {this.props.errorMessage}
-          </string>
+          </p>
         </div>
       );
     }
@@ -26,21 +28,41 @@ class Signin extends PureComponent {
     const { handleSubmit } = this.props;
 
     return (
-      <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
-        <fieldset className="form-group">
-          <label>Email:</label>
-          <Field className="form-control" name="mail" component="input" type="text" />
-        </fieldset>
-        <fieldset className="form-group">
-          <label>Password:</label>
-          <Field className="form-control" name="password" component="input" type="password" />
-        </fieldset>
-        {this.renderError()}
-        <button action="submit" className="btn btn-primary">Sign in</button>
-      </form>
+      <div className="login-form">
+
+
+        <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
+          <h2 className="text-center">Log in</h2>
+          {this.renderError()}
+          <div className="form-group">
+            <Field component="input" name="mail" type="text" className="form-control" placeholder="Username" />
+          </div>
+          <div className="form-group">
+            <Field component="input" name="password" type="password" className="form-control" placeholder="Password" />
+          </div>
+          <div className="form-group">
+            <button type="submit" className="btn btn-primary btn-block">Log in</button>
+          </div>
+          <div className="clearfix">
+            <p className="text-center"> Not Member? Join As</p>
+            <hr />
+            <Link to="./Signup/student" className="btn btn-primary btn-small student-link-button" role="button">
+              Volunteer
+            </Link>
+
+            <Link to="./Signup/partner" className="btn btn-primary btn-small" role="button">
+              Community Partner
+            </Link>
+
+          </div>
+        </form>
+
+      </div>
+
     );
   }
 }
+
 
 const mapStateToProps = state => ({ errorMessage: state.auth.error });
 
