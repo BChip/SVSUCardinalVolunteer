@@ -19,6 +19,7 @@ const Welcome = () => (
       <br />
       <br />
     </div>
+  </div>
 );
 
 export default Welcome;
