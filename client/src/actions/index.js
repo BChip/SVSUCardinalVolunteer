@@ -19,7 +19,7 @@ export const authError = error => ({
 });
 
 export const signinUser = ({ mail, password }) => async (dispatch) => {
-  const headers = { authorization: `Basic ${btoa(`${mail}:${password}`)}`, 'content-type': 'application/json' };
+  const headers = { authorization: `Basic ${btoa(`${mail.toLowerCase()}:${password}`)}`, 'content-type': 'application/json' };
   const response = await fetch(`${ROOT_URL}/auth`, { method: 'POST', headers });
   if (response.status !== 201) {
     dispatch(authError('Bad Login Info'));
