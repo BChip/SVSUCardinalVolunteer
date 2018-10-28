@@ -11,7 +11,7 @@ import {
 
 } from './types';
 
-const ROOT_URL = 'http://localhost:3030';
+const ROOT_URL = 'http://developerradio.com:3030';
 
 export const authError = error => ({
   type: AUTH_ERROR,
