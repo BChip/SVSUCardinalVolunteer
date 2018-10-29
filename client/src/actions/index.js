@@ -1,23 +1,24 @@
+
 import History from '../history';
+
+
 import {
   AUTH_USER,
   UNAUTH_USER,
   AUTH_ERROR,
   FETCH_POSTINGS,
+  DELETE_POSTINGS,
+  LOGIN_PAGE_UNLOADED,
+
 } from './types';
 
-const ROOT_URL = 'http://localhost:3030';
-
-export const authError = error => ({
-  type: AUTH_ERROR,
-  payload: error,
-});
+const ROOT_URL = 'http://developerradio.com:3030';
 
 export const signinUser = ({ mail, password }) => async (dispatch) => {
-  const headers = { authorization: `Basic ${btoa(`${mail}:${password}`)}`, 'content-type': 'application/json' };
+  const headers = { authorization: `Basic ${btoa(`${mail.toLowerCase()}:${password}`)}`, 'content-type': 'application/json' };
   const response = await fetch(`${ROOT_URL}/auth`, { method: 'POST', headers });
   if (response.status !== 201) {
-    dispatch(authError('Bad Login Info'));
+    dispatch({ type: AUTH_ERROR, payload: 'Invalid Email or Password. Please Try Again' });
     return;
   }
   dispatch({ type: AUTH_USER });
@@ -34,16 +35,48 @@ export const signinUser = ({ mail, password }) => async (dispatch) => {
   History.push('/postings');
 };
 
-export const signupUser = ({ email, password }) => async (dispatch) => {
+export const signupUser = formvalue => async (dispatch) => {
   const headers = { 'content-type': 'application/json' };
-  const body = JSON.stringify({ email, password });
+  const body = JSON.stringify(formvalue);
   const response = await fetch(`${ROOT_URL}/users`, { method: 'POST', headers, body });
-  const json = await response.json();
   if (response.status !== 201) {
-    dispatch(authError(json.message));
+    dispatch({ type: AUTH_ERROR, payload: response.message });
     return;
   }
-  History.push('/signin');
+  History.push('../welcome');
+};
+
+export const createPost = ({
+  title, description, location, time, category,
+}) => async (dispatch) => {
+  const headers = { authorization: `Bearer ${localStorage.getItem('token')}`, 'content-type': 'application/json' };
+  const body = JSON.stringify(
+    {
+      title, description, location, time, category,
+    },
+  );
+  const response = await fetch(`${ROOT_URL}/postings`, { method: 'POST', headers, body });
+ 
+  if (response.status !== 201) {
+    dispatch({ type: AUTH_ERROR, payload: response.message });
+    return;
+  }
+  History.push('/postings');
+};
+
+export const deletePost = postselectedid => async (dispatch) => {
+  const headers = { authorization: `Bearer ${localStorage.getItem('token')}`, 'content-type': 'application/json' };
+  const response = await fetch(`${ROOT_URL}/postings/${postselectedid}`, { method: 'DELETE', headers });
+  if (response.status === 204) {
+    dispatch({
+      type: DELETE_POSTINGS,
+      payload: postselectedid,
+    });
+
+    return;
+  }
+
+  History.push('/postings');
 };
 
 export const signoutUser = () => {
@@ -64,3 +97,7 @@ export const fetchPostings = () => async (dispatch) => {
     payload: json,
   });
 };
+
+export function unload() {
+  return { type: LOGIN_PAGE_UNLOADED, payload: '' };
+}

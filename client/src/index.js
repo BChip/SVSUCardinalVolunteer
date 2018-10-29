@@ -7,11 +7,8 @@ import { BrowserRouter, Router, Switch } from 'react-router-dom';
 import History from './history';
 import Routes from './routes';
 import { AUTH_USER } from './actions/types';
-
 import rootReducer from './reducers';
-
 import './style/style.css';
-
 import registerServiceWorker from './registerServiceWorker';
 
 /*
