@@ -39,7 +39,6 @@ export const signupUser = formvalue => async (dispatch) => {
   const headers = { 'content-type': 'application/json' };
   const body = JSON.stringify(formvalue);
   const response = await fetch(`${ROOT_URL}/users`, { method: 'POST', headers, body });
-  const json = await response.json();
   if (response.status !== 201) {
     dispatch({ type: AUTH_ERROR, payload: response.message });
     return;
