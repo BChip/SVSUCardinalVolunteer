@@ -31,7 +31,7 @@ class Header extends PureComponent {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav">
             <li className="nav-item active">
-              <Link className="nav-link" to="../Postings">
+              <Link className="nav-link" to="/Postings">
 Home
                 {' '}
                 <span className="sr-only">(current)</span>
