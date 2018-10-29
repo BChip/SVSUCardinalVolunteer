@@ -44,21 +44,6 @@ class Signin extends PureComponent {
     const { handleSubmit } = this.props;
 
     return (
-<<<<<<< HEAD
-      <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
-        <fieldset className="form-group">
-          <label>Email:</label>
-          <Field className="form-control" name="mail" component="input" type="text" />
-        </fieldset>
-        <fieldset className="form-group">
-          <label>Password:</label>
-          <Field className="form-control" name="password" component="input" type="password" />
-        </fieldset>
-        {this.renderError()}
-        <button action="submit" className="btn btn-primary">Sign in</button><br/><br/>
-        <Link to="/forgot_password" className="btn btn-primary">Forgot Passsword</Link>
-      </form>
-=======
       <div className="login-form">
         <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
           <h2 className="text-center">Log in</h2>
@@ -97,7 +82,6 @@ class Signin extends PureComponent {
 
       </div>
 
->>>>>>> origin/master
     );
   }
 }

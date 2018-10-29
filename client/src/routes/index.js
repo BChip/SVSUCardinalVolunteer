@@ -7,13 +7,10 @@ import Signout from '../components/auth/signout';
 import Signup from '../components/auth/signup';
 import Postings from '../components/postings';
 import Welcome from '../components/welcome';
-<<<<<<< HEAD
 import Forgot_Password from '../components/auth/forgot_password';
 import Change_Password from '../components/auth/change_password';
-=======
 import Postcreate from '../components/postcreate';
 
->>>>>>> origin/master
 
 const Routes = () => (
   <App>
@@ -23,12 +20,9 @@ const Routes = () => (
     <Route exact path="/welcome" component={RequireAuth(Welcome)} />
     <Route exact path="/signup/:type" component={Signup} />
     <Route exact path="/postings" component={RequireAuth(Postings)} />
-<<<<<<< HEAD
     <Route exact path="/forgot_password" component={Forgot_Password} />
     <Route exact path="/change_password" component={Change_Password} />
-=======
     <Route exact path="/postcreate" component={RequireAuth(Postcreate)} />
->>>>>>> origin/master
   </App>
 );
 
