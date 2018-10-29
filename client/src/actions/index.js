@@ -56,7 +56,7 @@ export const createPost = ({
     },
   );
   const response = await fetch(`${ROOT_URL}/postings`, { method: 'POST', headers, body });
-  const json = await response.json();
+ 
   if (response.status !== 201) {
     dispatch({ type: AUTH_ERROR, payload: response.message });
     return;
