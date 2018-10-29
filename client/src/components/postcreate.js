@@ -1,15 +1,16 @@
 import React, { PureComponent } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
+import Header from './header';
 import * as actions from '../actions';
 
 class Postcreate extends PureComponent {
   handleFormSubmit({
     title, description, location, time, category,
   }) {
-    this.props.createPost({ 
-title, description, location, time, category 
-});
+    this.props.createPost({
+      title, description, location, time, category,
+    });
   }
 
     renderField = ({
@@ -70,60 +71,63 @@ title, description, location, time, category
       } = this.props;
 
       return (
-        <div className="register-form">
+        <div>
+          <Header />
+          <div className="register-form">
 
-          <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
-            <h2 className="text-center">Create Event</h2>
-            <p>* All fields are required to filled up.</p>
-            {this.renderSignError()}
-            <div className="form-group">
-              <Field
-                name="title"
-                label="Title"
-                component={this.renderField}
-                type="text"
-              />
-            </div>
-            <div className="form-group">
-              <Field
-                name="description"
-                label="Description"
-                component={this.renderTextArea}
-              />
-            </div>
-            <div className="form-group">
-              <Field
-                name="location"
-                label="location"
-                component={this.renderField}
-                type="text"
-              />
-            </div>
-            <div className="form-group">
-              <Field
+            <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
+              <h2 className="text-center">Create Event</h2>
+              <p>* All fields are required to filled up.</p>
+              {this.renderSignError()}
+              <div className="form-group">
+                <Field
+                  name="title"
+                  label="Title"
+                  component={this.renderField}
+                  type="text"
+                />
+              </div>
+              <div className="form-group">
+                <Field
+                  name="description"
+                  label="Description"
+                  component={this.renderTextArea}
+                />
+              </div>
+              <div className="form-group">
+                <Field
+                  name="location"
+                  label="location"
+                  component={this.renderField}
+                  type="text"
+                />
+              </div>
+              <div className="form-group">
+                <Field
 
-                name="time"
-                label="Date"
-                component={this.renderField}
-                type="date"
-              />
-            </div>
+                  name="time"
+                  label="Date"
+                  component={this.renderField}
+                  type="date"
+                />
+              </div>
 
-            <div className="form-group">
-              <Field
-                name="category"
-                label="category"
-                component={this.renderField}
-                type="text"
-              />
-            </div>
+              <div className="form-group">
+                <Field
+                  name="category"
+                  label="category"
+                  component={this.renderField}
+                  type="text"
+                />
+              </div>
 
 
-            <div className="clearfix">
-              <button type="submit" className="btn btn-primary btn-small student-link-button" disabled={submitting}>Create</button>
-              <button type="submit" className="btn btn-primary btn-small" disabled={pristine || submitting} onClick={reset}>Clear</button>
-            </div>
-          </form>
+              <div className="clearfix">
+                <button type="submit" className="btn btn-primary btn-small student-link-button" disabled={submitting}>Create</button>
+                <button type="submit" className="btn btn-primary btn-small" disabled={pristine || submitting} onClick={reset}>Clear</button>
+              </div>
+            </form>
+          </div>
         </div>
 
       );

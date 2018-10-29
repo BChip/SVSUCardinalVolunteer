@@ -30,13 +30,13 @@ class Signin extends PureComponent {
   renderField = ({
     input, label, type, meta: { touched, error },
   }) => (
+
+
     <div>
-      <label>{label}</label>
-      <div>
-        <input className="form-control" {...input} placeholder={label} type={type} />
-        {touched && error && <span className="text-danger">{error}</span>}
-      </div>
+      <input className="form-control" {...input} placeholder={label} type={type} />
+      {touched && error && <span className="text-danger">{error}</span>}
     </div>
+
   );
 
   render() {
@@ -49,7 +49,7 @@ class Signin extends PureComponent {
           {this.renderError()}
           <div className="form-group">
             <Field
-              name="email"
+              name="mail"
               label="Email"
               component={this.renderField}
               type="text"
@@ -87,10 +87,10 @@ class Signin extends PureComponent {
 const validate = (values) => {
   const errors = {};
 
-  if (!values.email) {
-    errors.email = 'Please enter an email';
-  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-    errors.email = 'Invalid email address format';
+  if (!values.mail) {
+    errors.mail = 'Please enter an email';
+  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.mail)) {
+    errors.mail = 'Invalid email address format';
   }
 
   if (!values.password) {
