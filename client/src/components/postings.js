@@ -25,9 +25,21 @@ class Postings extends PureComponent {
            <p className="card-text">{posting.description}</p>
          </div>
          <ul className="list-group list-group-flush">
-           <li className="list-group-item">{posting.time}</li>
-           <li className="list-group-item">{posting.category.toUpperCase()}</li>
-           <li className="list-group-item">{posting.location}</li>
+           <li className="list-group-item">
+             <b>Date:</b>
+             {' '}
+             {posting.time}
+           </li>
+           <li className="list-group-item">
+             <b>Category:</b>
+             {' '}
+             {posting.category.toUpperCase()}
+           </li>
+           <li className="list-group-item">
+             <b>Location:</b>
+             {' '}
+             {posting.location}
+           </li>
          </ul>
          <div className="card-body">
            <button className="btn btn-link" onClick={() => this.handleDelete(posting.id)}>Delete</button>
