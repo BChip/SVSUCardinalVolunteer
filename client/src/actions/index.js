@@ -9,6 +9,10 @@ import {
   FETCH_POSTINGS,
   DELETE_POSTINGS,
   LOGIN_PAGE_UNLOADED,
+  FETCH_USERS,
+  FETCH_FAILURE_POSTING,
+  DELETE_USERS,
+  UPDATE_USERS,
 
 } from './types';
 
@@ -22,6 +26,7 @@ export const signinUser = ({ mail, password }) => async (dispatch) => {
     return;
   }
   dispatch({ type: AUTH_USER });
+  console.log(response);
   const json = await response.json();
   const { token, user } = json;
   const {
@@ -89,14 +94,34 @@ export const signoutUser = () => {
 
 export const fetchPostings = () => async (dispatch) => {
   const headers = { authorization: `Bearer ${localStorage.getItem('token')}` };
-  const response = await fetch(`${ROOT_URL}/postings`, { method: 'GET', headers });
-  const json = await response.json();
-  dispatch({
-    type: FETCH_POSTINGS,
-    payload: json,
-  });
+  try {
+    const response = await fetch(`${ROOT_URL}/postings`, { method: 'GET', headers });
+    const json = await response.json();
+
+    dispatch({
+      type: FETCH_POSTINGS,
+      payload: json,
+    });
+  } catch (e) {
+    dispatch({
+      type: FETCH_FAILURE_POSTING,
+      payload: e.response,
+    });
+  }
 };
 
 export function unload() {
   return { type: LOGIN_PAGE_UNLOADED, payload: '' };
 }
+
+export const fetchusers = () => async (dispatch) => {
+  const headers = { authorization: `Bearer ${localStorage.getItem('token')}` };
+
+  const response = await fetch(`${ROOT_URL}/users`, { method: 'GET', headers });
+  const json = await response.json();
+
+  dispatch({
+    type: FETCH_USERS,
+    payload: json,
+  });
+};

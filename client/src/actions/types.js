@@ -6,3 +6,7 @@ export const CREATE_POSTINGS = 'create_postings';
 export const DELETE_POSTINGS = 'delete_postings';
 export const UPDATE_POSTING = 'update_postings';
 export const LOGIN_PAGE_UNLOADED = 'login_page_unloaded';
+export const FETCH_USERS = 'fetch_users';
+export const UPDATE_USERS = 'update_users';
+export const DELETE_USERS = 'delete_users';
+export const FETCH_FAILURE_POSTING = 'fetch_failure_posting';

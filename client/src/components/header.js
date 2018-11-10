@@ -48,7 +48,6 @@ class Header extends PureComponent {
                 My Opportunities
               </Link>
               <div className="dropdown-menu" aria-labelledby="navDropDownLinkforopportunities">
-
                 <Link className="dropdown-item" to="/Postings">View Opportunities</Link>
                 <div className="dropdown-divider" />
                 <Link className="dropdown-item" to="/Postcreate">Create Post</Link>
@@ -58,7 +57,7 @@ class Header extends PureComponent {
 
           <ul className="navbar-nav">
             <li className="nav-item">
-              <Link className="nav-link" to="/Postings">
+              <Link className="nav-link" to="/Userlist">
                   Volunteer Students
               </Link>
             </li>

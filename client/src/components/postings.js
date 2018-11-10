@@ -16,7 +16,15 @@ class Postings extends PureComponent {
      this.props.deletePost(postselectedid);
    }
 
+   disable(userid) {
+     return {
+       display: ((userid === localStorage.getItem('id')) ? '' : 'none'),
+     };
+   }
+
    renderPostings() {
+     console.log(this.props.postings);
+
      return this.props.postings.map(posting => (
        <div className="card eventcard" key={posting.id}>
          <img src={`${window.location.origin}/svsu.png`} className="card-img-top" alt="eventlogo" />
@@ -42,7 +50,9 @@ class Postings extends PureComponent {
            </li>
          </ul>
          <div className="card-body">
-           <button className="btn btn-link" onClick={() => this.handleDelete(posting.id)}>Delete</button>
+
+
+           <button className="btn btn-link" style={this.disable(posting.user.id)} onClick={() => this.handleDelete(posting.id)}>Delete</button>
            <button className="btn btn-link">View</button>
            <button className="btn btn-link">Sign Up</button>
            <button className="btn btn-link">Edit</button>
@@ -56,7 +66,16 @@ class Postings extends PureComponent {
        return (
          <div>
            <Header />
-           <p>Loading...</p>
+           <div className="row">
+             <div className="col-md-10 offset-1">
+               <p className="eventlist">Events</p>
+               <div className="card eventcard">
+                 <h5 className="card-title text-center"><b>Sorry There are no more posting available</b></h5>
+                 <img src={`${window.location.origin}/nomorepost.jpg`} className="card-img-top" alt="nomorepost" />
+
+               </div>
+             </div>
+           </div>
 
          </div>
        );

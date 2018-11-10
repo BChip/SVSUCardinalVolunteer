@@ -8,6 +8,7 @@ import Signup from '../components/auth/signup';
 import Postings from '../components/postings';
 import Welcome from '../components/welcome';
 import Postcreate from '../components/postcreate';
+import Userlist from '../components/users/userlist';
 
 
 const Routes = () => (
@@ -19,6 +20,7 @@ const Routes = () => (
     <Route exact path="/signup/:type" component={Signup} />
     <Route exact path="/postings" component={RequireAuth(Postings)} />
     <Route exact path="/postcreate" component={RequireAuth(Postcreate)} />
+    { /* <Route exact path="/userlist" component={RequireAuth(Userlist)} /> */ }
 
   </App>
 );
