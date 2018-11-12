@@ -6,3 +6,4 @@ export const CREATE_POSTINGS = 'create_postings';
 export const DELETE_POSTINGS = 'delete_postings';
 export const UPDATE_POSTING = 'update_postings';
 export const LOGIN_PAGE_UNLOADED = 'login_page_unloaded';
+export const FORGOT_PASSWORD = 'forgot_password';

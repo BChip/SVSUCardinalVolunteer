@@ -9,10 +9,11 @@ import {
   FETCH_POSTINGS,
   DELETE_POSTINGS,
   LOGIN_PAGE_UNLOADED,
+  FORGOT_PASSWORD,
 
 } from './types';
 
-const ROOT_URL = 'http://developerradio.com:3030';
+const ROOT_URL = 'http://localhost:3030';
 
 export const signinUser = ({ mail, password }) => async (dispatch) => {
   const headers = { authorization: `Basic ${btoa(`${mail.toLowerCase()}:${password}`)}`, 'content-type': 'application/json' };
@@ -46,6 +47,19 @@ export const signupUser = formvalue => async (dispatch) => {
   History.push('../welcome');
 };
 
+export const forgotpassword = ( { email }) => async (dispatch) => {
+  const headers = { 'content-type': 'application/json' };
+  const body = JSON.stringify(email);
+  const response = await fetch(`${ROOT_URL}/password-resets`, { method: 'POST', headers, body });
+  if (response.status !== 202) {
+    dispatch({ type: 
+      FORGOT_PASSWORD, payload: response.message });
+    return;
+  }
+  History.push('../welcome');
+};
+
+
 export const createPost = ({
   title, description, location, time, category,
 }) => async (dispatch) => {
@@ -72,7 +86,6 @@ export const deletePost = postselectedid => async (dispatch) => {
       type: DELETE_POSTINGS,
       payload: postselectedid,
     });
-
     return;
   }
 

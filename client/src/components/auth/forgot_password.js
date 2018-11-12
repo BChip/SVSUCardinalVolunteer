@@ -4,8 +4,11 @@ import { connect } from 'react-redux';
 import * as actions from '../../actions';
 
 class Forgot_Password extends PureComponent {
-  handleFormSubmit(formProps) {
-    this.props.forgotpassword(formProps);
+  handleFormSubmit({
+    email
+  }) {
+    this.props.forgotpassword({ email
+    });
   }
 
   renderField = ({
