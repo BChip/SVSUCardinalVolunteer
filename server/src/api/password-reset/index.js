@@ -19,7 +19,6 @@ const { email, password } = schema.tree
  * @apiError {Object} 400 Some parameters may contain invalid values.
  */
 router.post('/',
-  master(),
   body({ email, link: { type: String, required: true } }),
   create)
 
