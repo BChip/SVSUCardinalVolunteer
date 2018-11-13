@@ -91,6 +91,14 @@ passport.use('google', new BearerStrategy((token, done) => {
   }).catch(done)
 }))
 
+passport.use('master', new BearerStrategy((token, done) => {
+  if (token === masterKey) {
+    done(null, {})
+  } else {
+    done(null, false)
+  }
+}))
+
 passport.use('token', new JwtStrategy({
   secretOrKey: jwtSecret,
   jwtFromRequest: ExtractJwt.fromExtractors([
