@@ -10,9 +10,12 @@ import {
   DELETE_POSTINGS,
   LOGIN_PAGE_UNLOADED,
   FETCH_USERS,
+  FETCH_SINGLE_USER,
   FETCH_FAILURE_POSTING,
   DELETE_USERS,
   UPDATE_USERS,
+  FETCH_FAILURE_USER,
+
 
 } from './types';
 
@@ -26,7 +29,7 @@ export const signinUser = ({ mail, password }) => async (dispatch) => {
     return;
   }
   dispatch({ type: AUTH_USER });
-  console.log(response);
+
   const json = await response.json();
   const { token, user } = json;
   const {
@@ -114,14 +117,40 @@ export function unload() {
   return { type: LOGIN_PAGE_UNLOADED, payload: '' };
 }
 
-export const fetchusers = () => async (dispatch) => {
+
+export const fetchusers = (userid = '') => async (dispatch) => {
   const headers = { authorization: `Bearer ${localStorage.getItem('token')}` };
+  try {
+    const response = await fetch(`${ROOT_URL}/users/${userid}`, { method: 'GET', headers });
+    const json = await response.json();
+    if (userid === '') {
+      dispatch({
+        type: FETCH_USERS,
+        payload: json,
+      });
+    } else {
+      dispatch({
+        type: FETCH_SINGLE_USER,
+        payload: json,
+      });
+    }
+  } catch (e) {
+    dispatch({
+      type: FETCH_FAILURE_USER,
+      payload: e,
+    });
+  }
+};
 
-  const response = await fetch(`${ROOT_URL}/users`, { method: 'GET', headers });
-  const json = await response.json();
+export const deleteUser = userselectedid => async (dispatch) => {
+  const headers = { authorization: `Bearer ${localStorage.getItem('token')}`, 'content-type': 'application/json' };
+  const response = await fetch(`${ROOT_URL}/users/${userselectedid}`, { method: 'DELETE', headers });
+  if (response.status === 204) {
+    dispatch({
+      type: DELETE_USERS,
+      payload: userselectedid,
+    });
+  }
 
-  dispatch({
-    type: FETCH_USERS,
-    payload: json,
-  });
+  History.push('/userlist');
 };

@@ -8,5 +8,7 @@ export const UPDATE_POSTING = 'update_postings';
 export const LOGIN_PAGE_UNLOADED = 'login_page_unloaded';
 export const FETCH_USERS = 'fetch_users';
 export const UPDATE_USERS = 'update_users';
+export const FETCH_SINGLE_USER = 'fetch_single_user';
 export const DELETE_USERS = 'delete_users';
 export const FETCH_FAILURE_POSTING = 'fetch_failure_posting';
+export const FETCH_FAILURE_USER = 'fetch_failure_user';

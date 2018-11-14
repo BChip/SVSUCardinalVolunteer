@@ -23,8 +23,6 @@ class Postings extends PureComponent {
    }
 
    renderPostings() {
-     console.log(this.props.postings);
-
      return this.props.postings.map(posting => (
        <div className="card eventcard" key={posting.id}>
          <img src={`${window.location.origin}/svsu.png`} className="card-img-top" alt="eventlogo" />

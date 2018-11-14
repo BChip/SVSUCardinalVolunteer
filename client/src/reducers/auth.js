@@ -14,6 +14,7 @@ const authReducer = (state = {}, action) => {
     case UNAUTH_USER:
       return { ...state, authenticated: false };
     case AUTH_ERROR:
+
       return { ...state, error: action.payload };
     case LOGIN_PAGE_UNLOADED:
       return { ...state, error: action.payload };
