@@ -18,10 +18,12 @@ class Signin extends PureComponent {
   renderError() {
     if (this.props.errorMessage) {
       return (
-        <div className="alert alert-danger">
-          <p className="text-justify">
-            { this.props.errorMessage }
-          </p>
+        <div className="alert alert-danger" role="alert">
+          <span className="glyphicon glyphicon-exclamation-sign" aria-hidden="true" />
+          <span className="sr-only">Error:</span>
+
+          { this.props.errorMessage }
+
         </div>
       );
     }
