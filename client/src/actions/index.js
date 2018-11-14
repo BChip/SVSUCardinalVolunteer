@@ -10,6 +10,7 @@ import {
   DELETE_POSTINGS,
   LOGIN_PAGE_UNLOADED,
   FORGOT_PASSWORD,
+  CHANGE_PASSWORD,
 
 } from './types';
 
@@ -47,10 +48,13 @@ export const signupUser = formvalue => async (dispatch) => {
   History.push('../welcome');
 };
 
-export const forgotpassword = ( { email }) => async (dispatch) => {
+export const forgotpassword = ( { email, link }) => async (dispatch) => {
+
   const headers = { 'content-type': 'application/json' };
-  const body = JSON.stringify(email);
+  const body = JSON.stringify({email, link});
+  console.log(body);
   const response = await fetch(`${ROOT_URL}/password-resets`, { method: 'POST', headers, body });
+  console.log(response.status);
   if (response.status !== 202) {
     dispatch({ type: 
       FORGOT_PASSWORD, payload: response.message });

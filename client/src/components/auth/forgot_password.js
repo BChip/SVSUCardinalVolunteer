@@ -4,10 +4,12 @@ import { connect } from 'react-redux';
 import * as actions from '../../actions';
 
 class Forgot_Password extends PureComponent {
+  
   handleFormSubmit({
     email
   }) {
-    this.props.forgotpassword({ email
+    var link = "http://localhost:3000/change_password/";
+    this.props.forgotpassword({ email, link
     });
   }
 
@@ -72,6 +74,6 @@ const validate = (values) => {
 const mapStateToProps = state => ({ errorMessage: state.auth.error });
 
 export default reduxForm({
-  form: 'signin',
+  form: 'Forgot_Password',
   validate,
 })(connect(mapStateToProps, actions)(Forgot_Password));
