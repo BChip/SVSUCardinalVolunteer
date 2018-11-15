@@ -26,10 +26,21 @@ const postingSchema = new Schema({
     type: String,
     required: true
   },
-  approved: {
+  valid: {
     type: Boolean,
     required: true,
     default: false
+  },
+  visible: {
+    type: Boolean,
+    required: true,
+    default: false
+  },
+  picture: {
+    type: String
+  },
+  rsvp: {
+    type: Array
   }
 }, {
   timestamps: true,

@@ -10,15 +10,19 @@ export const create = ({ user, bodymen: { body } }, res, next) =>
 export const index = ({ querymen: { query, select, cursor } }, res, next) =>
   Posting.find(query, select, cursor)
     .populate('user')
-    .populate('rsvps')
-    .then((postings) => postings.map((posting) => posting.view()))
+    .then((postings) => {
+      if(user.role == 'admin'){
+        return postings.map((posting) => posting.view())
+      }else{
+        return postings.map((posting) => { if(posting.visible === true) { return posting.view()} })
+      }
+    })
     .then(success(res))
     .catch(next)
 
 export const show = ({ params }, res, next) =>
   Posting.findById(params.id)
     .populate('user')
-    .populate('rsvps')
     .then(notFound(res))
     .then((posting) => posting ? posting.view() : null)
     .then(success(res))
@@ -27,9 +31,8 @@ export const show = ({ params }, res, next) =>
 export const update = ({ user, bodymen: { body }, params }, res, next) =>
   Posting.findById(params.id)
     .populate('user')
-    .populate('rsvps')
     .then(notFound(res))
-    .then(authorOrAdmin(res, user, 'user'))
+    .then(authorOrAdmin(res, user, 'community partner'))
     .then((posting) => posting ? Object.assign(posting, body).save() : null)
     .then((posting) => posting ? posting.view(true) : null)
     .then(success(res))
