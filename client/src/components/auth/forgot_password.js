@@ -4,54 +4,48 @@ import { connect } from 'react-redux';
 import * as actions from '../../actions';
 
 class Forgot_Password extends PureComponent {
-  handleFormSubmit({
-    email
-  }) {
+  handleFormSubmit({ email }) {
     var link = "http://localhost:3000/change_password/";
-    this.props.forgotpassword({ email, link
-    });
+    this.props.forgotpassword({ email, link });
   }
 
-  renderField = ({
-    input, label, type, meta: { touched, error },
-  }) => (
+  renderError() {
+    if (this.props.errorMessage) {
+      return (
+        <div className="alert alert-danger">
+          <p className="text-justify">
+            {this.props.errorMessage}
+          </p>
+        </div>
+      );
+    }
+  }
+
+  renderField = ({ input, label, type, meta: { touched, error }, }) => (
     <div>
       <input className="form-control" {...input} placeholder={label} type={type} />
       {touched && error && <span className="text-danger">{error}</span>}
     </div>
   );
 
-  renderError() {
-    if (this.props.errorMessage) {
-      return (
-        <div className="alert alert-danger">
-          <string>
-            Oops!
-            {' '}
-            {this.props.errorMessage}
-          </string>
-        </div>
-      );
-    }
-  }
-
   render() {
-    const { handleSubmit, submitting } = this.props;
-
+    const { handleSubmit } = this.props;
     return (
-      <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
-        <fieldset className="form-group">
-          <Field
-            name="email"
-            label="Email"
-            component={this.renderField}
-            type="text"
-          />
-        </fieldset>
-        {this.renderError()}
-        <button type="submit" className="btn btn-primary" disabled={submitting}>Send</button>
-
-      </form>
+      <div className="login-form">
+        <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
+          <h2 className="text-center">Password Reset</h2>
+          {this.renderError()}
+          <div className="form-group">
+            <Field
+              name="email"
+              label="Email"
+              component={this.renderField}
+              type="text"
+            />
+          </div>
+          <button type="submit" className="btn btn-primary btn-block">Submit</button>
+        </form>
+      </div>
     );
   }
 }
@@ -67,7 +61,7 @@ const validate = (values) => {
   return errors;
 };
 
-const mapStateToProps = state => ({ errorMessage: state.auth.error });
+const mapStateToProps = state => ({ errorMessage: state.auth.Forgot_Password });
 
 export default reduxForm({
   form: 'Forgot_Password',
