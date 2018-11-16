@@ -58,17 +58,7 @@ class Header extends PureComponent {
           <ul className="navbar-nav">
             <li className="nav-item">
               <Link className="nav-link" to="/Userlist">
-                  Volunteer Students
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/Postings">
-                  Volunteer Partners
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/Postings">
-                  Events
+                  Volunteers
               </Link>
             </li>
           </ul>
