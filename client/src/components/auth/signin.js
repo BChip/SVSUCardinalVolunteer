@@ -10,6 +10,12 @@ class Signin extends PureComponent {
     this.props.signinUser({ mail, password });
   }
 
+  componentWillMount() {
+    if (this.props.userauthenticated) {
+      this.props.history.push('/postings');
+    }
+  }
+
   componentWillUnmount() {
     this.props.unload();
   }
@@ -28,6 +34,7 @@ class Signin extends PureComponent {
       );
     }
   }
+
 
   renderField = ({
     input, label, type, meta: { touched, error },
@@ -103,7 +110,7 @@ const validate = (values) => {
   return errors;
 };
 
-const mapStateToProps = state => ({ errorMessage: state.auth.error });
+const mapStateToProps = state => ({ errorMessage: state.auth.error, userauthenticated: state.auth.authenticated });
 
 export default reduxForm({
   form: 'signin',
