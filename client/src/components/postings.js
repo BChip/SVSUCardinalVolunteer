@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import * as actions from '../actions';
 import Header from './header';
 
+
 class Postings extends PureComponent {
    postings = this.props.postings;
 
@@ -15,19 +16,47 @@ class Postings extends PureComponent {
      this.props.deletePost(postselectedid);
    }
 
+   disable(userid) {
+     return {
+       display: ((userid === localStorage.getItem('id')) ? '' : 'none'),
+     };
+   }
+
    renderPostings() {
      return this.props.postings.map(posting => (
-       <div>
-         <a href={`/postings/${posting.id}`} className="list-group-item list-group-item-action flex-column align-items-start">
-           <div className="d-flex w-100 justify-content-between">
-             <h5 className="mb-1">{posting.title}</h5>
-             <small>{`${posting.location} - ${posting.time}` }</small>
-           </div>
-           <p className="mb-1">{posting.description}</p>
-           <small>{posting.category}</small>
-         </a>
-         <button className="btn btn-primary btn-small" onClick={() => this.handleDelete(posting.id)}>Delete</button>
-       </div>));
+       <div className="card eventcard" key={posting.id}>
+         <img src={`${window.location.origin}/svsu.png`} className="card-img-top" alt="eventlogo" />
+         <div className="card-body">
+           <h5 className="card-title"><b>{posting.title}</b></h5>
+           <p className="card-text">{posting.description}</p>
+         </div>
+         <ul className="list-group list-group-flush">
+           <li className="list-group-item">
+             <b>Date:</b>
+             {' '}
+             {posting.time}
+           </li>
+           <li className="list-group-item">
+             <b>Category:</b>
+             {' '}
+             {posting.category.toUpperCase()}
+           </li>
+           <li className="list-group-item">
+             <b>Location:</b>
+             {' '}
+             {posting.location}
+           </li>
+         </ul>
+         <div className="card-body">
+
+
+           <button className="btn btn-link" style={this.disable(posting.user.id)} onClick={() => this.handleDelete(posting.id)}>Delete</button>
+           <button className="btn btn-link">View</button>
+           <button className="btn btn-link">Sign Up</button>
+           <button className="btn btn-link">Edit</button>
+         </div>
+       </div>
+     ));
    }
 
    render() {
@@ -35,7 +64,16 @@ class Postings extends PureComponent {
        return (
          <div>
            <Header />
-           <p>Loading...</p>
+           <div className="row">
+             <div className="col-md-10 offset-1">
+               <p className="eventlist">Events</p>
+               <div className="card eventcard">
+                 <h5 className="card-title text-center"><b>Sorry There are no more posting available</b></h5>
+                 <img src={`${window.location.origin}/nomorepost.jpg`} className="card-img-top" alt="nomorepost" />
+
+               </div>
+             </div>
+           </div>
 
          </div>
        );
@@ -43,9 +81,12 @@ class Postings extends PureComponent {
      return (
        <div>
          <Header />
-         <h4>Postings</h4>
-         <div className="list-group">
-           {this.renderPostings()}
+
+         <div className="row">
+           <div className="col-md-10 offset-1">
+             <p className="eventlist">Events</p>
+             {this.renderPostings()}
+           </div>
          </div>
        </div>
      );
