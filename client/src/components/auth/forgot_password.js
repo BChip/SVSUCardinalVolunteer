@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import * as actions from '../../actions';
 
 class Forgot_Password extends PureComponent {
-  
   handleFormSubmit({
     email
   }) {
@@ -17,11 +16,8 @@ class Forgot_Password extends PureComponent {
     input, label, type, meta: { touched, error },
   }) => (
     <div>
-      <label>{label}</label>
-      <div>
-        <input className="form-control" {...input} placeholder={label} type={type} />
-        {touched && error && <span className="text-danger">{error}</span>}
-      </div>
+      <input className="form-control" {...input} placeholder={label} type={type} />
+      {touched && error && <span className="text-danger">{error}</span>}
     </div>
   );
 
