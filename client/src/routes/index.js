@@ -21,7 +21,7 @@ const Routes = () => (
     <Route exact path="/signup/:type" component={Signup} />
     <Route exact path="/postings" component={RequireAuth(Postings)} />
     <Route exact path="/forgot_password" component={Forgot_Password} />
-    <Route exact path="/change_password" component={Change_Password} />
+    <Route exact path="/change_password/:token" component={Change_Password} />
     <Route exact path="/postcreate" component={RequireAuth(Postcreate)} />
   </App>
 );

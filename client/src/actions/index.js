@@ -14,7 +14,7 @@ import {
 
 } from './types';
 
-const ROOT_URL = 'http://localhost:3030';
+const ROOT_URL = 'http://developerradio.com:3030';
 
 export const signinUser = ({ mail, password }) => async (dispatch) => {
   const headers = { authorization: `Basic ${btoa(`${mail.toLowerCase()}:${password}`)}`, 'content-type': 'application/json' };
@@ -49,12 +49,9 @@ export const signupUser = formvalue => async (dispatch) => {
 };
 
 export const forgotpassword = ( { email, link }) => async (dispatch) => {
-
   const headers = { 'content-type': 'application/json' };
   const body = JSON.stringify({email, link});
-  console.log(body);
   const response = await fetch(`${ROOT_URL}/password-resets`, { method: 'POST', headers, body });
-  console.log(response.status);
   if (response.status !== 202) {
     dispatch({ type: 
       FORGOT_PASSWORD, payload: response.message });
@@ -63,6 +60,25 @@ export const forgotpassword = ( { email, link }) => async (dispatch) => {
   History.push('../welcome');
 };
 
+export const changepassword = ( { password, token }) => async (dispatch) => {
+  const headers = { 'content-type': 'application/json' };
+  const body = JSON.stringify({password});
+  const response = await fetch(`${ROOT_URL}/password-resets/${token}`, { method: 'GET', headers });
+  if (response.status === 200) {
+    const _response = await fetch(`${ROOT_URL}/password-resets/${token}`, { method: 'PUT', headers, body });
+    if (_response.status !== 200) {
+      dispatch({ type: 
+        CHANGE_PASSWORD, payload: _response.message });
+      return;
+    }
+    History.push('../welcome');
+  }
+  else {
+    dispatch({ type: 
+      CHANGE_PASSWORD, payload: response.message });
+    return;
+  }
+};
 
 export const createPost = ({
   title, description, location, time, category,

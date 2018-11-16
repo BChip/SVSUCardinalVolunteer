@@ -4,8 +4,11 @@ import { connect } from 'react-redux';
 import * as actions from '../../actions';
 
 class Change_Password extends PureComponent {
-  handleFormSubmit(formProps) {
-    this.props.changepassword(formProps);
+  handleFormSubmit({password}) {
+    var token = this.props.match.params.token;
+    this.props.changepassword({
+      password, token
+    });
   }
 
   renderField = ({
@@ -41,22 +44,6 @@ class Change_Password extends PureComponent {
       <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
         <fieldset className="form-group">
           <Field
-            name="email"
-            label="Email"
-            component={this.renderField}
-            type="text"
-          />
-        </fieldset>
-        <fieldset className="form-group">
-          <Field
-            name="token"
-            label="Token"
-            component={this.renderField}
-            type="text"
-          />
-        </fieldset>
-        <fieldset className="form-group">
-          <Field
             name="password"
             label="Password"
             component={this.renderField}
@@ -73,7 +60,6 @@ class Change_Password extends PureComponent {
         </fieldset>
         {this.renderError()}
         <button type="submit" className="btn btn-primary" disabled={submitting}>Submit</button>
-
       </form>
     );
   }
@@ -81,12 +67,6 @@ class Change_Password extends PureComponent {
 
 const validate = (values) => {
   const errors = {};
-
-  if (!values.email) {
-    errors.email = 'Please enter an email';
-  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-    errors.email = 'Invalid email address';
-  }
 
   if (!values.password) {
     errors.email = 'Please enter an password';
@@ -106,6 +86,6 @@ const validate = (values) => {
 const mapStateToProps = state => ({ errorMessage: state.auth.error });
 
 export default reduxForm({
-  form: 'signin',
+  form: 'Change_Password',
   validate,
 })(connect(mapStateToProps, actions)(Change_Password));
