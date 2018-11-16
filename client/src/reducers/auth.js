@@ -8,10 +8,13 @@ import {
 const authReducer = (state = {}, action) => {
   switch (action.type) {
     case AUTH_USER:
-      return { ...state, error: '', authenticated: true };
+      return {
+        ...state, error: '', authenticated: true, userinformation: action.payload,
+      };
     case UNAUTH_USER:
       return { ...state, authenticated: false };
     case AUTH_ERROR:
+
       return { ...state, error: action.payload };
     case LOGIN_PAGE_UNLOADED:
       return { ...state, error: action.payload };

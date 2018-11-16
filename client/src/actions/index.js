@@ -9,10 +9,16 @@ import {
   FETCH_POSTINGS,
   DELETE_POSTINGS,
   LOGIN_PAGE_UNLOADED,
+  FETCH_USERS,
+  FETCH_SINGLE_USER,
+  FETCH_FAILURE_POSTING,
+  DELETE_USERS,
+  FETCH_FAILURE_USER,
+
 
 } from './types';
 
-const ROOT_URL = 'http://developerradio.com:3030';
+const ROOT_URL = ' http://0.0.0.0:3030'; // 'http://developerradio.com:3030';
 
 export const signinUser = ({ mail, password }) => async (dispatch) => {
   const headers = { authorization: `Basic ${btoa(`${mail.toLowerCase()}:${password}`)}`, 'content-type': 'application/json' };
@@ -22,6 +28,7 @@ export const signinUser = ({ mail, password }) => async (dispatch) => {
     return;
   }
   dispatch({ type: AUTH_USER });
+
   const json = await response.json();
   const { token, user } = json;
   const {
@@ -56,7 +63,6 @@ export const createPost = ({
     },
   );
   const response = await fetch(`${ROOT_URL}/postings`, { method: 'POST', headers, body });
- 
   if (response.status !== 201) {
     dispatch({ type: AUTH_ERROR, payload: response.message });
     return;
@@ -90,14 +96,60 @@ export const signoutUser = () => {
 
 export const fetchPostings = () => async (dispatch) => {
   const headers = { authorization: `Bearer ${localStorage.getItem('token')}` };
-  const response = await fetch(`${ROOT_URL}/postings`, { method: 'GET', headers });
-  const json = await response.json();
-  dispatch({
-    type: FETCH_POSTINGS,
-    payload: json,
-  });
+  try {
+    const response = await fetch(`${ROOT_URL}/postings`, { method: 'GET', headers });
+    const json = await response.json();
+
+    dispatch({
+      type: FETCH_POSTINGS,
+      payload: json,
+    });
+  } catch (e) {
+    dispatch({
+      type: FETCH_FAILURE_POSTING,
+      payload: e.response,
+    });
+  }
 };
 
 export function unload() {
   return { type: LOGIN_PAGE_UNLOADED, payload: '' };
 }
+
+
+export const fetchusers = (userid = '') => async (dispatch) => {
+  const headers = { authorization: `Bearer ${localStorage.getItem('token')}` };
+  try {
+    const response = await fetch(`${ROOT_URL}/users/${userid}`, { method: 'GET', headers });
+    const json = await response.json();
+    if (userid === '') {
+      dispatch({
+        type: FETCH_USERS,
+        payload: json,
+      });
+    } else {
+      dispatch({
+        type: FETCH_SINGLE_USER,
+        payload: json,
+      });
+    }
+  } catch (e) {
+    dispatch({
+      type: FETCH_FAILURE_USER,
+      payload: e,
+    });
+  }
+};
+
+export const deleteUser = userselectedid => async (dispatch) => {
+  const headers = { authorization: `Bearer ${localStorage.getItem('token')}`, 'content-type': 'application/json' };
+  const response = await fetch(`${ROOT_URL}/users/${userselectedid}`, { method: 'DELETE', headers });
+  if (response.status === 204) {
+    dispatch({
+      type: DELETE_USERS,
+      payload: userselectedid,
+    });
+  }
+
+  History.push('/userlist');
+};
