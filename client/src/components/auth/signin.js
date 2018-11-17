@@ -20,7 +20,6 @@ class Signin extends PureComponent {
     this.props.unload();
   }
 
-
   renderError() {
     if (this.props.errorMessage) {
       return (
@@ -75,6 +74,12 @@ class Signin extends PureComponent {
           <div className="form-group">
             <button type="submit" className="btn btn-primary btn-block">Log in</button>
           </div>
+          <div className="form-group">
+          <p class="text-center">
+            <Link to="./forgot_password/"  className="btn btn-primary btn-block" >
+              Forgot Password
+            </Link></p>
+          </div>
           <div className="clearfix">
             <p className="text-center"> Not Member? Join As</p>
             <hr />
@@ -87,7 +92,6 @@ class Signin extends PureComponent {
             </Link>
           </div>
         </form>
-
       </div>
 
     );

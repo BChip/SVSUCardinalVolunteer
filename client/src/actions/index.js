@@ -9,16 +9,17 @@ import {
   FETCH_POSTINGS,
   DELETE_POSTINGS,
   LOGIN_PAGE_UNLOADED,
+  FORGOT_PASSWORD,
+  CHANGE_PASSWORD,
   FETCH_USERS,
   FETCH_SINGLE_USER,
   FETCH_FAILURE_POSTING,
   DELETE_USERS,
   FETCH_FAILURE_USER,
 
-
 } from './types';
 
-const ROOT_URL = ' http://0.0.0.0:3030'; // 'http://developerradio.com:3030';
+const ROOT_URL = ' http://developerradio:3030'; // 'http://developerradio.com:3030';
 
 export const signinUser = ({ mail, password }) => async (dispatch) => {
   const headers = { authorization: `Basic ${btoa(`${mail.toLowerCase()}:${password}`)}`, 'content-type': 'application/json' };
@@ -53,6 +54,33 @@ export const signupUser = formvalue => async (dispatch) => {
   History.push('../welcome');
 };
 
+export const forgotpassword = ({ email, link }) => async (dispatch) => {
+  const headers = { 'content-type': 'application/json' };
+  const body = JSON.stringify({ email, link });
+  const response = await fetch(`${ROOT_URL}/password-resets`, { method: 'POST', headers, body });
+  if (response.status !== 202) {
+    dispatch({ type: FORGOT_PASSWORD, payload: response.message });
+    return;
+  }
+  History.push('../welcome');
+};
+
+export const changepassword = ({ password, token }) => async (dispatch) => {
+  const headers = { 'content-type': 'application/json' };
+  const body = JSON.stringify({ password });
+  const response = await fetch(`${ROOT_URL}/password-resets/${token}`, { method: 'GET', headers });
+  if (response.status !== 200) {
+    dispatch({ type: CHANGE_PASSWORD, payload: response.message });
+    return;
+  }
+  const _response = await fetch(`${ROOT_URL}/password-resets/${token}`, { method: 'PUT', headers, body });
+  if (_response.status !== 200) {
+    dispatch({ type: CHANGE_PASSWORD, payload: _response.message });
+    return;
+  }
+  History.push('../welcome');
+};
+
 export const createPost = ({
   title, description, location, time, category,
 }) => async (dispatch) => {
@@ -78,7 +106,6 @@ export const deletePost = postselectedid => async (dispatch) => {
       type: DELETE_POSTINGS,
       payload: postselectedid,
     });
-
     return;
   }
 

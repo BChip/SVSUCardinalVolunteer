@@ -3,6 +3,8 @@ import {
   UNAUTH_USER,
   AUTH_ERROR,
   LOGIN_PAGE_UNLOADED,
+  FORGOT_PASSWORD,
+  CHANGE_PASSWORD,
 } from '../actions/types';
 
 const authReducer = (state = {}, action) => {
@@ -18,6 +20,10 @@ const authReducer = (state = {}, action) => {
       return { ...state, error: action.payload };
     case LOGIN_PAGE_UNLOADED:
       return { ...state, error: action.payload };
+    case FORGOT_PASSWORD:
+      return { ...state, error: action.payload, authenticated: false};
+    case CHANGE_PASSWORD:
+      return { ...state, error: action.payload, authenticated: false};
     default:
       return state;
   }
