@@ -10,17 +10,17 @@ const app = () => express(apiRoot, routes)
 let userSession, anotherSession, posting
 
 beforeEach(async () => {
-  const user = await User.create({ email: 'a@a.com', password: '123456' })
-  const anotherUser = await User.create({ email: 'b@b.com', password: '123456' })
+  const user = await User.create({ email: 'a@a.com', password: '123456', role: 'community partner' })
+  const anotherUser = await User.create({ email: 'b@b.com', password: '123456'})
   userSession = signSync(user.id)
   anotherSession = signSync(anotherUser.id)
-  posting = await Posting.create({ user, title: 'test', description: 'test', location: 'test', time: 'test', category: 'test' })
+  posting = await Posting.create({ user, title: 'test', description: 'test', location: 'test', time: 'test', category: 'test', visible: true })
 })
 
 test('POST /postings 201 (user)', async () => {
   const { status, body } = await request(app())
     .post(`${apiRoot}`)
-    .send({ access_token: userSession, title: 'test', description: 'test', location: 'test', time: 'test', category: 'test' })
+    .send({ access_token: userSession, title: 'test', description: 'test', location: 'test', time: 'test', category: 'test', visible: true })
   expect(status).toBe(201)
   expect(typeof body).toEqual('object')
   expect(body.title).toEqual('test')
@@ -78,7 +78,7 @@ test('GET /postings/:id 404 (user)', async () => {
 test('PUT /postings/:id 200 (user)', async () => {
   const { status, body } = await request(app())
     .put(`${apiRoot}/${posting.id}`)
-    .send({ access_token: userSession, title: 'test', description: 'test', location: 'test', time: 'test', category: 'test' })
+    .send({ access_token: userSession, title: 'test', description: 'test', location: 'test', time: 'test', category: 'test', visible: true })
   expect(status).toBe(200)
   expect(typeof body).toEqual('object')
   expect(body.id).toEqual(posting.id)

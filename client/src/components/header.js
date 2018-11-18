@@ -26,7 +26,7 @@ class Header extends PureComponent {
     return (
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <Link className="navbar-brand" to="/Postings" id="logoimage_header">
-          <img src={`${window.location.origin}/svsu.png`} width="150" height="80" alt="svsulogo" />
+          <img src={`${window.location.origin}/cardinal_volunteer.jpg`} width="150" height="80" alt="svsulogo" />
         </Link>
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon" />

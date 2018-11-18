@@ -5,7 +5,7 @@ import mongoose, { Schema } from 'mongoose'
 import mongooseKeywords from 'mongoose-keywords'
 import { env } from '../../config'
 
-const roles = ['user']
+const roles = ['user', 'community partner', 'admin']
 
 const userSchema = new Schema({
   email: {
@@ -39,7 +39,14 @@ const userSchema = new Schema({
   picture: {
     type: String,
     trim: true
+  },
+  svsuid:{
+    type: String,
+  },
+  roleatsvsu: {
+    type: String,
   }
+
 }, {
   timestamps: true
 })
