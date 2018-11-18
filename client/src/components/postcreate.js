@@ -146,7 +146,6 @@ const validate = (values) => {
   if (!values.time) {
     errors.time = 'Please enter event Date';
   } else if (values && new Date(values.time) < today) {
-    console.log(new Date(values.time));
     errors.time = 'You cannot create event in past';
   }
   if (!values.location) {
