@@ -230,7 +230,7 @@ const validate = (values) => {
 
   if (!values.password) {
     errors.password = 'Please enter a password';
-  } else if (values && values.password.length < 7) {
+  } else if (values && values.password.length <= 6) {
     errors.password = 'Password must have length greater than or equal to 6';
   }
   if (!values.fullName) {
