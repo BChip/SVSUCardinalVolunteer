@@ -4,14 +4,14 @@ import { connect } from 'react-redux';
 import * as actions from '../../actions';
 
 class Signup extends PureComponent {
-  /* Assign Role for Student */
   studentroles = ['Staff', 'Faculty', 'Student', 'Adminstrative/Professional', 'Alumini'];
+  /* Assign Role for Student */
+
 
   handleFormSubmit(formProps) {
     formProps.typedata = this.props.match.params.type;
     this.props.signupUser(formProps);
   }
-
 
   renderField = ({
     input, label, type, meta: { touched, error },
@@ -199,8 +199,8 @@ class Signup extends PureComponent {
       return (
         <div className="alert alert-danger">
           <p className="text-justify">
-            Sorry!
-            {' '}
+
+
             {this.props.errorMessage}
           </p>
         </div>
@@ -229,7 +229,7 @@ const validate = (values) => {
   }
 
   if (!values.password) {
-    errors.password = 'Please enter an password';
+    errors.password = 'Please enter a password';
   } else if (values && values.password.length < 7) {
     errors.password = 'Password must have length greater than or equal to 6';
   }
@@ -242,7 +242,7 @@ const validate = (values) => {
   }
 
   if (!values.passwordConfirmation) {
-    errors.passwordConfirmation = 'Please enter an password confirmation';
+    errors.passwordConfirmation = 'Please enter a password confirmation';
   }
 
   if (values.password !== values.passwordConfirmation) {

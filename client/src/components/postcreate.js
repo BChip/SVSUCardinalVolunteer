@@ -1,24 +1,25 @@
 import React, { PureComponent } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
+import Header from './header';
 import * as actions from '../actions';
 
 class Postcreate extends PureComponent {
   handleFormSubmit({
     title, description, location, time, category,
   }) {
-    this.props.createPost({ 
-title, description, location, time, category 
-});
+    this.props.createPost({
+      title, description, location, time, category,
+    });
   }
 
     renderField = ({
       input, label, type, meta: { touched, error },
     }) => (
       <div>
-        <label>{label}</label>
+        <label className="control-label">{label}</label>
         <div>
-          <input className="form-control" {...input} placeholder={label} type={type} />
+          <input className="form-control" {...input} type={type} />
           {touched && error && <span className="text-danger">{error}</span>}
         </div>
       </div>
@@ -28,7 +29,7 @@ title, description, location, time, category
       input, label, meta: { touched, error }, children,
     }) => (
       <div>
-        <label>{label}</label>
+        <label className="control-label">{label}</label>
         <div>
           <select {...input} className="form-control">
             {children}
@@ -42,9 +43,9 @@ title, description, location, time, category
       input, label, meta: { touched, error },
     }) => (
       <div>
-        <label>{label}</label>
+        <label className="control-label">{label}</label>
         <div>
-          <textarea {...input} className="form-control" placeholder={label} rows="5" cols="30" />
+          <textarea {...input} className="form-control" rows="5" cols="30" />
           {touched && error && <span className="text-danger">{error}</span>}
         </div>
       </div>
@@ -70,60 +71,65 @@ title, description, location, time, category
       } = this.props;
 
       return (
-        <div className="register-form">
+        <div>
+          <Header />
+          <div className="row">
+            <div className="col-md-6 offset-md-3 eventform">
 
-          <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
-            <h2 className="text-center">Create Event</h2>
-            <p>* All fields are required to filled up.</p>
-            {this.renderSignError()}
-            <div className="form-group">
-              <Field
-                name="title"
-                label="Title"
-                component={this.renderField}
-                type="text"
-              />
-            </div>
-            <div className="form-group">
-              <Field
-                name="description"
-                label="Description"
-                component={this.renderTextArea}
-              />
-            </div>
-            <div className="form-group">
-              <Field
-                name="location"
-                label="location"
-                component={this.renderField}
-                type="text"
-              />
-            </div>
-            <div className="form-group">
-              <Field
+              <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
+                <h3 className="text-center">Create Event</h3>
 
-                name="time"
-                label="Date"
-                component={this.renderField}
-                type="date"
-              />
-            </div>
+                {this.renderSignError()}
+                <div className="form-group">
+                  <Field
+                    name="title"
+                    label="Title"
+                    component={this.renderField}
+                    type="text"
+                  />
+                </div>
+                <div className="form-group">
+                  <Field
 
-            <div className="form-group">
-              <Field
-                name="category"
-                label="category"
-                component={this.renderField}
-                type="text"
-              />
-            </div>
+                    name="time"
+                    label="Date"
+                    component={this.renderField}
+                    type="date"
+                  />
+                </div>
+                <div className="form-group">
+                  <Field
+                    name="category"
+                    label="Category"
+                    component={this.renderField}
+                    type="text"
+                  />
+                </div>
+                <div className="form-group">
+                  <Field
+                    name="location"
+                    label="Location"
+                    component={this.renderField}
+                    type="text"
+                  />
+                </div>
+
+                <div className="form-group">
+                  <Field
+                    name="description"
+                    label="Description"
+                    component={this.renderTextArea}
+                  />
+                </div>
 
 
-            <div className="clearfix">
-              <button type="submit" className="btn btn-primary btn-small student-link-button" disabled={submitting}>Create</button>
-              <button type="submit" className="btn btn-primary btn-small" disabled={pristine || submitting} onClick={reset}>Clear</button>
+                <div className="clearfix">
+                  <button type="submit" className="btn btn-primary btn-small student-link-button" disabled={submitting}>Create</button>
+                  <button type="submit" className="btn btn-primary btn-small" disabled={pristine || submitting} onClick={reset}>Clear</button>
+                </div>
+              </form>
             </div>
-          </form>
+          </div>
         </div>
 
       );
