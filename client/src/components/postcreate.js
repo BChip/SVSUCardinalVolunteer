@@ -137,6 +137,7 @@ class Postcreate extends PureComponent {
 }
 const validate = (values) => {
   const errors = {};
+  const today = new Date();
 
   if (!values.title) {
     errors.title = 'Please enter title for Event';
@@ -144,6 +145,9 @@ const validate = (values) => {
 
   if (!values.time) {
     errors.time = 'Please enter event Date';
+  } else if (values && new Date(values.time) < today) {
+    console.log(new Date(values.time));
+    errors.time = 'You cannot create event in past';
   }
   if (!values.location) {
     errors.location = 'Please enter the Venue';
