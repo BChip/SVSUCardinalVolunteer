@@ -1,6 +1,5 @@
 import { Router } from 'express'
 import { middleware as body } from 'bodymen'
-import { master } from '../../services/passport'
 import { create, show, update } from './controller'
 import { schema } from '../user'
 export PasswordReset, { schema } from './model'
@@ -19,7 +18,6 @@ const { email, password } = schema.tree
  * @apiError {Object} 400 Some parameters may contain invalid values.
  */
 router.post('/',
-  master(),
   body({ email, link: { type: String, required: true } }),
   create)
 

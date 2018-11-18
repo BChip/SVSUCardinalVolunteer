@@ -10,22 +10,30 @@ class Signin extends PureComponent {
     this.props.signinUser({ mail, password });
   }
 
+  componentWillMount() {
+    if (this.props.userauthenticated) {
+      this.props.history.push('/postings');
+    }
+  }
+
   componentWillUnmount() {
     this.props.unload();
   }
 
-
   renderError() {
     if (this.props.errorMessage) {
       return (
-        <div className="alert alert-danger">
-          <p className="text-justify">
-            { this.props.errorMessage }
-          </p>
+        <div className="alert alert-danger" role="alert">
+          <span className="glyphicon glyphicon-exclamation-sign" aria-hidden="true" />
+          <span className="sr-only">Error:</span>
+
+          { this.props.errorMessage }
+
         </div>
       );
     }
   }
+
 
   renderField = ({
     input, label, type, meta: { touched, error },
@@ -66,6 +74,12 @@ class Signin extends PureComponent {
           <div className="form-group">
             <button type="submit" className="btn btn-primary btn-block">Log in</button>
           </div>
+          <div className="form-group">
+          <p class="text-center">
+            <Link to="./forgot_password/"  className="btn btn-primary btn-block" >
+              Forgot Password
+            </Link></p>
+          </div>
           <div className="clearfix">
             <p className="text-center"> Not Member? Join As</p>
             <hr />
@@ -78,7 +92,6 @@ class Signin extends PureComponent {
             </Link>
           </div>
         </form>
-
       </div>
 
     );
@@ -101,7 +114,7 @@ const validate = (values) => {
   return errors;
 };
 
-const mapStateToProps = state => ({ errorMessage: state.auth.error });
+const mapStateToProps = state => ({ errorMessage: state.auth.error, userauthenticated: state.auth.authenticated });
 
 export default reduxForm({
   form: 'signin',
