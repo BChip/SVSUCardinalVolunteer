@@ -63,7 +63,10 @@ postingSchema.methods = {
       description: this.description,
       location: this.location,
       time: this.time,
-      approved: this.approved,
+      valid: this.valid,
+      visible: this.visibile,
+      pic: this.picture,
+      rsvp: this.rsvp,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt
     }
