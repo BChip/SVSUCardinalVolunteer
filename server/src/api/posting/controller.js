@@ -16,7 +16,10 @@ export const index = ({ user, querymen: { query, select, cursor } }, res, next) 
         return postings.map((posting) => { return posting.view()})
       }else{
         const filteredPostings = postings.filter((posting) => {if(posting.visible){ return true;} return false; });
-        return filteredPostings.map((posting) => { return posting.view(); });
+        if(filteredPostings){
+          return filteredPostings.map((posting) => { return posting.view(); });
+        }
+          return []
       }
     })
     .then(success(res))
