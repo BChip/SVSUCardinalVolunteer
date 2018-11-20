@@ -64,7 +64,7 @@ class Signup extends PureComponent {
           {this.renderSignError()}
           <div className="form-group">
             <Field
-              name="fullName"
+              name="name"
               label="Full Name"
               component={this.renderField}
               type="text"
@@ -139,7 +139,7 @@ class Signup extends PureComponent {
           {this.renderSignError()}
           <div className="form-group">
             <Field
-              name="fullName"
+              name="name"
               label="Full Name"
               component={this.renderField}
               type="text"
@@ -199,8 +199,6 @@ class Signup extends PureComponent {
       return (
         <div className="alert alert-danger">
           <p className="text-justify">
-
-
             {this.props.errorMessage}
           </p>
         </div>
@@ -233,8 +231,8 @@ const validate = (values) => {
   } else if (values && values.password.length <= 6) {
     errors.password = 'Password must have length greater than or equal to 6';
   }
-  if (!values.fullName) {
-    errors.fullName = 'Please enter your full name';
+  if (!values.name) {
+    errors.name = 'Please enter your full name';
   }
 
   if (!values.svsuId) {

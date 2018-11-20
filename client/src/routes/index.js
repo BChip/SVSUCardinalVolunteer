@@ -19,7 +19,7 @@ const Routes = () => (
     <Route exact path="/" component={Signin} />
     <Route exact path="/signin" component={Signin} />
     <Route exact path="/signout" component={Signout} />
-    <Route exact path="/welcome" component={RequireAuth(Welcome)} />
+    <Route exact path="/welcome" component={Welcome} />
     <Route exact path="/signup/:type" component={Signup} />
     <Route exact path="/postings" component={RequireAuth(Postings)} />
     <Route exact path="/forgot_password" component={Forgot_Password} />
