@@ -47,7 +47,7 @@ class Userview extends PureComponent {
                       <label>Name</label>
                     </div>
                     <div className="col-md-6">
-                      <p>{ this.props.userlistpost.name.replace('.', ' ').toUpperCase() || '-' }</p>
+                      <p>{ this.props.userlistpost.name || '-' }</p>
                     </div>
                   </div>
                   <div className="row">

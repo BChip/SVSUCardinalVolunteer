@@ -19,15 +19,16 @@ import {
 
 } from './types';
 
-const ROOT_URL = ' http://developerradio.com:3030'; // 'http://developerradio.com:3030';
+const ROOT_URL = ' http://0.0.0.0:3030'; // 'http://developerradio.com:3030';
 
 export const signinUser = ({ mail, password }) => async (dispatch) => {
   const headers = { authorization: `Basic ${btoa(`${mail.toLowerCase()}:${password}`)}`, 'content-type': 'application/json' };
   const response = await fetch(`${ROOT_URL}/auth`, { method: 'POST', headers });
   if (response.status !== 201) {
-    dispatch({ type: AUTH_ERROR, payload: 'Invalid Email or Password. Please Try Again' });
+    dispatch({ type: AUTH_ERROR, payload: 'Invalid User. Please Try Again!' });
     return;
   }
+
   dispatch({ type: AUTH_USER });
 
   const json = await response.json();
@@ -47,9 +48,12 @@ export const signupUser = formvalue => async (dispatch) => {
   const headers = { 'content-type': 'application/json' };
   const body = JSON.stringify(formvalue);
   const response = await fetch(`${ROOT_URL}/users`, { method: 'POST', headers, body });
+
   if (response.status !== 201) {
-    dispatch({ type: AUTH_ERROR, payload: response.message });
-    return;
+    if (response.status === 409) {
+      dispatch({ type: AUTH_ERROR, payload: 'Email Address is Already Registered' });
+      return;
+    }
   }
   History.push('../welcome');
 };

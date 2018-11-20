@@ -64,16 +64,7 @@ class Header extends PureComponent {
           </ul>
 
           <ul className="nav navbar-nav ml-auto">
-            <li>
 
-              <Link className="nav-link" to="/Postings">
-                <p>
-                  <span className="glyphicon glyphicon-bell" />
-                  Notification
-                </p>
-
-              </Link>
-            </li>
             { /* PROFILE DROPDOWN - scrolling off the page to the right */ }
             <li className="nav-item dropdown">
               <Link to="/Postings" className="nav-link dropdown-toggle" id="navDropDownLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

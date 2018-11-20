@@ -75,10 +75,12 @@ class Signin extends PureComponent {
             <button type="submit" className="btn btn-primary btn-block">Log in</button>
           </div>
           <div className="form-group">
-          <p class="text-center">
-            <Link to="./forgot_password/"  className="btn btn-primary btn-block" >
+            <p className="text-center">
+              <Link to="./forgot_password/" className="btn btn-primary btn-block">
               Forgot Password
-            </Link></p>
+              </Link>
+
+            </p>
           </div>
           <div className="clearfix">
             <p className="text-center"> Not Member? Join As</p>
