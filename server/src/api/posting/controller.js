@@ -13,10 +13,10 @@ export const index = ({ user, querymen: { query, select, cursor } }, res, next) 
     .populate('user')
     .then((postings) => {
       if(user.role === 'admin'){
-        return postings.map((posting) => { return posting.view()})
+        return postings.map((posting) => { return posting.view() })
       }else{
-        const filteredPostings = postings.filter((posting) => {if(posting.visible){ return true;} return false; });
-        return filteredPostings.map((posting) => { return posting.view(); });
+        const filteredPostings = postings.filter((posting) => {if(posting.visible){ return true } return false });
+        return filteredPostings.map((posting) => { return posting.view() });
       }
     })
     .then(success(res))

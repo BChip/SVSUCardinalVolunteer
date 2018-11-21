@@ -69,7 +69,7 @@ class Postings extends PureComponent {
                <p className="eventlist">Events</p>
                <div className="card eventcard">
                  <h5 className="card-title text-center"><b>Sorry There are no more posting available</b></h5>
-                 <img src={`${window.location.origin}/nomorepost.jpg`} className="card-img-top" alt="nomorepost" />
+                 <img src={`${window.location.origin}/Volunteer_nopost.jpg`} className="card-img-top" alt="nomorepost" />
 
                </div>
              </div>
