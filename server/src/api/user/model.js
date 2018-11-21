@@ -43,7 +43,10 @@ const userSchema = new Schema({
   svsuid:{
     type: String,
   },
-  roleatsvsu: {
+  svsurole: {
+    type: String,
+  },
+  aboutorg: {
     type: String,
   }
 
