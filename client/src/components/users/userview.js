@@ -9,7 +9,6 @@ class Userview extends PureComponent {
     this.props.fetchusers(this.props.match.params.id);
   }
 
-
   render() {
     if (!this.props.userlistpost) {
       return (
@@ -32,35 +31,22 @@ class Userview extends PureComponent {
     return (
       <div>
         <Header />
-        <div className="row">
-          <div className="col-md-12">
-            <div className="row">
-              <div className="col-md-4">
-                <div className="profile-img">
-                  <img src={this.props.userlistpost.picture} alt={this.props.userlistpost.name} />
-                </div>
+        <div className="row profile">
+          <div className="col-md-4 offset-4">
+
+            {/* -- SIDEBAR USERPIC --> */}
+            <div className="profile-userpic">
+              <img src={this.props.userlistpost.picture} alt={this.props.userlistpost.name} className="img-responsive" />
+            </div>
+            {/* -- END SIDEBAR USERPIC --*/}
+            {/* -- SIDEBAR USER TITLE --*/}
+            <div className="profile-usertitle">
+              <div className="profile-usertitle-name">
+                { this.props.userlistpost.name || '-' }
               </div>
-              <div className="col-md-8">
-                <div className="profile-tab">
-                  <div className="row">
-                    <div className="col-md-6">
-                      <label>Name</label>
-                    </div>
-                    <div className="col-md-6">
-                      <p>{ this.props.userlistpost.name || '-' }</p>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-6">
-                      <label>Email</label>
-                    </div>
-                    <div className="col-md-6">
-                      <p>{ this.props.userlistpost.email || '-' }</p>
-                    </div>
-                  </div>
+              <div className="profile-usertitle-job">
 
-                </div>
-
+                { this.props.userlistpost.svsurole || '-' }
               </div>
             </div>
           </div>
