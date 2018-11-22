@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Header from '../header';
+import Header from '../header/header';
 import * as actions from '../../actions';
 
 class Userview extends PureComponent {

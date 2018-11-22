@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import Header from '../header';
+import Header from '../header/header';
 import * as actions from '../../actions';
 
 class Userlist extends PureComponent {

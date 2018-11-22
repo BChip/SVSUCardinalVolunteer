@@ -1,6 +1,8 @@
 import React, { PureComponent } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
+
+
 import * as actions from '../../actions';
 
 class Signup extends PureComponent {
@@ -13,6 +15,7 @@ class Signup extends PureComponent {
 
     this.props.signupUser(formProps);
   }
+
 
   renderField = ({
     input, label, type, meta: { touched, error },
@@ -63,6 +66,7 @@ class Signup extends PureComponent {
         <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
           <h2 className="text-center">Register</h2>
           {this.renderSignError()}
+
           <div className="form-group">
             <Field
               name="name"

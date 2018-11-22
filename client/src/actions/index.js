@@ -34,10 +34,11 @@ export const signinUser = ({ mail, password }) => async (dispatch) => {
   const json = await response.json();
   const { token, user } = json;
   const {
-    id, name, picture, email,
+    id, name, picture, email, role,
   } = user;
   localStorage.setItem('token', token);
   localStorage.setItem('id', id);
+  localStorage.setItem('role', role);
   localStorage.setItem('name', name);
   localStorage.setItem('picture', picture);
   localStorage.setItem('mail', email);
