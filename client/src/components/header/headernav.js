@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Userheader from './headeruser';
 
 const renderUsertype = () => (
-  <ul>
+  <React.Fragment>
     <ul className="navbar-nav">
       { /* PROFILE DROPDOWN - scrolling off the page for opportunities */ }
       <li className="nav-item dropdown">
@@ -25,7 +25,7 @@ const renderUsertype = () => (
         </Link>
       </li>
     </ul>
-  </ul>
+  </React.Fragment>
 );
 
 const rendervolunteer = () => (
@@ -43,7 +43,7 @@ const rendervolunteer = () => (
 );
 
 const renderpartner = () => (
-  <ul>
+  <React.Fragment>
     <ul className="navbar-nav">
       { /* PROFILE DROPDOWN - scrolling off the page for opportunities */ }
       <li className="nav-item dropdown">
@@ -65,12 +65,12 @@ const renderpartner = () => (
       </li>
     </ul>
 
-  </ul>
+  </React.Fragment>
 );
 
 
 const Navheader = () => (
-  <div>
+  <React.Fragment>
     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span className="navbar-toggler-icon" />
     </button>
@@ -87,11 +87,9 @@ const Navheader = () => (
       {localStorage.getItem('role') === 'admin' && renderUsertype()}
       {localStorage.getItem('role') === 'user' && rendervolunteer()}
       {localStorage.getItem('role') === 'community partner' && renderpartner()}
-
-
       <Userheader />
     </div>
-  </div>
+  </React.Fragment>
 );
 
 export default Navheader;
