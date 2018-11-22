@@ -2,29 +2,27 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
+import { filterpost } from '../../actions/helper';
 import Header from '../header/header';
 
 
-class Postings extends PureComponent {
+class PreviewEventList extends PureComponent {
    postings = this.props.postings;
 
    componentWillMount() {
-     this.props.fetchPostings(true, true);
+     this.props.fetchPostings();
    }
 
    handleDelete(postselectedid) {
      this.props.deletePost(postselectedid);
    }
 
-   handleVolunteers(postselectedid) {
-
-   }
-
 
    renderPostings() {
      const visiblefilter = this.props.postings.filter(
-       visibleposting => (visibleposting.visible === true && visibleposting.valid === true),
+       visibleposting => (visibleposting.visible === false && visibleposting.valid === false),
      );
+
      return visiblefilter.map(posting => (
        <div className="card eventcard" key={posting.id}>
          <img src={`${window.location.origin}/cardinal volunteer_long.jpg`} className="card-img-top" alt="eventlogo" />
@@ -51,11 +49,12 @@ class Postings extends PureComponent {
          </ul>
          <div className="card-body">
 
+           { localStorage.getItem('role') === 'admin' && <button className="btn btn-link" onClick={() => this.handleDelete(posting.id)}>Approve</button>}
 
-           { localStorage.getItem('role') === 'admin' && <button className="btn btn-link" onClick={() => this.handleDelete(posting.id)}>Delete</button>}
-           { (localStorage.getItem('role') === 'community partner' || localStorage.getItem('role') === 'community partner') && <button className="btn btn-link" onClick={() => this.handleVolunteers(posting.id)}>Volunteers view</button>}
-           <button className="btn btn-link">Sign Up</button>
-           {localStorage.getItem('role') === 'admin' && <button className="btn btn-link" onClick={() => this.handleDelete(posting.id)}>Edit</button>}
+           {localStorage.getItem('role') === 'admin' && <button className="btn btn-link" onClick={() => this.handleDelete(posting.id)}>Reject</button>}
+           { localStorage.getItem('role') === 'community partner' && <button className="btn btn-link" onClick={() => this.handleDelete(posting.id)}>Delete</button>}
+
+           {localStorage.getItem('role') === 'community partner' && <button className="btn btn-link" onClick={() => this.handleDelete(posting.id)}>Edit</button>}
          </div>
        </div>
      ));
@@ -95,11 +94,11 @@ class Postings extends PureComponent {
    }
 }
 
-Postings.propTypes = {
+PreviewEventList.propTypes = {
 
   fetchPostings: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({ postings: state.postings.homePagePostings });
 
-export default connect(mapStateToProps, actions)(Postings);
+export default connect(mapStateToProps, actions)(PreviewEventList);

@@ -11,7 +11,10 @@ const postingsReducer = (state = {}, action) => {
     case CREATE_POSTINGS:
       return { ...state };
     case DELETE_POSTINGS:
-      return { ...state, homePagePostings: state.homePagePostings.filter(value => value.id !== action.payload) };
+      return {
+        ...state,
+        homePagePostings: state.homePagePostings.filter(value => value.id !== action.payload),
+      };
     default:
       return state;
   }

@@ -132,6 +132,7 @@ export const signoutUser = () => {
 
 export const fetchPostings = () => async (dispatch) => {
   const headers = { authorization: `Bearer ${localStorage.getItem('token')}` };
+
   try {
     const response = await fetch(`${ROOT_URL}/postings`, { method: 'GET', headers });
     const json = await response.json();

@@ -24,6 +24,11 @@ const renderUsertype = () => (
                     Volunteers
         </Link>
       </li>
+      <li className="nav-item">
+        <Link className="nav-link" to="/previewlist">
+                    Preview Events
+        </Link>
+      </li>
     </ul>
   </React.Fragment>
 );
@@ -61,6 +66,11 @@ const renderpartner = () => (
       <li className="nav-item">
         <Link className="nav-link" to="/Userlist">
                     Volunteers
+        </Link>
+      </li>
+      <li className="nav-item">
+        <Link className="nav-link" to="/previewlist">
+                    Preview Events
         </Link>
       </li>
     </ul>
