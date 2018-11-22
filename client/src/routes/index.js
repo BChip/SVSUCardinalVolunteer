@@ -5,11 +5,11 @@ import RequireAuth from '../components/auth/require_auth';
 import Signin from '../components/auth/signin';
 import Signout from '../components/auth/signout';
 import Signup from '../components/auth/signup';
-import Postings from '../components/postings';
+import Postings from '../components/posting/postings';
 import Welcome from '../components/welcome';
 import Forgot_Password from '../components/auth/forgot_password';
 import Change_Password from '../components/auth/change_password';
-import Postcreate from '../components/postcreate';
+import Postcreate from '../components/posting/postcreate';
 import Userlist from '../components/users/userlist';
 import Userview from '../components/users/userview';
 

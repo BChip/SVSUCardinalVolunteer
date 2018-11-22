@@ -126,6 +126,7 @@ export const signoutUser = () => {
   localStorage.removeItem('name');
   localStorage.removeItem('picture');
   localStorage.removeItem('mail');
+  localStorage.removeItem('role');
   return { type: UNAUTH_USER };
 };
 
