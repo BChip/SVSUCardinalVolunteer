@@ -10,6 +10,7 @@ class Signup extends PureComponent {
 
   handleFormSubmit(formProps) {
     formProps.typedata = this.props.match.params.type;
+
     this.props.signupUser(formProps);
   }
 
@@ -73,7 +74,7 @@ class Signup extends PureComponent {
           <div className="form-group">
             <Field
 
-              name="svsuId"
+              name="svsuid"
               label="SVSU ID"
               component={this.renderField}
               type="text"
@@ -81,7 +82,7 @@ class Signup extends PureComponent {
           </div>
           <div className="form-group">
             <Field
-              name="rolesvsu"
+              name="svsurole"
               label="Role At SVSU"
               type="text"
               component={this.renderSelectField}
@@ -140,19 +141,12 @@ class Signup extends PureComponent {
           <div className="form-group">
             <Field
               name="name"
-              label="Full Name"
+              label="Organization Name"
               component={this.renderField}
               type="text"
             />
           </div>
-          <div className="form-group">
-            <Field
-              name="rolepartner"
-              label="Role"
-              component={this.renderField}
-              type="text"
-            />
-          </div>
+
           <div className="form-group">
             <Field
               name="email"
@@ -235,8 +229,8 @@ const validate = (values) => {
     errors.name = 'Please enter your full name';
   }
 
-  if (!values.svsuId) {
-    errors.svsuId = 'Please enter your SVSU ID';
+  if (!values.svsuid) {
+    errors.svsuid = 'Please enter your SVSU ID';
   }
 
   if (!values.passwordConfirmation) {
@@ -246,8 +240,8 @@ const validate = (values) => {
   if (values.password !== values.passwordConfirmation) {
     errors.password = 'Password must match';
   }
-  if (!values.rolesvsu) {
-    errors.rolesvsu = 'Please Select one role';
+  if (!values.svsurole) {
+    errors.svsurole = 'Please Select one role';
   }
   if (!values.rolepartner) {
     errors.rolepartner = 'Please Specify your role';
