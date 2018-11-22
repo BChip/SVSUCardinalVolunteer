@@ -28,5 +28,12 @@
     font-weight: 600;
     margin-bottom: 7px;
   }
+  .img-responsive {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    border-radius: 50%;
+  }
   
   
