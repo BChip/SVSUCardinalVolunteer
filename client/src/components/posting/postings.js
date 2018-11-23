@@ -25,6 +25,7 @@ class Postings extends PureComponent {
      const visiblefilter = this.props.postings.filter(
        visibleposting => (visibleposting.visible === true && visibleposting.valid === true),
      );
+
      return visiblefilter.map(posting => (
        <div className="card eventcard" key={posting.id}>
          <img src={`${window.location.origin}/cardinal volunteer_long.jpg`} className="card-img-top" alt="eventlogo" />
@@ -53,9 +54,9 @@ class Postings extends PureComponent {
 
 
            { localStorage.getItem('role') === 'admin' && <button className="btn btn-link" onClick={() => this.handleDelete(posting.id)}>Delete</button>}
-           { (localStorage.getItem('role') === 'community partner' || localStorage.getItem('role') === 'community partner') && <button className="btn btn-link" onClick={() => this.handleVolunteers(posting.id)}>Volunteers view</button>}
+           { ((localStorage.getItem('role') === 'community partner' && posting.user.id === localStorage.getItem('id')) || localStorage.getItem('role') === 'admin') && <button className="btn btn-link" onClick={() => this.handleVolunteers(posting.id)}>Volunteers view</button>}
            <button className="btn btn-link">Sign Up</button>
-           {localStorage.getItem('role') === 'admin' && <button className="btn btn-link" onClick={() => this.handleDelete(posting.id)}>Edit</button>}
+
          </div>
        </div>
      ));
