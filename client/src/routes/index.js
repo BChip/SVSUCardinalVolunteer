@@ -14,8 +14,7 @@ import Userlist from '../components/users/userlist';
 import Userview from '../components/users/userview';
 import PreviewEventList from '../components/posting/previewlist';
 import EditUser from '../components/users/edituser';
-import NotFoundPage from '../components/notfoundpage';
-
+import EditVolunteer from '../components/users/editvolunteer';
 
 const Routes = () => (
   <App>
@@ -29,7 +28,10 @@ const Routes = () => (
     <Route exact path="/change_password/:token" component={Change_Password} />
     <Route exact path="/postcreate" component={RequireAuth(Postcreate)} />
     <Route exact path="/userlist" component={RequireAuth(Userlist)} />
+
     <Route exact path="/edituser/:type/:id" component={RequireAuth(EditUser)} />
+    <Route exact path="/editvolunteer/:type/:id" component={EditVolunteer} />
+;
     <Route exact path="/previewlist" component={RequireAuth(PreviewEventList)} />
     <Route exact path="/userview/:id" component={RequireAuth(Userview)} />
 

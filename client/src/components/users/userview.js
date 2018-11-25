@@ -14,12 +14,14 @@ class Userview extends PureComponent {
   }
 
   renderPostings() {
+    const pathvalue = ((this.props.userlistpost.role === 'community partner') ? 'editvolunteer' : 'edituser');
+
     return (
       <div className="card eventcard" key={this.props.userlistpost.id}>
         <img src={this.props.userlistpost.picture} alt={this.props.userlistpost.name} className="img-responsive" />
         <div className="card-body">
           <h5 className="card-title"><b>{this.props.userlistpost.name}</b></h5>
-          <p className="card-text">{this.props.userlistpost.role}</p>
+          <p className="card-text">{this.props.userlistpost.svsurole}</p>
         </div>
         <ul className="list-group list-group-flush">
           <li className="list-group-item">
@@ -35,7 +37,9 @@ class Userview extends PureComponent {
 
         </ul>
         <div className="card-body">
-          <Link className="btn btn-link" to={`/edituser/${this.props.userlistpost.role}/${this.props.userlistpost.id}`}>Edit</Link>
+
+
+          <Link className="btn btn-link" to={`/${pathvalue}/${this.props.userlistpost.role}/${this.props.userlistpost.id}`}>Edit</Link>
         </div>
       </div>
     );

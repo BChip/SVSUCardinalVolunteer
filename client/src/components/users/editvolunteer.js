@@ -60,7 +60,7 @@ const renderSelectField = ({
 );
 
 
-class EditUser extends PureComponent {
+class EditVolunteer extends PureComponent {
   studentroles = ['Staff', 'Faculty', 'Student', 'Adminstrative/Professional', 'Alumini'];
 
 
@@ -102,14 +102,11 @@ class EditUser extends PureComponent {
       handleSubmit, submitting,
     } = this.props;
 
-    if (this.props.match.params.type === 'community partner') {
 
-    }
-    if (this.props.match.params.type === 'user' || this.props.match.params.type === 'admin') {
-      return (
-        <div>
-          <Header />
-          <div className="register-form">
+    return (
+      <div>
+        <Header />
+        <div className="register-form">
 
             <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
               <h2 className="text-center">Edit Profile</h2>
@@ -164,15 +161,14 @@ class EditUser extends PureComponent {
               </div>
             </form>
           </div>
-        </div>
+      </div>
 
-      );
-    }
+    );
   }
 }
 
 
-EditUser.propTypes = {
+EditVolunteer.propTypes = {
 
   fetchusers: PropTypes.func.isRequired,
 };
@@ -187,8 +183,8 @@ function mapStateToProps(state) {
 }
 
 export default reduxForm({
-  form: 'edituser',
+  form: 'editvolunteer',
   enableReinitialize: true,
   validate,
   keepDirtyOnReinitialize: true,
-})(connect(mapStateToProps, actions)(EditUser));
+})(connect(mapStateToProps, actions)(EditVolunteer));
