@@ -1,8 +1,10 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import Header from '../header/header';
 import * as actions from '../../actions';
+
 
 class Userview extends PureComponent {
   componentWillMount() {
@@ -33,9 +35,7 @@ class Userview extends PureComponent {
 
         </ul>
         <div className="card-body">
-
-          <button className="btn btn-link" onClick={() => this.handleEdit(this.props.userlistpost.id)}>Edit</button>
-
+          <Link className="btn btn-link" to={`/edituser/${this.props.userlistpost.role}/${this.props.userlistpost.id}`}>Edit</Link>
         </div>
       </div>
     );

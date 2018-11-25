@@ -16,6 +16,7 @@ import {
   FETCH_FAILURE_POSTING,
   DELETE_USERS,
   FETCH_FAILURE_USER,
+  UPDATE_USERS,
 
 } from './types';
 
@@ -156,6 +157,7 @@ export function unload() {
 
 export const fetchusers = (userid = '') => async (dispatch) => {
   const headers = { authorization: `Bearer ${localStorage.getItem('token')}` };
+
   try {
     const response = await fetch(`${ROOT_URL}/users/${userid}`, { method: 'GET', headers });
     const json = await response.json();
@@ -167,6 +169,7 @@ export const fetchusers = (userid = '') => async (dispatch) => {
     } else {
       dispatch({
         type: FETCH_SINGLE_USER,
+        success: '',
         payload: json,
       });
     }
@@ -189,4 +192,19 @@ export const deleteUser = userselectedid => async (dispatch) => {
   }
 
   History.push('/userlist');
+};
+
+export const updateProfile = (updateformvalue, userid) => async (dispatch) => {
+  const headers = { authorization: `Bearer ${localStorage.getItem('token')}`, 'content-type': 'application/json' };
+  const body = JSON.stringify(updateformvalue);
+
+
+  const response = await fetch(`${ROOT_URL}/users/${userid}`, { method: 'PUT', headers, body });
+
+  const json = await response.json();
+  if (response.status !== 200) {
+    dispatch({ type: AUTH_ERROR, payload: json });
+    return;
+  }
+  dispatch({ type: UPDATE_USERS, success: 'Your Profile has been updated Succesfully', payload: json });
 };

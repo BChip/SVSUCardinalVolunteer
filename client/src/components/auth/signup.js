@@ -1,8 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
-
-
 import * as actions from '../../actions';
 
 class Signup extends PureComponent {
