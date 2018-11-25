@@ -21,14 +21,19 @@ class Userview extends PureComponent {
         <img src={this.props.userlistpost.picture} alt={this.props.userlistpost.name} className="img-responsive" />
         <div className="card-body">
           <h5 className="card-title"><b>{this.props.userlistpost.name}</b></h5>
-          <p className="card-text">{this.props.userlistpost.svsurole}</p>
+          <p className="card-text">{this.props.userlistpost.svsurole || this.props.userlistpost.aboutorg}</p>
         </div>
         <ul className="list-group list-group-flush">
+          { this.props.userlistpost.svsuid && (
           <li className="list-group-item">
+
+
             <b>SVUSID:</b>
-            {' '}
-            {this.props.userlistpost.svsuid}
+              {this.props.userlistpost.svsuid}
+
           </li>
+          )
+        }
           <li className="list-group-item">
             <b>Email:</b>
             {' '}
@@ -36,11 +41,17 @@ class Userview extends PureComponent {
           </li>
 
         </ul>
+        {
+          this.props.userlistpost.id === localStorage.getItem('id')
+        && (
         <div className="card-body">
 
 
           <Link className="btn btn-link" to={`/${pathvalue}/${this.props.userlistpost.role}/${this.props.userlistpost.id}`}>Edit</Link>
+
         </div>
+        )
+          }
       </div>
     );
   }

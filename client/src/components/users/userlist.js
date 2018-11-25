@@ -15,7 +15,11 @@ class Userlist extends PureComponent {
   }
 
   renderPostings() {
-    return this.props.listinguser.map((userlist, index) => (
+    const visiblefilter = this.props.listinguser.filter(
+      visibleuser => (visibleuser.id !== localStorage.getItem('id')),
+    );
+
+    return visiblefilter.map((userlist, index) => (
       <tr key={userlist.id}>
         <th scope="row">{index + 1}</th>
         <td>{userlist.name || '-'}</td>
@@ -38,7 +42,6 @@ class Userlist extends PureComponent {
   }
 
   render() {
-    console.log(this.props.listinguser);
     if (!this.props.listinguser) {
       return (
         <div>

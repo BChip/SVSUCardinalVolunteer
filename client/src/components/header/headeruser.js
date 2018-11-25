@@ -12,8 +12,7 @@ const Userheader = () => (
       </Link>
       <div className="dropdown-menu" aria-labelledby="navDropDownLink">
         <Link className="dropdown-item" to={`/userview/${localStorage.getItem('id')}`}>{localStorage.getItem('name')}</Link>
-        <div className="dropdown-divider" />
-        <Link className="dropdown-item" to="/Signout">Edit Account</Link>
+
         <div className="dropdown-divider" />
         <Link className="dropdown-item" to="/Signout">Log Out</Link>
       </div>

@@ -15,17 +15,13 @@ const validate = (values) => {
   }
 
   if (!values.name) {
-    errors.name = 'Please enter your full name';
+    errors.name = 'Please enter name of organization';
   }
 
-  if (!values.svsuid) {
-    errors.svsuid = 'Please enter your SVSU ID';
+  if (!values.aboutorg) {
+    errors.aboutorg = 'Please enter description of organization';
   }
 
-
-  if (!values.svsurole) {
-    errors.svsurole = 'Please Select one role';
-  }
 
   return errors;
 };
@@ -45,15 +41,14 @@ const renderField = ({
   </div>
 );
 
-const renderSelectField = ({
-  input, label, meta: { touched, error }, children,
+
+const renderTextArea = ({
+  input, label, meta: { touched, error },
 }) => (
   <div>
     <label>{label}</label>
     <div>
-      <select {...input} className="form-control">
-        {children}
-      </select>
+      <textarea {...input} className="form-control" placeholder={label} rows="5" cols="30" />
       {touched && error && <span className="text-danger">{error}</span>}
     </div>
   </div>
@@ -102,65 +97,44 @@ class EditVolunteer extends PureComponent {
       handleSubmit, submitting,
     } = this.props;
 
-
     return (
       <div>
         <Header />
         <div className="register-form">
+          <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
+            <h2 className="text-center">Organization Profile</h2>
+            {this.renderSignError()}
+            <div className="form-group">
+              <Field
+              name="name"
+              label="Organization Name"
+              component={renderField}
+              type="text"
+            />
+            </div>
 
-            <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
-              <h2 className="text-center">Edit Profile</h2>
-              {this.renderSignError()}
+            <div className="form-group">
+              <Field
+              name="email"
+              label="Email"
+              component={renderField}
+              type="text"
+            />
+            </div>
 
-              <div className="form-group">
-                <Field
-                  name="name"
-                  label="Full Name"
-                  component={renderField}
-                  type="text"
-                  onChange={event => this.handleChange(event)}
-                />
-              </div>
-              <div className="form-group">
-                <Field
-                  name="svsuid"
-                  label="SVSU ID"
-                  component={renderField}
-                  type="text"
-                  onChange={event => this.handleChange(event)}
-                />
-              </div>
-              <div className="form-group">
-                <Field
-                  name="svsurole"
-                  label="Role At SVSU"
-                  type="text"
-                  component={renderSelectField}
-                  onChange={event => this.handleChange(event)}
-                >
-                  <option value="">Select one</option>
-                  {this.studentroles.map(
-                    roles => <option value={roles} key={roles}>{roles}</option>)}
-                </Field>
+            <div className="form-group">
+              <Field
+              name="aboutorg"
+              label="About Organization"
+              component={renderTextArea}
+            />
+            </div>
 
-              </div>
+            <button type="submit" className="btn btn-primary btn-small student-link-button" disabled={submitting}>Update</button>
 
-              <div className="form-group">
-                <Field
-                  name="email"
-                  label="Email"
-                  component={renderField}
-                  type="text"
-                  onChange={event => this.handleChange(event)}
-                />
-              </div>
 
-              <div className="clearfix">
-                <button type="submit" className="btn btn-primary btn-small student-link-button" disabled={submitting}>Update</button>
-
-              </div>
-            </form>
-          </div>
+          </form>
+        </div>
       </div>
 
     );

@@ -157,11 +157,13 @@ export function unload() {
 
 export const fetchusers = (userid = '') => async (dispatch) => {
   const headers = { authorization: `Bearer ${localStorage.getItem('token')}` };
+  console.log(headers);
 
   try {
     const response = await fetch(`${ROOT_URL}/users/${userid}`, { method: 'GET', headers });
     const json = await response.json();
     if (userid === '') {
+      debugger;
       dispatch({
         type: FETCH_USERS,
         payload: json,
