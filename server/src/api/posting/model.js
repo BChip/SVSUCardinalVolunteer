@@ -29,7 +29,7 @@ const postingSchema = new Schema({
   valid: {
     type: Boolean,
     required: true,
-    default: false
+    default: true
   },
   visible: {
     type: Boolean,
