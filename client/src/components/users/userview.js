@@ -27,7 +27,6 @@ class Userview extends PureComponent {
           { this.props.userlistpost.svsuid && (
           <li className="list-group-item">
 
-
             <b>SVUSID:</b>
               {this.props.userlistpost.svsuid}
 
@@ -45,8 +44,6 @@ class Userview extends PureComponent {
           this.props.userlistpost.id === localStorage.getItem('id')
         && (
         <div className="card-body">
-
-
           <Link className="btn btn-link" to={`/${pathvalue}/${this.props.userlistpost.role}/${this.props.userlistpost.id}`}>Edit</Link>
 
         </div>

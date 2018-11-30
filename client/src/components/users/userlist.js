@@ -46,7 +46,8 @@ class Userlist extends PureComponent {
       return (
         <div>
           <Header />
-          <div className="row">
+
+          <div className="row eventcreateform">
             <div className="col-md-10 offset-1">
               <p className="eventlist">User List</p>
               <div className="card eventcard">
@@ -63,7 +64,7 @@ class Userlist extends PureComponent {
     return (
       <div>
         <Header />
-        <div className="row">
+        <div className="row eventcreateform">
           <div className="col-md-10 offset-1">
             <p className="eventlist">User list</p>
             <table className="table">

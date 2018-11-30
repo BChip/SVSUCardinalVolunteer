@@ -16,7 +16,9 @@ import {
   FETCH_FAILURE_POSTING,
   DELETE_USERS,
   FETCH_FAILURE_USER,
+  FETCH_SINGLE_POSTING,
   UPDATE_USERS,
+  UPDATE_POSTING,
 
 } from './types';
 
@@ -91,14 +93,18 @@ export const changepassword = ({ password, token }) => async (dispatch) => {
 };
 
 export const createPost = ({
-  title, description, location, time, category,
+  title, description, location, time, category, valid, visible,
 }) => async (dispatch) => {
   const headers = { authorization: `Bearer ${localStorage.getItem('token')}`, 'content-type': 'application/json' };
+
+
   const body = JSON.stringify(
     {
-      title, description, location, time, category,
+      title, description, location, time, category, valid, visible,
     },
   );
+  console.log(body);
+
   const response = await fetch(`${ROOT_URL}/postings`, { method: 'POST', headers, body });
   if (response.status !== 201) {
     dispatch({ type: AUTH_ERROR, payload: response.message });
@@ -131,17 +137,24 @@ export const signoutUser = () => {
   return { type: UNAUTH_USER };
 };
 
-export const fetchPostings = () => async (dispatch) => {
+export const fetchPostings = (postingid = '') => async (dispatch) => {
   const headers = { authorization: `Bearer ${localStorage.getItem('token')}` };
 
   try {
-    const response = await fetch(`${ROOT_URL}/postings`, { method: 'GET', headers });
-    const json = await response.json();
+    const response = await fetch(`${ROOT_URL}/postings/${postingid}`, { method: 'GET', headers });
 
-    dispatch({
-      type: FETCH_POSTINGS,
-      payload: json,
-    });
+    const json = await response.json();
+    if (postingid === '') {
+      dispatch({
+        type: FETCH_POSTINGS,
+        payload: json,
+      });
+    } else {
+      dispatch({
+        type: FETCH_SINGLE_POSTING,
+        payload: json,
+      });
+    }
   } catch (e) {
     dispatch({
       type: FETCH_FAILURE_POSTING,
@@ -157,13 +170,11 @@ export function unload() {
 
 export const fetchusers = (userid = '') => async (dispatch) => {
   const headers = { authorization: `Bearer ${localStorage.getItem('token')}` };
-  console.log(headers);
 
   try {
     const response = await fetch(`${ROOT_URL}/users/${userid}`, { method: 'GET', headers });
     const json = await response.json();
     if (userid === '') {
-      debugger;
       dispatch({
         type: FETCH_USERS,
         payload: json,
@@ -183,6 +194,7 @@ export const fetchusers = (userid = '') => async (dispatch) => {
   }
 };
 
+
 export const deleteUser = userselectedid => async (dispatch) => {
   const headers = { authorization: `Bearer ${localStorage.getItem('token')}`, 'content-type': 'application/json' };
   const response = await fetch(`${ROOT_URL}/users/${userselectedid}`, { method: 'DELETE', headers });
@@ -200,7 +212,6 @@ export const updateProfile = (updateformvalue, userid) => async (dispatch) => {
   const headers = { authorization: `Bearer ${localStorage.getItem('token')}`, 'content-type': 'application/json' };
   const body = JSON.stringify(updateformvalue);
 
-
   const response = await fetch(`${ROOT_URL}/users/${userid}`, { method: 'PUT', headers, body });
 
   const json = await response.json();
@@ -209,4 +220,17 @@ export const updateProfile = (updateformvalue, userid) => async (dispatch) => {
     return;
   }
   dispatch({ type: UPDATE_USERS, success: 'Your Profile has been updated Succesfully', payload: json });
+};
+
+export const UpdatePosting = (formvalue, postingid) => async (dispatch) => {
+  const headers = { authorization: `Bearer ${localStorage.getItem('token')}`, 'content-type': 'application/json' };
+  const body = JSON.stringify(formvalue);
+  const response = await fetch(`${ROOT_URL}/postings/${postingid}`, { method: 'PUT', headers, body });
+
+  const json = await response.json();
+  if (response.status !== 200) {
+    dispatch({ type: AUTH_ERROR, payload: json });
+    return;
+  }
+  dispatch({ type: UPDATE_POSTING, success: 'Your Event has been updated Succesfully', payload: json });
 };

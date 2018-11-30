@@ -4,13 +4,19 @@ import { connect } from 'react-redux';
 import Header from '../header/header';
 import * as actions from '../../actions';
 
-class Postcreate extends PureComponent {
+class EditPost extends PureComponent {
+  componentDidMount() {
+    this.props.fetchPostings(this.props.match.params.id).then(() => {
+      this.props.initialize(this.props.edituserlist);
+    });
+  }
+
   handleFormSubmit({
     title, description, location, time, category,
   }) {
-    this.props.createPost({
-      title, description, location, time, category, valid: 'true', visible: 'false',
-    });
+    this.props.UpdatePosting({
+      title, description, location, time, category, valid: true, visible: false,
+    }, this.props.match.params.id);
   }
 
     renderField = ({
@@ -52,13 +58,12 @@ class Postcreate extends PureComponent {
     )
 
     renderSignError() {
-      if (this.props.errorMessage) {
+      if (this.props.errorMessage || this.props.successMesage) {
         return (
           <div className="alert alert-danger">
             <p className="text-justify">
-              Sorry!
-              {' '}
-              {this.props.errorMessage}
+
+              {this.props.errorMessage || this.props.successMesage}
             </p>
           </div>
         );
@@ -77,7 +82,7 @@ class Postcreate extends PureComponent {
             <div className="col-md-6 offset-md-3 eventform">
 
               <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
-                <h3 className="text-center">Event</h3>
+                <h3 className="text-center">Update Event</h3>
 
                 {this.renderSignError()}
                 <div className="form-group">
@@ -124,8 +129,8 @@ class Postcreate extends PureComponent {
 
 
                 <div className="clearfix">
-                  <button type="submit" className="btn btn-primary btn-small student-link-button" disabled={submitting}>Create</button>
-                  <button type="submit" className="btn btn-primary btn-small" disabled={pristine || submitting} onClick={reset}>Clear</button>
+                  <button type="submit" className="btn btn-primary btn-small student-link-button" disabled={submitting}>Update</button>
+
                 </div>
               </form>
             </div>
@@ -161,9 +166,16 @@ const validate = (values) => {
   return errors;
 };
 
-const mapStateToProps = state => ({ errorMessage: state.auth.error });
+const mapStateToProps = state => ({
+  edituserlist: state.postings.singlePosting,
+  initialValues: state.postings.singlePosting,
+  errorMessage: state.auth.error,
+  successMesage: state.postings.successPosting,
 
+});
 export default reduxForm({
-  form: 'PostCreate',
+  form: 'EditPost',
+  enableReinitialize: true,
   validate,
-})(connect(mapStateToProps, actions)(Postcreate));
+  keepDirtyOnReinitialize: true,
+})(connect(mapStateToProps, actions)(EditPost));

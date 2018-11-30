@@ -69,8 +69,8 @@ const renderpartner = () => (
         </Link>
       </li>
       <li className="nav-item">
-        <Link className="nav-link" to="/previewlist">
-                    Preview Events
+        <Link className="nav-link" to="/requestevent">
+                    Request
         </Link>
       </li>
     </ul>

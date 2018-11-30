@@ -5,7 +5,7 @@ import * as actions from '../../actions';
 import Header from '../header/header';
 
 
-class PreviewEventList extends PureComponent {
+class RequestEvent extends PureComponent {
    postings = this.props.postings;
 
    componentWillMount() {
@@ -72,6 +72,7 @@ class PreviewEventList extends PureComponent {
    }
 
    render() {
+     console.log(this.props);
      if (!this.props.postings || this.props.postings.length === 0) {
        return (
          <div>
@@ -80,7 +81,7 @@ class PreviewEventList extends PureComponent {
              <div className="col-md-10 offset-1">
                <p className="eventlist">Events</p>
                <div className="card eventcard">
-                 <h5 className="card-title text-center"><b>Sorry There are no more events to preview </b></h5>
+                 <h5 className="card-title text-center"><b>No Events are pending to review </b></h5>
                  <img src={`${window.location.origin}/Volunteer_nopost.jpg`} className="card-img-top" alt="nomorepost" />
 
                </div>
@@ -105,7 +106,7 @@ class PreviewEventList extends PureComponent {
    }
 }
 
-PreviewEventList.propTypes = {
+RequestEvent.propTypes = {
 
   fetchPostings: PropTypes.func.isRequired,
 };
@@ -118,11 +119,12 @@ const mapStateToProps = (state) => {
       postings: null,
     };
   }
+
   return {
     postings: posting.filter(
-      visibleposting => (visibleposting.visible === false && visibleposting.valid === true),
+      visibleposting => (visibleposting.visible === false && visibleposting.valid === false),
     ),
   };
 };
 
-export default connect(mapStateToProps, actions)(PreviewEventList);
+export default connect(mapStateToProps, actions)(RequestEvent);
