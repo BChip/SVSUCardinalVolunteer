@@ -39,16 +39,16 @@ const postingSchema = new Schema({
   picture: {
     type: String
   },
-  rsvp: {
-    type: Array
-  }
+  rsvp: [{ type: Schema.ObjectId, ref: 'User', unique: true }]
 }, {
+  usePushEach: true,
   timestamps: true,
   toJSON: {
     virtuals: true,
     transform: (obj, ret) => { delete ret._id }
   }
 })
+
 
 
 

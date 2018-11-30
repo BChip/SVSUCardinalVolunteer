@@ -2,7 +2,7 @@ import { Router } from 'express'
 import { middleware as query } from 'querymen'
 import { middleware as body } from 'bodymen'
 import { token } from '../../services/passport'
-import { create, index, show, update, destroy } from './controller'
+import { create, index, show, update, destroy, rsvp, unrsvp } from './controller'
 import { schema } from './model'
 export Posting, { schema } from './model'
 
@@ -29,6 +29,36 @@ router.post('/',
   token({ required: true }),
   body({ title, description, location, time, category, picture }),
   create)
+
+/**
+ * @api {post} /postings/:id/rsvp rsvp to a posting
+ * @apiName RSVP
+ * @apiGroup Posting
+ * @apiPermission user
+ * @apiParam {String} access_token user access token.
+ * @apiUse listParams
+ * @apiSuccess 201 postings List of postings.
+ * @apiError {Object} 400 Some parameters may contain invalid values.
+ * @apiError 401 user access only.
+ */
+router.post('/:id/rsvp',
+  token({ required: true }),
+  rsvp)
+
+/**
+ * @api {delete} /postings/:id/rsvp unrsvp to a posting
+ * @apiName RSVP
+ * @apiGroup Posting
+ * @apiPermission user
+ * @apiParam {String} access_token user access token.
+ * @apiUse listParams
+ * @apiSuccess 201 postings List of postings.
+ * @apiError {Object} 400 Some parameters may contain invalid values.
+ * @apiError 401 user access only.
+ */
+router.delete('/:id/rsvp',
+  token({ required: true }),
+  unrsvp)
 
 /**
  * @api {get} /postings Retrieve postings
