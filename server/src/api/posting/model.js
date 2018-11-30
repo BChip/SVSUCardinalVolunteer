@@ -39,7 +39,7 @@ const postingSchema = new Schema({
   picture: {
     type: String
   },
-  rsvp: [{ type: Schema.ObjectId, ref: 'User', unique: true }]
+  rsvp: [{ type: Schema.ObjectId, ref: 'User' }]
 }, {
   usePushEach: true,
   timestamps: true,
