@@ -102,9 +102,7 @@ class EditUser extends PureComponent {
       handleSubmit, submitting,
     } = this.props;
 
-    if (this.props.match.params.type === 'community partner') {
 
-    }
     if (this.props.match.params.type === 'user' || this.props.match.params.type === 'admin') {
       return (
         <div>
