@@ -3,7 +3,7 @@ import { Posting } from '.'
 
 export const create = ({ user, bodymen: { body } }, res, next) =>
   Posting.create({ ...body, user })
-    .then(user.role === 'community partner')
+    .then(user.role !== 'user')
     .then((posting) => posting.view(true))
     .then(success(res, 201))
     .catch(next)
@@ -11,6 +11,7 @@ export const create = ({ user, bodymen: { body } }, res, next) =>
 export const index = ({ user, querymen: { query, select, cursor } }, res, next) =>
   Posting.find(query, select, cursor)
     .populate('user')
+    .populate('rsvp')
     .then((postings) => {
       if(user.role === 'admin'){
         return postings.map((posting) => { return posting.view() })
@@ -25,6 +26,7 @@ export const index = ({ user, querymen: { query, select, cursor } }, res, next) 
 export const show = ({ params }, res, next) =>
   Posting.findById(params.id)
     .populate('user')
+    .populate('rsvp')
     .then(notFound(res))
     .then((posting) => posting ? posting.view() : null)
     .then(success(res))
@@ -46,4 +48,42 @@ export const destroy = ({ user, params }, res, next) =>
     .then(authorOrAdmin(res, user, 'user'))
     .then((posting) => posting ? posting.remove() : null)
     .then(success(res, 204))
+    .catch(next)
+
+export const rsvp = ({ user, params }, res, next) =>
+  Posting.findById(params.id)
+    .then(notFound(res))
+    .then((posting) => {
+      let modified = 0;
+      if(posting && posting.rsvp.indexOf(user.id) === -1){
+        posting.rsvp.push(user.id);
+        modified = posting.save();
+      }else{
+        next(res.status(409).json({
+          valid: false,
+          message: 'user already rsvpd'
+        }))
+      }
+      return modified;
+    })
+    .then(success(res))
+    .catch(next)
+
+export const unrsvp = ({ user, params }, res, next) =>
+  Posting.findById(params.id)
+    .then(notFound(res))
+    .then((posting) => {
+      let modified = 0;
+      if(posting && posting.rsvp.indexOf(user.id) === 0){
+        posting.rsvp.pull(user.id);
+        modified = posting.save();
+      }else{
+        next(res.status(409).json({
+          valid: false,
+          message: 'user not rsvpd'
+        }))
+      }
+      return modified;
+    })
+    .then(success(res))
     .catch(next)
