@@ -31,30 +31,26 @@ router.post('/',
   create)
 
 /**
- * @api {post} /postings/:id/rsvp rsvp to a posting
+ * @api {post} /postings/:id/rsvp RSVP to a posting
  * @apiName RSVP
  * @apiGroup Posting
  * @apiPermission user
  * @apiParam {String} access_token user access token.
- * @apiUse listParams
  * @apiSuccess 201 postings List of postings.
- * @apiError {Object} 400 Some parameters may contain invalid values.
- * @apiError 401 user access only.
+ * @apiError {Object} 409 Some parameters may contain invalid values.
  */
 router.post('/:id/rsvp',
   token({ required: true }),
   rsvp)
 
 /**
- * @api {delete} /postings/:id/rsvp unrsvp to a posting
- * @apiName RSVP
+ * @api {delete} /postings/:id/rsvp UnRSVP to a posting
+ * @apiName UNRSVP
  * @apiGroup Posting
  * @apiPermission user
  * @apiParam {String} access_token user access token.
- * @apiUse listParams
- * @apiSuccess 201 postings List of postings.
- * @apiError {Object} 400 Some parameters may contain invalid values.
- * @apiError 401 user access only.
+ * @apiSuccess 200 postings List of postings.
+ * @apiError {Object} 409 Some parameters may contain invalid values.
  */
 router.delete('/:id/rsvp',
   token({ required: true }),
