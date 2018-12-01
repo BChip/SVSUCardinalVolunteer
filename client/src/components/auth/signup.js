@@ -84,7 +84,7 @@ class Signup extends PureComponent {
           </div>
           <div className="form-group">
             <Field
-              name="roleatsvsu"
+              name="svsurole"
               label="Role At SVSU"
               type="text"
               component={this.renderSelectField}
@@ -242,8 +242,8 @@ const validate = (values) => {
   if (values.password !== values.passwordConfirmation) {
     errors.password = 'Password must match';
   }
-  if (!values.roleatsvsu) {
-    errors.roleatsvsu = 'Please Select one role';
+  if (!values.svsurole) {
+    errors.svsurole = 'Please Select one role';
   }
   if (!values.rolepartner) {
     errors.rolepartner = 'Please Specify your role';
