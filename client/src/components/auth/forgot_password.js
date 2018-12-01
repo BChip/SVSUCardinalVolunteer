@@ -5,7 +5,7 @@ import * as actions from '../../actions';
 
 class Forgot_Password extends PureComponent {
   handleFormSubmit({ email }) {
-    var link = "http://localhost:3000/change_password/";
+    var link = "http://developerradio.com:3000/change_password/";
     this.props.forgotpassword({ email, link });
   }
 
