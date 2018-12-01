@@ -1,5 +1,5 @@
 import {
-  FETCH_POSTINGS, DELETE_POSTINGS, CREATE_POSTINGS, FETCH_FAILURE_POSTING,
+  FETCH_POSTINGS, DELETE_POSTINGS, CREATE_POSTINGS, FETCH_FAILURE_POSTING, FETCH_SINGLE_POSTING, UPDATE_POSTING,
 } from '../actions/types';
 
 const postingsReducer = (state = {}, action) => {
@@ -11,7 +11,15 @@ const postingsReducer = (state = {}, action) => {
     case CREATE_POSTINGS:
       return { ...state };
     case DELETE_POSTINGS:
-      return { ...state, homePagePostings: state.homePagePostings.filter(value => value.id !== action.payload) };
+      return {
+        ...state,
+        homePagePostings: state.homePagePostings.filter(value => value.id !== action.payload),
+      };
+    case FETCH_SINGLE_POSTING:
+      return { ...state, singlePosting: action.payload };
+
+    case UPDATE_POSTING:
+      return { ...state, singlePosting: action.payload, successPosting: action.success };
     default:
       return state;
   }

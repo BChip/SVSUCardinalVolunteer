@@ -9,7 +9,7 @@ const userReducer = (state = initialstate, action) => {
     case FETCH_USERS:
       return { ...state, userlist: action.payload };
     case UPDATE_USERS:
-      return { ...state };
+      return { ...state, singleuser: action.payload, success: action.success };
     case DELETE_USERS:
       return {
         ...state,

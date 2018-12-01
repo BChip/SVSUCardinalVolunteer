@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import Header from '../header';
+import Header from '../header/header';
 import * as actions from '../../actions';
 
 class Userlist extends PureComponent {
@@ -15,7 +15,11 @@ class Userlist extends PureComponent {
   }
 
   renderPostings() {
-    return this.props.listinguser.map((userlist, index) => (
+    const visiblefilter = this.props.listinguser.filter(
+      visibleuser => (visibleuser.id !== localStorage.getItem('id')),
+    );
+
+    return visiblefilter.map((userlist, index) => (
       <tr key={userlist.id}>
         <th scope="row">{index + 1}</th>
         <td>{userlist.name || '-'}</td>
@@ -38,12 +42,12 @@ class Userlist extends PureComponent {
   }
 
   render() {
-    console.log(this.props.listinguser);
     if (!this.props.listinguser) {
       return (
         <div>
           <Header />
-          <div className="row">
+
+          <div className="row eventcreateform">
             <div className="col-md-10 offset-1">
               <p className="eventlist">User List</p>
               <div className="card eventcard">
@@ -60,7 +64,7 @@ class Userlist extends PureComponent {
     return (
       <div>
         <Header />
-        <div className="row">
+        <div className="row eventcreateform">
           <div className="col-md-10 offset-1">
             <p className="eventlist">User list</p>
             <table className="table">

@@ -1,15 +1,15 @@
 import React, { PureComponent } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
-import Header from './header';
-import * as actions from '../actions';
+import Header from '../header/header';
+import * as actions from '../../actions';
 
 class Postcreate extends PureComponent {
   handleFormSubmit({
     title, description, location, time, category,
   }) {
     this.props.createPost({
-      title, description, location, time, category,
+      title, description, location, time, category, valid: 'true', visible: 'false',
     });
   }
 
@@ -73,11 +73,11 @@ class Postcreate extends PureComponent {
       return (
         <div>
           <Header />
-          <div className="row">
+          <div className="row eventcreateform">
             <div className="col-md-6 offset-md-3 eventform">
 
               <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
-                <h3 className="text-center">Create Event</h3>
+                <h3 className="text-center">Event</h3>
 
                 {this.renderSignError()}
                 <div className="form-group">

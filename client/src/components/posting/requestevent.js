@@ -1,11 +1,11 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import * as actions from '../actions';
-import Header from './header';
+import * as actions from '../../actions';
+import Header from '../header/header';
 
 
-class Postings extends PureComponent {
+class RequestEvent extends PureComponent {
    postings = this.props.postings;
 
    componentWillMount() {
@@ -16,11 +16,20 @@ class Postings extends PureComponent {
      this.props.deletePost(postselectedid);
    }
 
-   disable(userid) {
-     return {
-       display: ((userid === localStorage.getItem('id')) ? '' : 'none'),
-     };
+   handleUpdate(isapprove, postid) {
+     const objectuserinfo = this.props.postings.filter(
+       thisposting => (thisposting.id === postid),
+     );
+     if (isapprove) {
+       objectuserinfo[0].valid = true;
+       objectuserinfo[0].visible = true;
+     } else if (!isapprove) {
+       objectuserinfo[0].valid = false;
+       objectuserinfo[0].visible = false;
+     }
+     this.props.UpdatePosting(objectuserinfo[0], postid);
    }
+
 
    renderPostings() {
      return this.props.postings.map(posting => (
@@ -47,20 +56,24 @@ class Postings extends PureComponent {
              {posting.location}
            </li>
          </ul>
+
+
          <div className="card-body">
 
 
-           <button className="btn btn-link" style={this.disable(posting.user.id)} onClick={() => this.handleDelete(posting.id)}>Delete</button>
-           <button className="btn btn-link">View</button>
-           <button className="btn btn-link">Sign Up</button>
-           <button className="btn btn-link">Edit</button>
+           { localStorage.getItem('role') === 'admin' && <button className="btn btn-link" onClick={() => this.handleUpdate(true, posting.id)}>Approve</button>}
+
+           {localStorage.getItem('role') === 'admin' && <button className="btn btn-link" onClick={() => this.handleUpdate(false, posting.id)}>Reject</button>}
+           { localStorage.getItem('role') === 'community partner' && <button className="btn btn-link" onClick={() => this.handleDelete(posting.id)}>Delete</button>}
+           {localStorage.getItem('role') === 'community partner' && <button className="btn btn-link" onClick={() => this.handleDelete(posting.id)}>Edit</button>}
          </div>
        </div>
      ));
    }
 
    render() {
-     if (!this.props.postings) {
+     console.log(this.props);
+     if (!this.props.postings || this.props.postings.length === 0) {
        return (
          <div>
            <Header />
@@ -68,7 +81,7 @@ class Postings extends PureComponent {
              <div className="col-md-10 offset-1">
                <p className="eventlist">Events</p>
                <div className="card eventcard">
-                 <h5 className="card-title text-center"><b>Sorry There are no more posting available</b></h5>
+                 <h5 className="card-title text-center"><b>No Events are pending to review </b></h5>
                  <img src={`${window.location.origin}/Volunteer_nopost.jpg`} className="card-img-top" alt="nomorepost" />
 
                </div>
@@ -93,11 +106,25 @@ class Postings extends PureComponent {
    }
 }
 
-Postings.propTypes = {
+RequestEvent.propTypes = {
 
   fetchPostings: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => ({ postings: state.postings.homePagePostings });
+const mapStateToProps = (state) => {
+  const posting = state.postings.homePagePostings;
 
-export default connect(mapStateToProps, actions)(Postings);
+  if (!posting || posting.length === 0) {
+    return {
+      postings: null,
+    };
+  }
+
+  return {
+    postings: posting.filter(
+      visibleposting => (visibleposting.visible === false && visibleposting.valid === false),
+    ),
+  };
+};
+
+export default connect(mapStateToProps, actions)(RequestEvent);

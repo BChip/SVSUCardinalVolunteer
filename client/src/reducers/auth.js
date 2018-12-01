@@ -21,9 +21,9 @@ const authReducer = (state = {}, action) => {
     case LOGIN_PAGE_UNLOADED:
       return { ...state, error: action.payload };
     case FORGOT_PASSWORD:
-      return { ...state, error: action.payload, authenticated: false};
+      return { ...state, error: action.payload, authenticated: false };
     case CHANGE_PASSWORD:
-      return { ...state, error: action.payload, authenticated: false};
+      return { ...state, error: action.payload, authenticated: false };
     default:
       return state;
   }

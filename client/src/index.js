@@ -9,6 +9,8 @@ import Routes from './routes';
 import { AUTH_USER } from './actions/types';
 import rootReducer from './reducers';
 import './style/style.css';
+import './style/userprofile.css';
+
 import registerServiceWorker from './registerServiceWorker';
 
 /*

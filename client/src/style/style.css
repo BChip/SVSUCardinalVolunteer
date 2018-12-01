@@ -1,6 +1,6 @@
 
 body{
-    background-color: #a9a9a9
+    background-color: #853737;
 }
 .login-form,.register-form {
     width: 360px;
@@ -86,5 +86,15 @@ body{
 }
 .profile-tab label{
     font-weight:800;
+    
+}
+.imgresponsive {
+    border-radius: 50%;
+}
+.eventcreateform{
+    background-color: #ebdede;
+    margin-top: 15px;
+    margin-left: 0px;
+    margin-right: 0px;
     
 }

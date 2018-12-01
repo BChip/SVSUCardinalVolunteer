@@ -10,8 +10,10 @@ class Signup extends PureComponent {
 
   handleFormSubmit(formProps) {
     formProps.typedata = this.props.match.params.type;
+
     this.props.signupUser(formProps);
   }
+
 
   renderField = ({
     input, label, type, meta: { touched, error },
@@ -62,9 +64,10 @@ class Signup extends PureComponent {
         <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
           <h2 className="text-center">Register</h2>
           {this.renderSignError()}
+
           <div className="form-group">
             <Field
-              name="fullName"
+              name="name"
               label="Full Name"
               component={this.renderField}
               type="text"
@@ -73,7 +76,7 @@ class Signup extends PureComponent {
           <div className="form-group">
             <Field
 
-              name="svsuId"
+              name="svsuid"
               label="SVSU ID"
               component={this.renderField}
               type="text"
@@ -81,7 +84,7 @@ class Signup extends PureComponent {
           </div>
           <div className="form-group">
             <Field
-              name="rolesvsu"
+              name="svsurole"
               label="Role At SVSU"
               type="text"
               component={this.renderSelectField}
@@ -139,20 +142,13 @@ class Signup extends PureComponent {
           {this.renderSignError()}
           <div className="form-group">
             <Field
-              name="fullName"
-              label="Full Name"
+              name="name"
+              label="Organization Name"
               component={this.renderField}
               type="text"
             />
           </div>
-          <div className="form-group">
-            <Field
-              name="rolepartner"
-              label="Role"
-              component={this.renderField}
-              type="text"
-            />
-          </div>
+
           <div className="form-group">
             <Field
               name="email"
@@ -199,8 +195,6 @@ class Signup extends PureComponent {
       return (
         <div className="alert alert-danger">
           <p className="text-justify">
-
-
             {this.props.errorMessage}
           </p>
         </div>
@@ -233,12 +227,12 @@ const validate = (values) => {
   } else if (values && values.password.length <= 6) {
     errors.password = 'Password must have length greater than or equal to 6';
   }
-  if (!values.fullName) {
-    errors.fullName = 'Please enter your full name';
+  if (!values.name) {
+    errors.name = 'Please enter your full name';
   }
 
-  if (!values.svsuId) {
-    errors.svsuId = 'Please enter your SVSU ID';
+  if (!values.svsuid) {
+    errors.svsuid = 'Please enter your SVSU ID';
   }
 
   if (!values.passwordConfirmation) {
@@ -248,8 +242,8 @@ const validate = (values) => {
   if (values.password !== values.passwordConfirmation) {
     errors.password = 'Password must match';
   }
-  if (!values.rolesvsu) {
-    errors.rolesvsu = 'Please Select one role';
+  if (!values.svsurole) {
+    errors.svsurole = 'Please Select one role';
   }
   if (!values.rolepartner) {
     errors.rolepartner = 'Please Specify your role';
