@@ -15,9 +15,23 @@ class Postings extends PureComponent {
     this.props.deletePost(postselectedid);
   }
 
+  handlersvp(postselectedid) {
+    this.props.UpdateRsvp(postselectedid);
+  }
+
+  handleVolunteers(status) {
+    if (status) { document.getElementById('div2').style.visibility = 'visible'; } else { document.getElementById('div2').style.visibility = 'hidden'; }
+  }
+
+  deletersvp(postselectedid) {
+    debugger;
+    this.props.deleteRsvp(postselectedid);
+  }
+
 
   renderPostings() {
     return this.props.postings.map(posting => (
+
       <div className="card eventcard" key={posting.id}>
         <img src={`${window.location.origin}/cardinal volunteer_long.jpg`} className="card-img-top" alt="eventlogo" />
         <div className="card-body">
@@ -45,12 +59,36 @@ class Postings extends PureComponent {
 
           { localStorage.getItem('id') === posting.user.id && <Link className="btn btn-link" to={`/editpost/${posting.id}`}>Edit</Link>}
           { localStorage.getItem('role') === 'admin' && <button className="btn btn-link" onClick={() => this.handleDelete(posting.id)}>Delete</button>}
-          { ((localStorage.getItem('role') === 'community partner' && posting.user.id === localStorage.getItem('id')) || localStorage.getItem('role') === 'admin') && <button className="btn btn-link" onClick={() => this.handleVolunteers(posting.id)}>Volunteers view</button>}
-          <button className="btn btn-link">Sign Up</button>
+
+
+          {posting.rsvp.length <= 0 && <button className="btn btn-link mmm" onClick={() => this.handlersvp(posting.id)}>Sign In</button> }
+          {posting.rsvp.length > 0 && posting.rsvp.filter(subscribedusers => subscribedusers._id === localStorage.getItem('id')).length === 0
+          && <button className="btn btn-link" onClick={() => this.handlersvp(posting.id)}>Sign In</button> }
+          {posting.rsvp.length > 0 && posting.rsvp.filter(subscribedusers => subscribedusers._id === localStorage.getItem('id')).length > 0
+          && <button className="btn btn-link" onClick={() => this.deletersvp(posting.id)}>Sign Out</button> }
+
+          {((localStorage.getItem('role') === 'community partner' && posting.user.id === localStorage.getItem('id')) || localStorage.getItem('role') === 'admin')
+           && <button className="btn btn-link" onMouseOver={() => this.handleVolunteers(true)} onMouseOut={() => this.handleVolunteers(false)}>Volunteers view</button>}
+          <div id="div2" className="div2">
+            {posting.rsvp.map(list => <li key={list._id}>{list.name}</li>)}
+          </div>
 
         </div>
       </div>
     ));
+  }
+
+  renderRsvpSuccess() {
+    if (this.props.rsvpcondition) {
+      return (
+        <div className="alert alert-danger">
+          <p className="text-justify">
+
+            {this.props.rsvpcondition }
+          </p>
+        </div>
+      );
+    }
   }
 
   render() {
@@ -79,6 +117,7 @@ class Postings extends PureComponent {
         <div className="row">
           <div className="col-md-10 offset-1">
             <p className="eventlist">Events</p>
+            {this.renderRsvpSuccess()}
             {this.renderPostings()}
           </div>
         </div>
@@ -95,6 +134,7 @@ Postings.propTypes = {
 const mapStateToProps = (state) => {
   const posting = state.postings.homePagePostings;
 
+
   if (!posting || posting.length === 0) {
     return {
       postings: null,
@@ -103,8 +143,10 @@ const mapStateToProps = (state) => {
   return {
     postings: posting.filter(
       visibleposting => (visibleposting.visible === true && visibleposting.valid === true
-                                       && new Date(visibleposting.time) >= new Date()),
+          && new Date(visibleposting.time) >= new Date()),
     ),
+
+    rsvpcondition: state.postings.rsvpcondition,
   };
 };
 
