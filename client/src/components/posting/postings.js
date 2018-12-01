@@ -24,7 +24,6 @@ class Postings extends PureComponent {
   }
 
   deletersvp(postselectedid) {
-    debugger;
     this.props.deleteRsvp(postselectedid);
   }
 
