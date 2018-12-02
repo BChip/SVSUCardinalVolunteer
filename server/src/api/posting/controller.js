@@ -74,7 +74,7 @@ export const unrsvp = ({ user, params }, res, next) =>
     .then(notFound(res))
     .then((posting) => {
       let modified = 0;
-      if(posting && posting.rsvp.indexOf(user.id) !== 0){
+      if(posting && posting.rsvp.indexOf(user.id) !== -1){
         posting.rsvp.pull(user.id);
         modified = posting.save();
       }else{
