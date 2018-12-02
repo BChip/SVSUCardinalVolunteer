@@ -7,11 +7,11 @@ const renderUsertype = () => (
     <ul className="navbar-nav">
       { /* PROFILE DROPDOWN - scrolling off the page for opportunities */ }
       <li className="nav-item dropdown">
-        <Link to="/Postings" className="nav-link dropdown-toggle" id="navDropDownLinkforopportunities" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <Link to="/myposting" className="nav-link dropdown-toggle" id="navDropDownLinkforopportunities" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   My Opportunities
         </Link>
         <div className="dropdown-menu" aria-labelledby="navDropDownLinkforopportunities">
-          <Link className="dropdown-item" to="/Postings">View Opportunities</Link>
+          <Link className="dropdown-item" to="/myposting">View Opportunities</Link>
           <div className="dropdown-divider" />
           <Link className="dropdown-item" to="/Postcreate">Create Post</Link>
         </div>
@@ -52,22 +52,18 @@ const renderpartner = () => (
     <ul className="navbar-nav">
       { /* PROFILE DROPDOWN - scrolling off the page for opportunities */ }
       <li className="nav-item dropdown">
-        <Link to="/Postings" className="nav-link dropdown-toggle" id="navDropDownLinkforopportunities" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <Link to="/myposting" className="nav-link dropdown-toggle" id="navDropDownLinkforopportunities" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   My Opportunities
         </Link>
         <div className="dropdown-menu" aria-labelledby="navDropDownLinkforopportunities">
-          <Link className="dropdown-item" to="/Postings">View Opportunities</Link>
+          <Link className="dropdown-item" to="/myposting">View Opportunities</Link>
           <div className="dropdown-divider" />
           <Link className="dropdown-item" to="/Postcreate">Create Post</Link>
         </div>
       </li>
     </ul>
     <ul className="navbar-nav">
-      <li className="nav-item">
-        <Link className="nav-link" to="/Userlist">
-                    Volunteers
-        </Link>
-      </li>
+
       <li className="nav-item">
         <Link className="nav-link" to="/requestevent">
                     Request

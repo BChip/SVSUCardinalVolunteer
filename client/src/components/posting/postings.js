@@ -19,8 +19,8 @@ class Postings extends PureComponent {
     this.props.UpdateRsvp(postselectedid);
   }
 
-  handleVolunteers(status) {
-    if (status) { document.getElementById('div2').style.visibility = 'visible'; } else { document.getElementById('div2').style.visibility = 'hidden'; }
+  handleVolunteers(status, postingid) {
+    if (status) { document.getElementById(postingid).style.visibility = 'visible'; } else { document.getElementById(postingid).style.visibility = 'hidden'; }
   }
 
   deletersvp(postselectedid) {
@@ -67,8 +67,8 @@ class Postings extends PureComponent {
           && <button className="btn btn-link" onClick={() => this.deletersvp(posting.id)}>Sign Out</button> }
 
           {((localStorage.getItem('role') === 'community partner' && posting.user.id === localStorage.getItem('id')) || localStorage.getItem('role') === 'admin')
-           && <button className="btn btn-link" onMouseOver={() => this.handleVolunteers(true)} onMouseOut={() => this.handleVolunteers(false)}>Volunteers view</button>}
-          <div id="div2" className="div2">
+           && <button className="btn btn-link" onMouseOver={() => this.handleVolunteers(true, posting.id)} onMouseOut={() => this.handleVolunteers(false, posting.id)}>Volunteers view</button>}
+          <div id={`${posting.id}`} className="div2">
             {posting.rsvp.map(list => <li key={list._id}>{list.name}</li>)}
           </div>
 

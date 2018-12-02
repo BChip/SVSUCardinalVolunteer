@@ -17,6 +17,7 @@ import PreviewEventList from '../components/posting/previewlist';
 import EditUser from '../components/users/edituser';
 import EditVolunteer from '../components/users/editvolunteer';
 import RequestEvent from '../components/posting/requestevent';
+import Mypostings from '../components/posting/myposting';
 
 const Routes = () => (
   <App>
@@ -34,7 +35,7 @@ const Routes = () => (
 
     <Route exact path="/edituser/:type/:id" component={RequireAuth(EditUser)} />
     <Route exact path="/editvolunteer/:type/:id" component={RequireAuth(EditVolunteer)} />
-;
+    <Route exact path="/myposting" component={RequireAuth(Mypostings)} />
     <Route exact path="/previewlist" component={RequireAuth(PreviewEventList)} />
     <Route exact path="/requestevent" component={RequireAuth(RequestEvent)} />
     <Route exact path="/userview/:id" component={RequireAuth(Userview)} />
