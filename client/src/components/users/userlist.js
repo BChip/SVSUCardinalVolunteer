@@ -18,7 +18,6 @@ class Userlist extends PureComponent {
     const visiblefilter = this.props.listinguser.filter(
       visibleuser => (visibleuser.id !== localStorage.getItem('id')),
     );
-
     return visiblefilter.map((userlist, index) => (
       <tr key={userlist.id}>
         <th scope="row">{index + 1}</th>
@@ -95,6 +94,9 @@ Userlist.propTypes = {
 
   fetchusers: PropTypes.func.isRequired,
 };
-const mapStateToProps = state => ({ listinguser: state.users.userlist });
+const mapStateToProps = state => ({
+  listinguser: state.users.userlist,
+
+});
 
 export default connect(mapStateToProps, actions)(Userlist);

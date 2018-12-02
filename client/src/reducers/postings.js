@@ -1,5 +1,5 @@
 import {
-  FETCH_POSTINGS, DELETE_POSTINGS, CREATE_POSTINGS, FETCH_FAILURE_POSTING, FETCH_SINGLE_POSTING, UPDATE_POSTING,
+  FETCH_POSTINGS, DELETE_POSTINGS, CREATE_POSTINGS, FETCH_FAILURE_POSTING, FETCH_SINGLE_POSTING, UPDATE_POSTING, UPDATE_RSVP,
 } from '../actions/types';
 
 const postingsReducer = (state = {}, action) => {
@@ -20,6 +20,8 @@ const postingsReducer = (state = {}, action) => {
 
     case UPDATE_POSTING:
       return { ...state, singlePosting: action.payload, successPosting: action.success };
+    case UPDATE_RSVP:
+      return { ...state, rsvpdata: action.payload, rsvpcondition: action.success };
     default:
       return state;
   }

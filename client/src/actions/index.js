@@ -19,6 +19,7 @@ import {
   FETCH_SINGLE_POSTING,
   UPDATE_USERS,
   UPDATE_POSTING,
+  UPDATE_RSVP,
 
 } from './types';
 
@@ -39,6 +40,7 @@ export const signinUser = ({ mail, password }) => async (dispatch) => {
   const {
     id, name, picture, email, role,
   } = user;
+
   localStorage.setItem('token', token);
   localStorage.setItem('id', id);
   localStorage.setItem('role', role);
@@ -93,17 +95,17 @@ export const changepassword = ({ password, token }) => async (dispatch) => {
 };
 
 export const createPost = ({
-  title, description, location, time, category, valid, visible,
+  title, description, location, time, category,
 }) => async (dispatch) => {
   const headers = { authorization: `Bearer ${localStorage.getItem('token')}`, 'content-type': 'application/json' };
 
 
   const body = JSON.stringify(
     {
-      title, description, location, time, category, valid, visible,
+      title, description, location, time, category,
     },
   );
-  console.log(body);
+
 
   const response = await fetch(`${ROOT_URL}/postings`, { method: 'POST', headers, body });
   if (response.status !== 201) {
@@ -233,4 +235,29 @@ export const UpdatePosting = (formvalue, postingid) => async (dispatch) => {
     return;
   }
   dispatch({ type: UPDATE_POSTING, success: 'Your Event has been updated Succesfully', payload: json });
+};
+
+export const UpdateRsvp = postingid => async (dispatch) => {
+  const headers = { authorization: `Bearer ${localStorage.getItem('token')}` };
+
+  const response = await fetch(`${ROOT_URL}/postings/${postingid}/rsvp`, { method: 'POST', headers });
+
+  const json = await response.json();
+  if (response.status !== 200) {
+    dispatch({ type: AUTH_ERROR, payload: response.message });
+    return;
+  }
+  dispatch({ type: UPDATE_RSVP, success: 'You have successfully signed up for events', payload: json });
+};
+
+export const deleteRsvp = postingid => async (dispatch) => {
+  const headers = { authorization: `Bearer ${localStorage.getItem('token')}` };
+
+  const response = await fetch(`${ROOT_URL}/postings/${postingid}/rsvp`, { method: 'DELETE', headers });
+  const json = await response.json();
+  if (response.status !== 200) {
+    dispatch({ type: AUTH_ERROR, payload: response.message });
+    return;
+  }
+  dispatch({ type: UPDATE_RSVP, success: 'You have successfully signed out for events', payload: json });
 };

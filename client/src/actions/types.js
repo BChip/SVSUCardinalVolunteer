@@ -15,3 +15,4 @@ export const FETCH_SINGLE_POSTING = 'fetch_single_user';
 export const DELETE_USERS = 'delete_users';
 export const FETCH_FAILURE_POSTING = 'fetch_failure_posting';
 export const FETCH_FAILURE_USER = 'fetch_failure_user';
+export const UPDATE_RSVP = 'update_RSVP';

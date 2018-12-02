@@ -9,7 +9,7 @@ class Postcreate extends PureComponent {
     title, description, location, time, category,
   }) {
     this.props.createPost({
-      title, description, location, time, category, valid: 'true', visible: 'false',
+      title, description, location, time, category,
     });
   }
 
