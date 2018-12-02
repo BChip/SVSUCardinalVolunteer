@@ -7,7 +7,7 @@ import { schema } from './model'
 export User, { schema } from './model'
 
 const router = new Router()
-const { email, password, name, picture, role, svsuid, svsurole } = schema.tree
+const { email, password, name, picture, role, svsuid, roleatsvsu } = schema.tree
 
 /**
  * @api {get} /users Retrieve users
@@ -61,7 +61,7 @@ router.get('/:id',show)
  * @apiError 409 Email already registered.
  */
 router.post('/',
-  body({ email, password, name, picture, role, svsuid, svsurole }),
+  body({ email, password, name, picture, role, svsuid, roleatsvsu }),
   create)
 
 /**
