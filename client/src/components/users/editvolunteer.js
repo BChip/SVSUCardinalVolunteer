@@ -18,10 +18,6 @@ const validate = (values) => {
     errors.name = 'Please enter name of organization';
   }
 
-  if (!values.aboutorg) {
-    errors.aboutorg = 'Please enter description of organization';
-  }
-
 
   return errors;
 };
@@ -38,19 +34,6 @@ const renderField = ({
       {touched && error && <span className="text-danger">{error}</span>}
     </div>
 
-  </div>
-);
-
-
-const renderTextArea = ({
-  input, label, meta: { touched, error },
-}) => (
-  <div>
-    <label>{label}</label>
-    <div>
-      <textarea {...input} className="form-control" placeholder={label} rows="5" cols="30" />
-      {touched && error && <span className="text-danger">{error}</span>}
-    </div>
   </div>
 );
 
@@ -106,29 +89,22 @@ class EditVolunteer extends PureComponent {
             {this.renderSignError()}
             <div className="form-group">
               <Field
-              name="name"
-              label="Organization Name"
-              component={renderField}
-              type="text"
-            />
+                name="name"
+                label="Organization Name"
+                component={renderField}
+                type="text"
+              />
             </div>
 
             <div className="form-group">
               <Field
-              name="email"
-              label="Email"
-              component={renderField}
-              type="text"
-            />
+                name="email"
+                label="Email"
+                component={renderField}
+                type="text"
+              />
             </div>
 
-            <div className="form-group">
-              <Field
-              name="aboutorg"
-              label="About Organization"
-              component={renderTextArea}
-            />
-            </div>
 
             <button type="submit" className="btn btn-primary btn-small student-link-button" disabled={submitting}>Update</button>
 

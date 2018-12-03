@@ -10,9 +10,9 @@ class Userlist extends PureComponent {
     this.props.fetchusers();
   }
 
-  handleDelete(userselectedid) {
+  /*handleDelete(userselectedid) {
     this.props.deleteUser(userselectedid);
-  }
+  } */
 
   renderPostings() {
     const visiblefilter = this.props.listinguser.filter(
@@ -27,9 +27,7 @@ class Userlist extends PureComponent {
         <td>{userlist.role || '-'}</td>
         <td>
           {' '}
-          <button className="btn btn-link" onClick={() => this.handleDelete(userlist.id)}>
-            Delete
-          </button>
+
           <Link className="btn btn-link" to={`/userview/${userlist.id}`}>
             View
 
