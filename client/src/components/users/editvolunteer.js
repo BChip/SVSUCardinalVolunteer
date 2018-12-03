@@ -18,10 +18,6 @@ const validate = (values) => {
     errors.name = 'Please enter name of organization';
   }
 
-  if (!values.aboutorg) {
-    errors.aboutorg = 'Please enter description of organization';
-  }
-
 
   return errors;
 };
@@ -106,29 +102,22 @@ class EditVolunteer extends PureComponent {
             {this.renderSignError()}
             <div className="form-group">
               <Field
-              name="name"
-              label="Organization Name"
-              component={renderField}
-              type="text"
-            />
+                name="name"
+                label="Organization Name"
+                component={renderField}
+                type="text"
+              />
             </div>
 
             <div className="form-group">
               <Field
-              name="email"
-              label="Email"
-              component={renderField}
-              type="text"
-            />
+                name="email"
+                label="Email"
+                component={renderField}
+                type="text"
+              />
             </div>
 
-            <div className="form-group">
-              <Field
-              name="aboutorg"
-              label="About Organization"
-              component={renderTextArea}
-            />
-            </div>
 
             <button type="submit" className="btn btn-primary btn-small student-link-button" disabled={submitting}>Update</button>
 

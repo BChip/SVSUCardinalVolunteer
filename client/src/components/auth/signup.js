@@ -84,7 +84,7 @@ class Signup extends PureComponent {
           </div>
           <div className="form-group">
             <Field
-              name="svsurole"
+              name="roleatsvsu"
               label="Role At SVSU"
               type="text"
               component={this.renderSelectField}
@@ -173,13 +173,7 @@ class Signup extends PureComponent {
               type="password"
             />
           </div>
-          <div className="form-group">
-            <Field
-              name="aboutorg"
-              label="About Organization"
-              component={this.renderTextArea}
-            />
-          </div>
+
 
           <button type="submit" className="btn btn-primary btn-small student-link-button" disabled={submitting}>Sign Up</button>
           <button type="submit" className="btn btn-primary btn-medium" disabled={pristine || submitting} onClick={reset}>Clear</button>
@@ -242,15 +236,13 @@ const validate = (values) => {
   if (values.password !== values.passwordConfirmation) {
     errors.password = 'Password must match';
   }
-  if (!values.svsurole) {
-    errors.svsurole = 'Please Select one role';
+  if (!values.roleatsvsu) {
+    errors.roleatsvsu = 'Please Select one role';
   }
   if (!values.rolepartner) {
     errors.rolepartner = 'Please Specify your role';
   }
-  if (!values.aboutorg) {
-    errors.aboutorg = 'Please provide some information about organisation';
-  }
+
   return errors;
 };
 

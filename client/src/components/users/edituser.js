@@ -23,8 +23,8 @@ const validate = (values) => {
   }
 
 
-  if (!values.svsurole) {
-    errors.svsurole = 'Please Select one role';
+  if (!values.roleatsvsu) {
+    errors.roleatsvsu = 'Please Select one role';
   }
 
   return errors;
@@ -68,6 +68,8 @@ class EditUser extends PureComponent {
 
 
   handleFormSubmit(formProps) {
+    debugger;
+    console.log(formProps);
     this.props.updateProfile(formProps, this.props.match.params.id);
   }
 
@@ -133,7 +135,7 @@ class EditUser extends PureComponent {
               </div>
               <div className="form-group">
                 <Field
-                  name="svsurole"
+                  name="roleatsvsu"
                   label="Role At SVSU"
                   type="text"
                   component={renderSelectField}
