@@ -72,7 +72,7 @@ class EditPost extends PureComponent {
 
     render() {
       const {
-        handleSubmit, submitting, pristine, reset,
+        handleSubmit, submitting,
       } = this.props;
 
       return (

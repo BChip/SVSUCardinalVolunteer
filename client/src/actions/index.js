@@ -14,15 +14,16 @@ import {
   FETCH_USERS,
   FETCH_SINGLE_USER,
   FETCH_FAILURE_POSTING,
-  DELETE_USERS,
+  /* DELETE_USERS, */
   FETCH_FAILURE_USER,
   FETCH_SINGLE_POSTING,
   UPDATE_USERS,
   UPDATE_POSTING,
+  UPDATE_RSVP,
 
 } from './types';
 
-const ROOT_URL = ' http://developerradio.com:3030'; // 'http://developerradio.com:3030';
+const ROOT_URL = 'http://developerradio.com:3030';
 
 export const signinUser = ({ mail, password }) => async (dispatch) => {
   const headers = { authorization: `Basic ${btoa(`${mail.toLowerCase()}:${password}`)}`, 'content-type': 'application/json' };
@@ -35,10 +36,12 @@ export const signinUser = ({ mail, password }) => async (dispatch) => {
   dispatch({ type: AUTH_USER });
 
   const json = await response.json();
+
   const { token, user } = json;
   const {
     id, name, picture, email, role,
   } = user;
+
   localStorage.setItem('token', token);
   localStorage.setItem('id', id);
   localStorage.setItem('role', role);
@@ -52,8 +55,10 @@ export const signupUser = formvalue => async (dispatch) => {
   if (!formvalue.svsuid && formvalue.typedata === 'partner') {
     formvalue.role = 'community partner';
   }
+
   const headers = { 'content-type': 'application/json' };
   const body = JSON.stringify(formvalue);
+
   const response = await fetch(`${ROOT_URL}/users`, { method: 'POST', headers, body });
 
   if (response.status !== 201) {
@@ -93,17 +98,17 @@ export const changepassword = ({ password, token }) => async (dispatch) => {
 };
 
 export const createPost = ({
-  title, description, location, time, category, valid, visible,
+  title, description, location, time, category,
 }) => async (dispatch) => {
   const headers = { authorization: `Bearer ${localStorage.getItem('token')}`, 'content-type': 'application/json' };
 
 
   const body = JSON.stringify(
     {
-      title, description, location, time, category, valid, visible,
+      title, description, location, time, category,
     },
   );
-  console.log(body);
+
 
   const response = await fetch(`${ROOT_URL}/postings`, { method: 'POST', headers, body });
   if (response.status !== 201) {
@@ -139,11 +144,12 @@ export const signoutUser = () => {
 
 export const fetchPostings = (postingid = '') => async (dispatch) => {
   const headers = { authorization: `Bearer ${localStorage.getItem('token')}` };
-
   try {
     const response = await fetch(`${ROOT_URL}/postings/${postingid}`, { method: 'GET', headers });
 
     const json = await response.json();
+
+
     if (postingid === '') {
       dispatch({
         type: FETCH_POSTINGS,
@@ -174,6 +180,7 @@ export const fetchusers = (userid = '') => async (dispatch) => {
   try {
     const response = await fetch(`${ROOT_URL}/users/${userid}`, { method: 'GET', headers });
     const json = await response.json();
+
     if (userid === '') {
       dispatch({
         type: FETCH_USERS,
@@ -194,7 +201,7 @@ export const fetchusers = (userid = '') => async (dispatch) => {
   }
 };
 
-
+/*
 export const deleteUser = userselectedid => async (dispatch) => {
   const headers = { authorization: `Bearer ${localStorage.getItem('token')}`, 'content-type': 'application/json' };
   const response = await fetch(`${ROOT_URL}/users/${userselectedid}`, { method: 'DELETE', headers });
@@ -206,15 +213,15 @@ export const deleteUser = userselectedid => async (dispatch) => {
   }
 
   History.push('/userlist');
-};
+}; */
 
 export const updateProfile = (updateformvalue, userid) => async (dispatch) => {
   const headers = { authorization: `Bearer ${localStorage.getItem('token')}`, 'content-type': 'application/json' };
   const body = JSON.stringify(updateformvalue);
 
   const response = await fetch(`${ROOT_URL}/users/${userid}`, { method: 'PUT', headers, body });
-
   const json = await response.json();
+
   if (response.status !== 200) {
     dispatch({ type: AUTH_ERROR, payload: json });
     return;
@@ -233,4 +240,29 @@ export const UpdatePosting = (formvalue, postingid) => async (dispatch) => {
     return;
   }
   dispatch({ type: UPDATE_POSTING, success: 'Your Event has been updated Succesfully', payload: json });
+};
+
+export const UpdateRsvp = postingid => async (dispatch) => {
+  const headers = { authorization: `Bearer ${localStorage.getItem('token')}` };
+
+  const response = await fetch(`${ROOT_URL}/postings/${postingid}/rsvp`, { method: 'POST', headers });
+
+  const json = await response.json();
+  if (response.status !== 200) {
+    dispatch({ type: AUTH_ERROR, payload: response.message });
+    return;
+  }
+  dispatch({ type: UPDATE_RSVP, success: 'You have successfully signed up for events', payload: json });
+};
+
+export const deleteRsvp = postingid => async (dispatch) => {
+  const headers = { authorization: `Bearer ${localStorage.getItem('token')}` };
+
+  const response = await fetch(`${ROOT_URL}/postings/${postingid}/rsvp`, { method: 'DELETE', headers });
+  const json = await response.json();
+  if (response.status !== 200) {
+    dispatch({ type: AUTH_ERROR, payload: response.message });
+    return;
+  }
+  dispatch({ type: UPDATE_RSVP, success: 'You have successfully signed out for events', payload: json });
 };

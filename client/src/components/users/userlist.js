@@ -10,15 +10,14 @@ class Userlist extends PureComponent {
     this.props.fetchusers();
   }
 
-  handleDelete(userselectedid) {
+  /*handleDelete(userselectedid) {
     this.props.deleteUser(userselectedid);
-  }
+  } */
 
   renderPostings() {
     const visiblefilter = this.props.listinguser.filter(
       visibleuser => (visibleuser.id !== localStorage.getItem('id')),
     );
-
     return visiblefilter.map((userlist, index) => (
       <tr key={userlist.id}>
         <th scope="row">{index + 1}</th>
@@ -28,9 +27,7 @@ class Userlist extends PureComponent {
         <td>{userlist.role || '-'}</td>
         <td>
           {' '}
-          <button className="btn btn-link" onClick={() => this.handleDelete(userlist.id)}>
-            Delete
-          </button>
+
           <Link className="btn btn-link" to={`/userview/${userlist.id}`}>
             View
 
@@ -95,6 +92,9 @@ Userlist.propTypes = {
 
   fetchusers: PropTypes.func.isRequired,
 };
-const mapStateToProps = state => ({ listinguser: state.users.userlist });
+const mapStateToProps = state => ({
+  listinguser: state.users.userlist,
+
+});
 
 export default connect(mapStateToProps, actions)(Userlist);

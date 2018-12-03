@@ -29,7 +29,7 @@ const postingSchema = new Schema({
   valid: {
     type: Boolean,
     required: true,
-    default: false
+    default: true
   },
   visible: {
     type: Boolean,
@@ -39,16 +39,16 @@ const postingSchema = new Schema({
   picture: {
     type: String
   },
-  rsvp: {
-    type: Array
-  }
+  rsvp: [{ type: Schema.ObjectId, ref: 'User' }]
 }, {
+  usePushEach: true,
   timestamps: true,
   toJSON: {
     virtuals: true,
     transform: (obj, ret) => { delete ret._id }
   }
 })
+
 
 
 

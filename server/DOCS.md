@@ -1,4 +1,4 @@
-# SVSU Cardinal Volunteer v0.0.0
+# svsuvolunteer v1.0.0
 
 
 
@@ -16,8 +16,10 @@
 - [Posting](#posting)
 	- [Create posting](#create-posting)
 	- [Delete posting](#delete-posting)
+	- [RSVP to a posting](#rsvp-to-a-posting)
 	- [Retrieve posting](#retrieve-posting)
 	- [Retrieve postings](#retrieve-postings)
+	- [UnRSVP to a posting](#unrsvp-to-a-posting)
 	- [Update posting](#update-posting)
 	
 - [User](#user)
@@ -153,6 +155,19 @@
 |---------|-----------|--------------------------------------|
 | access_token			| String			|  <p>user access token.</p>							|
 
+## RSVP to a posting
+
+
+
+	POST /postings/:id/rsvp
+
+
+### Parameters
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| access_token			| String			|  <p>user access token.</p>							|
+
 ## Retrieve posting
 
 
@@ -183,6 +198,19 @@
 | limit			| Number			| **optional** <p>Amount of returned items.</p>							|
 | sort			| String[]			| **optional** <p>Order of returned items.</p>							|
 | fields			| String[]			| **optional** <p>Fields to be returned.</p>							|
+
+## UnRSVP to a posting
+
+
+
+	DELETE /postings/:id/rsvp
+
+
+### Parameters
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| access_token			| String			|  <p>user access token.</p>							|
 
 ## Update posting
 
