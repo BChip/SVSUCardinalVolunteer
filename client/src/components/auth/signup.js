@@ -41,17 +41,6 @@ class Signup extends PureComponent {
     </div>
   )
 
-  renderTextArea = ({
-    input, label, meta: { touched, error },
-  }) => (
-    <div>
-      <label>{label}</label>
-      <div>
-        <textarea {...input} className="form-control" placeholder={label} rows="5" cols="30" />
-        {touched && error && <span className="text-danger">{error}</span>}
-      </div>
-    </div>
-  );
 
   studentform() {
     const {
