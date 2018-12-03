@@ -10,9 +10,9 @@ class Userlist extends PureComponent {
     this.props.fetchusers();
   }
 
-  handleDelete(userselectedid) {
+  /*handleDelete(userselectedid) {
     this.props.deleteUser(userselectedid);
-  }
+  } */
 
   renderPostings() {
     const visiblefilter = this.props.listinguser.filter(

@@ -14,7 +14,7 @@ import {
   FETCH_USERS,
   FETCH_SINGLE_USER,
   FETCH_FAILURE_POSTING,
-  DELETE_USERS,
+  /* DELETE_USERS, */
   FETCH_FAILURE_USER,
   FETCH_SINGLE_POSTING,
   UPDATE_USERS,
@@ -23,7 +23,7 @@ import {
 
 } from './types';
 
-const ROOT_URL = 'http://0.0.0.0:3030';// 'http://developerradio.com:3030';
+const ROOT_URL = 'http://developerradio.com:3030';
 
 export const signinUser = ({ mail, password }) => async (dispatch) => {
   const headers = { authorization: `Basic ${btoa(`${mail.toLowerCase()}:${password}`)}`, 'content-type': 'application/json' };
@@ -201,7 +201,7 @@ export const fetchusers = (userid = '') => async (dispatch) => {
   }
 };
 
-
+/*
 export const deleteUser = userselectedid => async (dispatch) => {
   const headers = { authorization: `Bearer ${localStorage.getItem('token')}`, 'content-type': 'application/json' };
   const response = await fetch(`${ROOT_URL}/users/${userselectedid}`, { method: 'DELETE', headers });
@@ -213,7 +213,7 @@ export const deleteUser = userselectedid => async (dispatch) => {
   }
 
   History.push('/userlist');
-};
+}; */
 
 export const updateProfile = (updateformvalue, userid) => async (dispatch) => {
   const headers = { authorization: `Bearer ${localStorage.getItem('token')}`, 'content-type': 'application/json' };
